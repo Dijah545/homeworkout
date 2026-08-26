@@ -1,0 +1,2074 @@
+[
+  {
+    "id": "pushup",
+    "name": "Push-Ups",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "dbsquat",
+    "name": "Dumbbell Squat",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "kbswing",
+    "name": "Kettlebell Swing",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bandrow",
+    "name": "Resistance Band Row",
+    "equipment": "Resistance Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "jumprope",
+    "name": "Skipping Rope",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Skipping%20Rope%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "glutebridge",
+    "name": "Glute Bridge",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "climbers",
+    "name": "Mountain Climbers",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "stepups",
+    "name": "Mini Stepper Intervals",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Mini%20Stepper%20Intervals%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "sliders",
+    "name": "Plank with Sliders",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Plank%20with%20Sliders%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "dbpress",
+    "name": "Dumbbell Shoulder Press",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bentrow",
+    "name": "Bent-Over Dumbbell Row",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Bent-Over%20Dumbbell%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rdl",
+    "name": "Barbell Romanian Deadlift",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bike",
+    "name": "Stationary Bike Intervals",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Stationary%20Bike%20Intervals%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bandwalk",
+    "name": "Loop Band Lateral Walk",
+    "equipment": "Resistance Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Loop%20Band%20Lateral%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "deadbug",
+    "name": "Dead Bug",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "sliderlunge",
+    "name": "Slider Reverse Lunge",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Reverse%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bandpress",
+    "name": "Resistance Band Chest Press",
+    "equipment": "Resistance Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Chest%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-goblet-squat",
+    "name": "Dumbbell Goblet Squat",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-front-squat",
+    "name": "Dumbbell Front Squat",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Front%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-sumo-squat",
+    "name": "Dumbbell Sumo Squat",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Sumo%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-rdl",
+    "name": "Dumbbell Romanian Deadlift",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-stiff-leg-deadlift",
+    "name": "Dumbbell Stiff-Leg Deadlift",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-reverse-lunge",
+    "name": "Dumbbell Reverse Lunge",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-forward-lunge",
+    "name": "Dumbbell Forward Lunge",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-walking-lunge",
+    "name": "Dumbbell Walking Lunge",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-lateral-lunge",
+    "name": "Dumbbell Lateral Lunge",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Lateral%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-bulgarian-split-squat",
+    "name": "Dumbbell Bulgarian Split Squat",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Split_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-step-up",
+    "name": "Dumbbell Step-Up",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Step_Ups/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-glute-bridge",
+    "name": "Dumbbell Glute Bridge",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-hip-thrust",
+    "name": "Dumbbell Hip Thrust",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-calf-raise",
+    "name": "Dumbbell Calf Raise",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Calf_Raise/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-single-leg-rdl",
+    "name": "Dumbbell Single-Leg Romanian Deadlift",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Single-Leg%20Romanian%20Deadlift%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-chest-press",
+    "name": "Dumbbell Chest Press",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-floor-press",
+    "name": "Dumbbell Floor Press",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-chest-fly",
+    "name": "Dumbbell Chest Fly",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Flyes/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-shoulder-press",
+    "name": "Dumbbell Shoulder Press",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-arnold-press",
+    "name": "Dumbbell Arnold Press",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arnold_Dumbbell_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-front-raise",
+    "name": "Dumbbell Front Raise",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Dumbbell_Raise/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-lateral-raise",
+    "name": "Dumbbell Lateral Raise",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-bent-over-row",
+    "name": "Dumbbell Bent-Over Row",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Two-Dumbbell_Row/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-single-arm-row",
+    "name": "Dumbbell Single-Arm Row",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-reverse-fly",
+    "name": "Dumbbell Reverse Fly",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Flyes/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-pullover",
+    "name": "Dumbbell Pullover",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent-Arm_Dumbbell_Pullover/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-bicep-curl",
+    "name": "Dumbbell Bicep Curl",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bicep_Curl/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-hammer-curl",
+    "name": "Dumbbell Hammer Curl",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-concentration-curl",
+    "name": "Dumbbell Concentration Curl",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Concentration_Curls/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-tricep-extension",
+    "name": "Dumbbell Tricep Extension",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Triceps_Extension/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-tricep-kickback",
+    "name": "Dumbbell Tricep Kickback",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Tricep_Dumbbell_Kickback/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-skull-crusher",
+    "name": "Dumbbell Skull Crusher",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_One-Arm_Triceps_Extension/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-thruster",
+    "name": "Dumbbell Thruster",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-squat-to-press",
+    "name": "Dumbbell Squat to Press",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-clean-press",
+    "name": "Dumbbell Clean and Press",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Clean%20and%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-deadlift-row",
+    "name": "Dumbbell Deadlift to Row",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Deadlift%20to%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-renegade-row",
+    "name": "Dumbbell Renegade Row",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Renegade_Row/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "db-farmers-carry",
+    "name": "Dumbbell Farmer's Carry",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Farmer%27s%20Carry%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-reverse-lunge-curl",
+    "name": "Dumbbell Reverse Lunge to Curl",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Reverse%20Lunge%20to%20Curl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "db-rdl-row",
+    "name": "Dumbbell Romanian Deadlift to Row",
+    "equipment": "Adjustable Dumbbells",
+    "image": "https://tse2.mm.bing.net/th?q=Dumbbell%20Romanian%20Deadlift%20to%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bb-back-squat",
+    "name": "Barbell Back Squat",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-front-squat",
+    "name": "Barbell Front Squat",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Barbell_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-sumo-squat",
+    "name": "Barbell Sumo Squat",
+    "equipment": "Barbell",
+    "image": "https://tse2.mm.bing.net/th?q=Barbell%20Sumo%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bb-rdl",
+    "name": "Barbell Romanian Deadlift",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-conventional-deadlift",
+    "name": "Barbell Conventional Deadlift",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-good-morning",
+    "name": "Barbell Good Morning",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Good_Morning/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-reverse-lunge",
+    "name": "Barbell Reverse Lunge",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Lunge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-hip-thrust",
+    "name": "Barbell Hip Thrust",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-glute-bridge",
+    "name": "Barbell Glute Bridge",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-calf-raise",
+    "name": "Barbell Calf Raise",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Barbell_Calf_Raise/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-bent-over-row",
+    "name": "Barbell Bent-Over Row",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-overhead-press",
+    "name": "Barbell Overhead Press",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Military_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-floor-press",
+    "name": "Barbell Floor Press",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Floor_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-bicep-curl",
+    "name": "Barbell Bicep Curl",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-upright-row",
+    "name": "Barbell Upright Row",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Upright_Barbell_Row/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-close-grip-floor-press",
+    "name": "Barbell Close-Grip Floor Press",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Barbell_Bench_Press/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-deadlift",
+    "name": "Barbell Deadlift",
+    "equipment": "Barbell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "bb-clean-press",
+    "name": "Barbell Clean and Press",
+    "equipment": "Barbell",
+    "image": "https://tse2.mm.bing.net/th?q=Barbell%20Clean%20and%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bb-thruster",
+    "name": "Barbell Thruster",
+    "equipment": "Barbell",
+    "image": "https://tse2.mm.bing.net/th?q=Barbell%20Thruster%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bb-squat-to-press",
+    "name": "Barbell Squat to Press",
+    "equipment": "Barbell",
+    "image": "https://tse2.mm.bing.net/th?q=Barbell%20Squat%20to%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "kb-goblet-squat",
+    "name": "Kettlebell Goblet Squat",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-sumo-squat",
+    "name": "Kettlebell Sumo Squat",
+    "equipment": "Kettlebell",
+    "image": "https://tse2.mm.bing.net/th?q=Kettlebell%20Sumo%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "kb-deadlift",
+    "name": "Kettlebell Deadlift",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-rdl",
+    "name": "Kettlebell Romanian Deadlift",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-reverse-lunge",
+    "name": "Kettlebell Reverse Lunge",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pass_Between_The_Legs/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-lateral-lunge",
+    "name": "Kettlebell Lateral Lunge",
+    "equipment": "Kettlebell",
+    "image": "https://tse2.mm.bing.net/th?q=Kettlebell%20Lateral%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "kb-single-leg-deadlift",
+    "name": "Kettlebell Single-Leg Deadlift",
+    "equipment": "Kettlebell",
+    "image": "https://tse2.mm.bing.net/th?q=Kettlebell%20Single-Leg%20Deadlift%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "kb-swing",
+    "name": "Kettlebell Swing",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-clean",
+    "name": "Kettlebell Clean",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-clean-press",
+    "name": "Kettlebell Clean and Press",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean_And_Jerk/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-thruster",
+    "name": "Kettlebell Thruster",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Thruster/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-high-pull",
+    "name": "Kettlebell High Pull",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pirate_Ships/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-deadlift-high-pull",
+    "name": "Kettlebell Deadlift to High Pull",
+    "equipment": "Kettlebell",
+    "image": "https://tse2.mm.bing.net/th?q=Kettlebell%20Deadlift%20to%20High%20Pull%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "kb-squat-press",
+    "name": "Kettlebell Squat to Press",
+    "equipment": "Kettlebell",
+    "image": "https://tse2.mm.bing.net/th?q=Kettlebell%20Squat%20to%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "kb-farmers-carry",
+    "name": "Kettlebell Farmer's Carry",
+    "equipment": "Kettlebell",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Farmers_Walk/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "kb-figure-eight",
+    "name": "Kettlebell Figure Eight",
+    "equipment": "Kettlebell",
+    "image": "https://tse2.mm.bing.net/th?q=Kettlebell%20Figure%20Eight%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-0",
+    "name": "Banded Squat",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-1",
+    "name": "Banded Sumo Squat",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Sumo%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-2",
+    "name": "Banded Squat Pulses",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Squat%20Pulses%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-3",
+    "name": "Banded Lateral Walk",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Lateral%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-4",
+    "name": "Banded Monster Walk",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Monster%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-5",
+    "name": "Banded Glute Bridge",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Glute%20Bridge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-6",
+    "name": "Banded Glute Bridge Abduction",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Glute%20Bridge%20Abduction%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-7",
+    "name": "Banded Hip Thrust",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Hip%20Thrust%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-8",
+    "name": "Banded Donkey Kick",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Donkey%20Kick%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-9",
+    "name": "Banded Fire Hydrant",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Fire%20Hydrant%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-10",
+    "name": "Banded Standing Kickback",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Standing%20Kickback%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-11",
+    "name": "Banded Side Leg Raise",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Side%20Leg%20Raise%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-12",
+    "name": "Banded Clamshell",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Clamshell%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-13",
+    "name": "Banded Hip Abduction",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Hip%20Abduction%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-14",
+    "name": "Banded Reverse Lunge",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Reverse%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-15",
+    "name": "Banded Curtsy Lunge",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Curtsy%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-16",
+    "name": "Banded Standing Hip Extension",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Standing%20Hip%20Extension%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-core-0",
+    "name": "Banded Mountain Climbers",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Mountain%20Climbers%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-core-1",
+    "name": "Banded Plank Leg Raises",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Plank%20Leg%20Raises%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-core-2",
+    "name": "Banded Bicycle Crunch",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Bicycle%20Crunch%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "loop-core-3",
+    "name": "Banded Dead Bug",
+    "equipment": "Resistance Loop Bands",
+    "image": "https://tse2.mm.bing.net/th?q=Banded%20Dead%20Bug%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-0",
+    "name": "Resistance Band Chest Press",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Chest%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-1",
+    "name": "Resistance Band Chest Fly",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Chest%20Fly%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-2",
+    "name": "Resistance Band Row",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-3",
+    "name": "Resistance Band Lat Pulldown",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Lat%20Pulldown%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-4",
+    "name": "Resistance Band Shoulder Press",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Shoulder%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-5",
+    "name": "Resistance Band Front Raise",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Front%20Raise%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-6",
+    "name": "Resistance Band Lateral Raise",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Lateral%20Raise%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-7",
+    "name": "Resistance Band Reverse Fly",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Reverse%20Fly%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-8",
+    "name": "Resistance Band Face Pull",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Face%20Pull%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-9",
+    "name": "Resistance Band Bicep Curl",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Bicep%20Curl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-10",
+    "name": "Resistance Band Hammer Curl",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Hammer%20Curl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-11",
+    "name": "Resistance Band Tricep Extension",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Tricep%20Extension%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-12",
+    "name": "Resistance Band Tricep Pushdown",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Tricep%20Pushdown%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-u-13",
+    "name": "Resistance Band Upright Row",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Upright%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-l-0",
+    "name": "Resistance Band Squat",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-l-1",
+    "name": "Resistance Band Deadlift",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Deadlift%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-l-2",
+    "name": "Resistance Band Romanian Deadlift",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Romanian%20Deadlift%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-l-3",
+    "name": "Resistance Band Good Morning",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Good%20Morning%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-l-4",
+    "name": "Resistance Band Lunge",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-l-5",
+    "name": "Resistance Band Glute Kickback",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Glute%20Kickback%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-c-0",
+    "name": "Resistance Band Wood Chop",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Wood%20Chop%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-c-1",
+    "name": "Resistance Band Pallof Press",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Pallof%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-c-2",
+    "name": "Resistance Band Standing Rotation",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Standing%20Rotation%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tube-c-3",
+    "name": "Resistance Band Kneeling Crunch",
+    "equipment": "Resistance/Toning Tubes",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Band%20Kneeling%20Crunch%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-0",
+    "name": "Slider Mountain Climbers",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Mountain%20Climbers%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-1",
+    "name": "Slider Plank Knee Tucks",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Plank%20Knee%20Tucks%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-2",
+    "name": "Slider Pike",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Pike%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-3",
+    "name": "Slider Body Saw",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Body%20Saw%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-4",
+    "name": "Slider Plank Jacks",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Plank%20Jacks%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-5",
+    "name": "Slider Bear Crawl",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Bear%20Crawl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-6",
+    "name": "Slider Single-Leg Knee Tuck",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Single-Leg%20Knee%20Tuck%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-c-7",
+    "name": "Slider Cross-Body Mountain Climbers",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Cross-Body%20Mountain%20Climbers%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-l-0",
+    "name": "Slider Reverse Lunge",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Reverse%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-l-1",
+    "name": "Slider Lateral Lunge",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Lateral%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-l-2",
+    "name": "Slider Curtsy Lunge",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Curtsy%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-l-3",
+    "name": "Slider Hamstring Curl",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Hamstring%20Curl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-l-4",
+    "name": "Slider Glute Bridge Hamstring Curl",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Glute%20Bridge%20Hamstring%20Curl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-l-5",
+    "name": "Slider Side Lunge",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Side%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-l-6",
+    "name": "Slider Single-Leg Lunge",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Single-Leg%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-f-0",
+    "name": "Slider Burpee",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Burpee%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-f-1",
+    "name": "Slider Squat Thrust",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Squat%20Thrust%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "slider-f-2",
+    "name": "Slider Plank to Lunge",
+    "equipment": "Disc Sliders",
+    "image": "https://tse2.mm.bing.net/th?q=Slider%20Plank%20to%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-0",
+    "name": "Basic Jump",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Basic%20Jump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-1",
+    "name": "Alternate-Foot Jump",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Alternate-Foot%20Jump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-2",
+    "name": "Boxer Step",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Boxer%20Step%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-3",
+    "name": "High-Knee Jump",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=High-Knee%20Jump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-4",
+    "name": "Side-to-Side Jump",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Side-to-Side%20Jump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-5",
+    "name": "Forward-and-Back Jump",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Forward-and-Back%20Jump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-6",
+    "name": "Skier Jump",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Skier%20Jump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-7",
+    "name": "Bell Jump",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Bell%20Jump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-8",
+    "name": "Running Skip",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Running%20Skip%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-9",
+    "name": "Double Under",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=Double%20Under%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-int-0",
+    "name": "30 sec Jump / 30 sec Rest",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=30%20sec%20Jump%20/%2030%20sec%20Rest%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-int-1",
+    "name": "45 sec Jump / 15 sec Rest",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=45%20sec%20Jump%20/%2015%20sec%20Rest%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-int-2",
+    "name": "60 sec Jump / 30 sec Rest",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=60%20sec%20Jump%20/%2030%20sec%20Rest%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-int-3",
+    "name": "5-Minute Continuous Moderate Skipping",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=5-Minute%20Continuous%20Moderate%20Skipping%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "rope-int-4",
+    "name": "10-Minute Interval Skipping Session",
+    "equipment": "Skipping Rope",
+    "image": "https://tse2.mm.bing.net/th?q=10-Minute%20Interval%20Skipping%20Session%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-w-0",
+    "name": "Easy Walk",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Easy%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-w-1",
+    "name": "Brisk Walk",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Brisk%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-w-2",
+    "name": "Incline Walk",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Incline%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-w-3",
+    "name": "Progressive Incline Walk",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Progressive%20Incline%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-w-4",
+    "name": "Power Walk",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Power%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-w-5",
+    "name": "Incline Power Walk",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Incline%20Power%20Walk%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-r-0",
+    "name": "Easy Jog",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Easy%20Jog%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-r-1",
+    "name": "Steady-State Run",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Steady-State%20Run%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-r-2",
+    "name": "Running Intervals",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Running%20Intervals%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-r-3",
+    "name": "Sprint Intervals",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Sprint%20Intervals%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "tm-r-4",
+    "name": "Walk/Jog Intervals",
+    "equipment": "Treadmill",
+    "image": "https://tse2.mm.bing.net/th?q=Walk/Jog%20Intervals%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-regular",
+    "name": "Regular Stepping",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Regular%20Stepping%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-fast",
+    "name": "Fast Stepping",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Fast%20Stepping%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-slow-resistance",
+    "name": "Slow Resistance Stepping",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Slow%20Resistance%20Stepping%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-interval",
+    "name": "Interval Stepping",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Interval%20Stepping%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-deep",
+    "name": "Deep Step",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Deep%20Step%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-half-squat",
+    "name": "Half-Squat Stepping",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Half-Squat%20Stepping%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-bicep-curl",
+    "name": "Stepper Bicep Curl",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Bicep%20Curl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-hammer-curl",
+    "name": "Stepper Hammer Curl",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Hammer%20Curl%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-shoulder-press",
+    "name": "Stepper Shoulder Press",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Shoulder%20Press%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-front-raise",
+    "name": "Stepper Front Raise",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Front%20Raise%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-lateral-raise",
+    "name": "Stepper Lateral Raise",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Lateral%20Raise%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-upright-row",
+    "name": "Stepper Upright Row",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Upright%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-tricep-extension",
+    "name": "Stepper Tricep Extension",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Tricep%20Extension%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "stepper-row",
+    "name": "Stepper Row",
+    "equipment": "Mini Stepper",
+    "image": "https://tse2.mm.bing.net/th?q=Stepper%20Row%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-easy",
+    "name": "Easy Cycling",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Easy%20Cycling%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-moderate",
+    "name": "Moderate Steady-State Cycling",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Moderate%20Steady-State%20Cycling%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-high-resistance",
+    "name": "High-Resistance Cycling",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=High-Resistance%20Cycling%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-low-resistance-speed",
+    "name": "Low-Resistance Speed Cycling",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Low-Resistance%20Speed%20Cycling%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-hill-climb",
+    "name": "Hill-Climb Simulation",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Hill-Climb%20Simulation%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-sprint-intervals",
+    "name": "Sprint Intervals",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Sprint%20Intervals%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-resistance-intervals",
+    "name": "Resistance Intervals",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Resistance%20Intervals%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "bike-recovery",
+    "name": "Recovery Ride",
+    "equipment": "Stationary Bike",
+    "image": "https://tse2.mm.bing.net/th?q=Recovery%20Ride%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-0",
+    "name": "Bodyweight Squat",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-l-1",
+    "name": "Sumo Squat",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-l-2",
+    "name": "Squat Pulse",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Squat%20Pulse%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-3",
+    "name": "Jump Squat",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Jump%20Squat%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-4",
+    "name": "Reverse Lunge",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Reverse%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-5",
+    "name": "Forward Lunge",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Forward%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-6",
+    "name": "Lateral Lunge",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Lateral%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-7",
+    "name": "Curtsy Lunge",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Curtsy%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-8",
+    "name": "Glute Bridge",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-l-9",
+    "name": "Single-Leg Glute Bridge",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Single_Leg_Glute_Bridge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-l-10",
+    "name": "Frog Pump",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Frog%20Pump%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-11",
+    "name": "Donkey Kick",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Donkey%20Kick%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-12",
+    "name": "Fire Hydrant",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Fire%20Hydrant%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-13",
+    "name": "Side-Lying Leg Raise",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Side-Lying%20Leg%20Raise%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-14",
+    "name": "Clamshell",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Clamshell%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-l-15",
+    "name": "Calf Raise",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-l-16",
+    "name": "Wall Sit",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wall_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-u-0",
+    "name": "Push-Up",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-u-1",
+    "name": "Knee Push-Up",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-u-2",
+    "name": "Wide Push-Up",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Push-Up/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-u-3",
+    "name": "Close-Grip Push-Up",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Push-Up/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-u-4",
+    "name": "Incline Push-Up",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Push-Up/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-u-5",
+    "name": "Plank Shoulder Tap",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Plank%20Shoulder%20Tap%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-u-6",
+    "name": "Plank Up-Down",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Plank%20Up-Down%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-u-7",
+    "name": "Tricep Push-Up",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Tricep%20Push-Up%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-u-8",
+    "name": "Superman",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Superman%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-u-9",
+    "name": "Superman Pull-Down",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Superman%20Pull-Down%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-cb-0",
+    "name": "Crunch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Crunches/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-1",
+    "name": "Reverse Crunch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Crunch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-2",
+    "name": "Bicycle Crunch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-3",
+    "name": "Dead Bug",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-4",
+    "name": "Heel Tap",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Heel%20Tap%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-cb-5",
+    "name": "Toe Reach",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Toe%20Reach%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-cb-6",
+    "name": "Bird Dog",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-7",
+    "name": "Knee Plank",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Knee%20Plank%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-cb-8",
+    "name": "Forearm Plank",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-9",
+    "name": "High Plank",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-10",
+    "name": "Side Plank",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Bridge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-cb-11",
+    "name": "Seated Knee Tuck",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Seated%20Knee%20Tuck%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-0",
+    "name": "Leg Raise",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Flat_Bench_Lying_Leg_Raise/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-ca-1",
+    "name": "Flutter Kick",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Flutter%20Kick%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-2",
+    "name": "Scissor Kick",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Scissor%20Kick%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-3",
+    "name": "Russian Twist",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Russian_Twist/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-ca-4",
+    "name": "V-Up",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/V-Ups/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-ca-5",
+    "name": "Plank Hip Dip",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Plank%20Hip%20Dip%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-6",
+    "name": "Plank Shoulder Tap",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Plank%20Shoulder%20Tap%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-7",
+    "name": "Mountain Climber",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "mat-ca-8",
+    "name": "Cross-Body Mountain Climber",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Cross-Body%20Mountain%20Climber%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-9",
+    "name": "Plank Knee-to-Elbow",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Plank%20Knee-to-Elbow%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-10",
+    "name": "Hollow Body Hold",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Hollow%20Body%20Hold%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "mat-ca-11",
+    "name": "Bear Plank",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Bear%20Plank%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-0",
+    "name": "Jumping Jacks",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Jumping_Jack/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "hiit-1",
+    "name": "Step Jacks",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Step%20Jacks%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-2",
+    "name": "High Knees",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/High_Knees/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "hiit-3",
+    "name": "Butt Kicks",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Butt%20Kicks%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-4",
+    "name": "Mountain Climbers",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "hiit-5",
+    "name": "Skaters",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Skaters%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-6",
+    "name": "Squat to Knee Drive",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Squat%20to%20Knee%20Drive%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-7",
+    "name": "Speed Squats",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Speed%20Squats%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-8",
+    "name": "Jump Squats",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Jump%20Squats%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-9",
+    "name": "Burpees",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "hiit-10",
+    "name": "Modified Burpees",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "hiit-11",
+    "name": "Lateral Shuffles",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Lateral%20Shuffles%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-12",
+    "name": "Fast Feet",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Fast%20Feet%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-13",
+    "name": "Plank Jacks",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Plank%20Jacks%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-14",
+    "name": "Standing Mountain Climbers",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Standing%20Mountain%20Climbers%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "hiit-15",
+    "name": "Shadow Boxing",
+    "equipment": "Bodyweight / Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Shadow%20Boxing%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "warm-0",
+    "name": "Arm Circles",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "warm-1",
+    "name": "Shoulder Rolls",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Shoulder%20Rolls%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "warm-2",
+    "name": "Hip Circles",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Hip%20Circles%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "warm-3",
+    "name": "Leg Swings",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Leg%20Swings%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "warm-4",
+    "name": "Walking Knee Hugs",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Walking%20Knee%20Hugs%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "warm-5",
+    "name": "Bodyweight Good Morning",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Bodyweight%20Good%20Morning%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "warm-6",
+    "name": "Inchworm",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Inchworm%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "warm-7",
+    "name": "World's Greatest Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Worlds_Greatest_Stretch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "warm-8",
+    "name": "Cat-Cow",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "warm-9",
+    "name": "Bird Dog",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "warm-10",
+    "name": "Glute Bridge",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "warm-11",
+    "name": "Bodyweight Squat",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "warm-12",
+    "name": "Alternating Reverse Lunge",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Alternating%20Reverse%20Lunge%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "cool-0",
+    "name": "Hamstring Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hamstring_And_Calf_Stretch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-1",
+    "name": "Quad Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Quadriceps/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-2",
+    "name": "Hip Flexor Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kneeling_Hip_Flexor/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-3",
+    "name": "Figure-Four Glute Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Figure-Four%20Glute%20Stretch%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "cool-4",
+    "name": "Butterfly Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://tse2.mm.bing.net/th?q=Butterfly%20Stretch%20exercise%20demonstration%20proper%20form&w=600&h=600&c=7&rs=1&p=0",
+    "source_type": "exercise-specific Bing image search result"
+  },
+  {
+    "id": "cool-5",
+    "name": "Child's Pose",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Childs_Pose/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-6",
+    "name": "Cobra Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cobra/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-7",
+    "name": "Chest Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Doorway_Chest_Stretch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-8",
+    "name": "Shoulder Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cross_Body_Shoulder_Stretch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-9",
+    "name": "Tricep Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Stretch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-10",
+    "name": "Calf Stretch",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Stretch_Hands_Against_Wall/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "id": "cool-11",
+    "name": "Cat-Cow",
+    "equipment": "Exercise Mat",
+    "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg",
+    "source_type": "Free Exercise DB public-domain exact mapping"
+  }
+]
