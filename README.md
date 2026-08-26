@@ -377,3 +377,10 @@ Single GitHub upload package containing the requested Home Workout features.
 - Removed the malformed array slot.
 - Added defensive checks to exercise lookup and workout-plan filtering so one malformed exercise entry cannot blank the Today tab again.
 - Passed both JavaScript syntax validation and a runtime smoke test that confirms Today renders content.
+
+## v49 Missing Workout Images & Instructions
+- Expanded exercise-specific image coverage using the public-domain Free Exercise DB.
+- Added/strengthened instructions for common dumbbell, barbell, kettlebell, resistance-band, bodyweight, core, cardio and warm-up movements.
+- The existing image fallback system remains active for custom movements that do not have a safe exact source match.
+- Today, Week and Library continue to use the same shared exercise instruction system.
+- Source: Free Exercise DB — https://github.com/yuhonas/free-exercise-db (Unlicense/public domain).
