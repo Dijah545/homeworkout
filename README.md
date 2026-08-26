@@ -370,3 +370,10 @@ Single GitHub upload package containing the requested Home Workout features.
 - Library: full exercise catalogue, shared instructions for Library/Today/Week, warm-up exercises, and retained internet exercise-image mappings from the stable build.
 - History: local-date tracking, workout-days count, weekly streak, crescent-moon rest days, cyan completion ticks, recent workout details.
 - Settings, dark/light mode, offline/PWA support, service worker, and installed app icons retained.
+
+## v48 Today Blank-Screen Fix
+- Fixed the actual runtime cause of the blank Today tab: the exercise array contained a sparse/undefined entry created by an accidental double comma.
+- The warm-up lookup attempted to read `.name` from that undefined entry, which stopped `renderToday()` before any Today content could display.
+- Removed the malformed array slot.
+- Added defensive checks to exercise lookup and workout-plan filtering so one malformed exercise entry cannot blank the Today tab again.
+- Passed both JavaScript syntax validation and a runtime smoke test that confirms Today renders content.

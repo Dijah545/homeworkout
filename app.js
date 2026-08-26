@@ -19,7 +19,7 @@ const exercises=[
 {id:"bandwalk",name:"Loop Band Lateral Walk",area:"Lower Body",equipment:"Resistance Bands",img:null,sets:"3 × 12 steps each way",tips:["Keep band under constant tension.","Take small controlled steps.","Keep knees softly bent."]},
 {id:"deadbug",name:"Dead Bug",area:"Core",equipment:"Exercise Mat",img:null,sets:"3 × 10 each side",tips:["Press lower back gently into the mat.","Move opposite arm and leg slowly.","Exhale as you extend."]},
 {id:"sliderlunge",name:"Slider Reverse Lunge",area:"Lower Body",equipment:"Disc Sliders",img:null,sets:"3 × 10 each side",tips:["Keep most weight in the front foot.","Slide the rear foot backward.","Drive through front heel to return."]},
-{id:"bandpress",name:"Resistance Band Chest Press",area:"Upper Body",equipment:"Resistance Bands",img:null,sets:"3 sets × 12 reps",tips:["Secure anchor behind you.","Press forward at chest height.","Control the return."]},,
+{id:"bandpress",name:"Resistance Band Chest Press",area:"Upper Body",equipment:"Resistance Bands",img:null,sets:"3 sets × 12 reps",tips:["Secure anchor behind you.","Press forward at chest height.","Control the return."]},
 {id:"db-goblet-squat",name:"Dumbbell Goblet Squat",area:"Lower Body",equipment:"Adjustable Dumbbells",img:null,sets:"3 sets \u00d7 10\u201312 reps",tips:["Hold one dumbbell at chest height.","Sit hips down and back with chest tall.","Drive through your feet to stand."],sourceGroup:"Adjustable Dumbbells"},
 {id:"db-front-squat",name:"Dumbbell Front Squat",area:"Lower Body",equipment:"Adjustable Dumbbells",img:null,sets:"3 sets \u00d7 8\u201312 reps",tips:["Hold two dumbbells at shoulder height.","Brace your core and keep elbows slightly forward.","Squat under control, then stand tall."],sourceGroup:"Adjustable Dumbbells"},
 {id:"db-sumo-squat",name:"Dumbbell Sumo Squat",area:"Lower Body",equipment:"Adjustable Dumbbells",img:null,sets:"3 sets \u00d7 10\u201315 reps",tips:["Take a wide stance with toes slightly out.","Hold one dumbbell between your legs.","Track knees over toes as you squat."],sourceGroup:"Adjustable Dumbbells"},
@@ -692,7 +692,7 @@ function treadmillExercise(day=new Date().getDay(),strengthPlan=[]){
 function planForDay(day){
  if(isRest(day)) return [];
  const focus=workoutType(day);
- const filtered=exercises.filter(x=>allowed(x) && x.id!=="bike" && !x.area.includes("Mobility"));
+ const filtered=exercises.filter(x=>x && allowed(x) && x.id!=="bike" && !x.area.includes("Mobility"));
  const matches=x=>focus.includes(x.area.split(" & ")[0])||x.area.includes(focus.split(" & ")[0])||(focus.includes("Full Body")&&x.area.includes("Full Body"));
  const rotate=(arr,n)=>arr.length?[...arr.slice(n%arr.length),...arr.slice(0,n%arr.length)]:arr;
  const seed=Number(state.planSeed||0);
@@ -980,7 +980,7 @@ function bindTodayReordering(plan){
 }
 
 function findExerciseByName(name){
- return exercises.find(ex=>ex.name===name)||null;
+ return exercises.find(ex=>ex && ex.name===name)||null;
 }
 function preWorkoutWarmup(day){
  const focus=workoutType(day).toLowerCase();
