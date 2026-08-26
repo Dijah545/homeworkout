@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v49-library-media";
+const CACHE="home-workout-v50-progressive-training";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=49",
-  "./app.js?v=49",
+  "./styles.css?v=50",
+  "./app.js?v=50",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

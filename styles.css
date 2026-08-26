@@ -774,3 +774,17 @@ body:has(.today-fixed-actions) main{
     font-size:10px;
   }
 }
+
+/* v50 progressive training */
+.load-entry{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0;padding:9px 10px;border-radius:10px;background:var(--surface2)}
+.load-entry label{font-size:10px;font-weight:800}
+.load-entry select,.load-entry input{background:var(--surface3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 8px}
+.load-input-wrap{display:flex;align-items:center;gap:5px}.load-input-wrap input{width:72px}.load-input-wrap span{font-size:9px;color:var(--muted)}
+.actual-reps{margin:9px 0}.actual-reps-title{display:flex;justify-content:space-between;font-size:10px}.actual-reps-title small{color:var(--muted)}
+.actual-reps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}
+.actual-reps-grid label{font-size:8px;color:var(--muted)}.actual-reps-grid input{width:100%;box-sizing:border-box;margin-top:3px;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:7px}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.summary-grid div{background:var(--surface2);border-radius:10px;padding:9px;text-align:center}.summary-grid b{display:block;font-size:14px}.summary-grid span{font-size:8px;color:var(--muted)}
+.progression-suggestions{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--border));border-radius:12px;padding:10px;margin:10px 0}.progression-suggestions h3{margin:0 0 7px;font-size:11px}.progression-item{background:var(--surface2);border-radius:9px;padding:8px;margin-top:6px}.progression-item strong{font-size:10px}.progression-item p{font-size:9px;color:var(--muted);line-height:1.45;margin:4px 0 0}
+.rating-block{margin:12px 0}.rating-block h3{font-size:11px}.rating-buttons{display:flex;flex-wrap:wrap;gap:6px}.rating-buttons button{border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:9px;padding:8px 10px;font-size:9px}.rating-buttons button.selected{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface2))}
+.record-list{display:grid;gap:6px}.record-list div{display:flex;justify-content:space-between;gap:10px;padding:8px 9px;border-radius:9px;background:var(--surface2);font-size:9px}.record-list span{color:var(--muted)}.record-list b{color:var(--text)}
+.import-label{display:block;cursor:pointer}

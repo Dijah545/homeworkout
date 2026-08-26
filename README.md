@@ -384,3 +384,15 @@ Single GitHub upload package containing the requested Home Workout features.
 - The existing image fallback system remains active for custom movements that do not have a safe exact source match.
 - Today, Week and Library continue to use the same shared exercise instruction system.
 - Source: Free Exercise DB — https://github.com/yuhonas/free-exercise-db (Unlicense/public domain).
+
+## v50 Progressive Training & Data Safety
+- Weight/resistance tracking is available during strength exercises.
+- Actual reps can be recorded per set for rep-based strength movements.
+- Progression is intentionally gradual: an increase suggestion appears only after reaching the top of the rep range for all sets on 2 qualifying appearances of that exercise.
+- A single good workout never changes the programmed load automatically.
+- After a progression suggestion, the user remains in control and can keep the current load or use the smallest available increment.
+- Repeated under-performance must occur across 3 completed sessions before the app suggests reviewing/reducing load.
+- Completed workouts now show a summary with minutes, exercises, sets, treadmill time and rest.
+- Workout and treadmill difficulty feedback can be recorded.
+- History includes tracked-load records.
+- Settings now provide Full Backup export/import, History CSV export, History JSON export, and visible build version.
