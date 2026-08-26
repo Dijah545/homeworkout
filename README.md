@@ -396,3 +396,12 @@ Single GitHub upload package containing the requested Home Workout features.
 - Workout and treadmill difficulty feedback can be recorded.
 - History includes tracked-load records.
 - Settings now provide Full Backup export/import, History CSV export, History JSON export, and visible build version.
+
+## v51 Next Suggested Features
+- Added **Swap Exercise** from Today. Replacements prioritize the same workout area and the same equipment, then fall back to other selected equipment targeting the same area.
+- Added **Auto Arrange** to Today. It groups the generated workout by equipment configuration to reduce repeated dumbbell/barbell/kettlebell setup changes while keeping the treadmill finisher last.
+- Manual Up/Down reordering remains available after auto-arranging.
+- Added a **monthly History calendar** showing completed workout days, rest days and past scheduled days that were not marked complete.
+- Added **Past Workout** entry in History so a previous workout day can be marked completed if it was forgotten at the time.
+- A previous-day completion creates a proper History record and marks the planned sets for that date complete.
+- The past-workout picker covers the previous 21 days and excludes rest days.
