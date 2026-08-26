@@ -405,3 +405,12 @@ Single GitHub upload package containing the requested Home Workout features.
 - Added **Past Workout** entry in History so a previous workout day can be marked completed if it was forgotten at the time.
 - A previous-day completion creates a proper History record and marks the planned sets for that date complete.
 - The past-workout picker covers the previous 21 days and excludes rest days.
+
+## v52 Warm-Up + Cool-Down
+- Retains the existing dynamic pre-workout warm-up.
+- Adds a compact dynamic **Cool-Down · 5 min** section to Today.
+- Cool-down stretches change according to the day's focus: Lower Body, Upper Body, Core/Cardio, or Full Body.
+- Cool-down uses exercises already in the Workout Library, so tapping a stretch opens its shared instructions.
+- The cool-down is collapsed by default to avoid crowding Today.
+- No set tracking, weight progression, rest tracking, or ratings were added to warm-up/cool-down; those remain reserved for the main workout.
+- Intended workout flow: Warm-Up → Main Workout → Treadmill Finisher → Cool-Down.

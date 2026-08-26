@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v51-next-features";
+const CACHE="home-workout-v52-warmup-cooldown";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=51",
-  "./app.js?v=51",
+  "./styles.css?v=52",
+  "./app.js?v=52",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

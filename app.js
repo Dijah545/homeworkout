@@ -1190,11 +1190,45 @@ function openPastCompletionPicker(){
  });
 }
 
+
+function postWorkoutCooldown(day){
+ const focus=workoutType(day);
+ const names=focus.includes("Lower")?[
+   "Hip Flexor Stretch","Hamstring Stretch","Quad Stretch","Figure-Four Glute Stretch","Calf Stretch"
+ ]:focus.includes("Upper")?[
+   "Chest Stretch","Shoulder Stretch","Tricep Stretch","Child's Pose","Cat-Cow"
+ ]:focus.includes("Core")?[
+   "Child's Pose","Cobra Stretch","Hip Flexor Stretch","Figure-Four Glute Stretch","Cat-Cow"
+ ]:[
+   "Hamstring Stretch","Hip Flexor Stretch","Child's Pose","Shoulder Stretch","Calf Stretch"
+ ];
+ const picked=names.map(name=>exercises.find(x=>x && x.name===name)).filter(Boolean).slice(0,5);
+ return {minutes:5,items:picked};
+}
+function recoverySectionMarkup(title,subtitle,items,kind){
+ return `<details class="recovery-section ${kind}">
+   <summary><div><strong>${title}</strong><small>${subtitle}</small></div><span>⌄</span></summary>
+   <div class="recovery-body">
+     ${items.map(ex=>`<button type="button" class="recovery-row" data-recovery-ex="${ex.id}">
+       <div><b>${ex.name}</b><small>${ex.sets||"30–45 sec"}</small></div><span>Instructions ›</span>
+     </button>`).join("")}
+   </div>
+ </details>`;
+}
+function bindRecoveryInstructions(){
+ document.querySelectorAll("[data-recovery-ex]").forEach(btn=>btn.onclick=(e)=>{
+   e.preventDefault();e.stopPropagation();
+   const ex=getExercise(btn.dataset.recoveryEx);
+   if(ex) openExercise(ex);
+ });
+}
+
 function renderToday(){
  const day=new Date().getDay();
  const basePlan=planForDay(day);
  const plan=orderedTodayPlan(basePlan,isoDate());
  const warmup=preWorkoutWarmup(day);
+ const cooldown=postWorkoutCooldown(day);
  const sessionPlan=[...warmup,...plan];
  const focus=workoutType(day);
  const finisher=plan.find(x=>x.isFinisher);
@@ -1216,7 +1250,8 @@ function renderToday(){
  </section>
 
  ${isRest(day)?"":`
-   <section class="card heatmap-card">${femaleHeatmap(plan)}</section>
+   <section class="card heatmap-card">${recoverySectionMarkup("Cool-Down","5 min · Recovery stretches",cooldown.items,"cooldown")}
+   ${femaleHeatmap(plan)}</section>
    <section class="card">${durationControl()}
      <div class="duration-note">Changing the time automatically adds or removes strength exercises. Today's treadmill finish remains last.</div>
    </section>
@@ -1290,6 +1325,7 @@ function renderToday(){
    };
    if(completeBtn) completeBtn.onclick=()=>saveCompletedWorkout(sessionPlan);
  }
+ bindRecoveryInstructions();
 }
 
 

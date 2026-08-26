@@ -812,3 +812,15 @@ body:has(.today-fixed-actions) main{
 .calendar-legend span{display:flex;align-items:center;gap:4px;font-size:8px;color:var(--muted)}
 .calendar-legend i{width:8px;height:8px;border-radius:50%;background:var(--surface3)}
 .calendar-legend i.done{background:var(--accent)}.calendar-legend i.rest{background:#8795a3}.calendar-legend i.missed{border:1px dashed var(--muted);background:transparent}
+
+/* v52 compact warm-up / cool-down */
+.recovery-section{margin:10px 0;border:1px solid var(--border);border-radius:13px;background:var(--surface);overflow:hidden}
+.recovery-section summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;cursor:pointer}
+.recovery-section summary::-webkit-details-marker{display:none}
+.recovery-section summary div{display:grid;gap:2px}.recovery-section summary strong{font-size:11px}.recovery-section summary small{font-size:9px;color:var(--muted)}
+.recovery-section summary>span{font-size:13px;color:var(--accent);transition:transform .2s}
+.recovery-section[open] summary>span{transform:rotate(180deg)}
+.recovery-body{display:grid;gap:5px;padding:0 8px 8px}
+.recovery-row{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;border:0;background:var(--surface2);color:var(--text);border-radius:9px;padding:8px 9px;text-align:left}
+.recovery-row div{display:grid;gap:2px}.recovery-row b{font-size:9px}.recovery-row small,.recovery-row>span{font-size:8px;color:var(--muted)}
+.recovery-section.cooldown{border-color:color-mix(in srgb,var(--accent) 25%,var(--border))}
