@@ -418,3 +418,6 @@ Single GitHub upload package containing the requested Home Workout features.
 ## v53 Cool-Down Flow Fix
 Cool-Down is now positioned at the end of the workout flow:
 Warm-Up → Main Workout → Treadmill Finisher → Cool-Down.
+
+## v54 Cool-Down Position Correction
+The prior version still rendered Cool-Down inside the upper heat-map card. v54 removes that placement and renders Cool-Down only once, after the complete Today's Workout card and treadmill finisher.

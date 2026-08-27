@@ -1251,7 +1251,6 @@ function renderToday(){
 
  ${isRest(day)?"":`
    <section class="card heatmap-card">
-   ${recoverySectionMarkup("Cool-Down","5 min · Recovery stretches",cooldown.items,"cooldown")}
    ${femaleHeatmap(plan)}</section>
    <section class="card">${durationControl()}
      <div class="duration-note">Changing the time automatically adds or removes strength exercises. Today's treadmill finish remains last.</div>
@@ -1297,7 +1296,8 @@ function renderToday(){
         </div>`
      }`
   }
- </section>`;
+ </section>
+ ${isRest(day)?"":recoverySectionMarkup("Cool-Down","5 min · Recovery stretches",cooldown.items,"cooldown")}`;
 
  bindDurationControls(renderToday);
  bindExerciseRows();
