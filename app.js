@@ -1217,9 +1217,9 @@ function recoverySectionMarkup(title,subtitle,items,kind){
 }
 function bindRecoveryInstructions(){
  document.querySelectorAll("[data-recovery-ex]").forEach(btn=>btn.onclick=(e)=>{
-   e.preventDefault();e.stopPropagation();
-   const ex=getExercise(btn.dataset.recoveryEx);
-   if(ex) openExercise(ex);
+   e.preventDefault();
+   e.stopPropagation();
+   preview(btn.dataset.recoveryEx);
  });
 }
 
@@ -2289,4 +2289,12 @@ function completeWorkout(plan,totalRest,restSessions){
 }
 
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+document.addEventListener("click",(e)=>{
+ const recovery=e.target.closest("[data-recovery-ex]");
+ if(recovery){
+   e.preventDefault();
+   e.stopPropagation();
+   preview(recovery.dataset.recoveryEx);
+ }
+});
 route("today");

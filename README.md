@@ -421,3 +421,9 @@ Warm-Up → Main Workout → Treadmill Finisher → Cool-Down.
 
 ## v54 Cool-Down Position Correction
 The prior version still rendered Cool-Down inside the upper heat-map card. v54 removes that placement and renders Cool-Down only once, after the complete Today's Workout card and treadmill finisher.
+
+## v55 Cool-Down Instruction Fix
+- Fixed Cool-Down instruction buttons.
+- The recovery section was calling a non-existent `openExercise()` function.
+- Cool-Down now uses the same shared `preview()` instruction modal as Today, Week and the Workout Library.
+- Exercise images, instructions and form reminders therefore load from the same source everywhere.
