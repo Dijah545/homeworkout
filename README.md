@@ -414,3 +414,7 @@ Single GitHub upload package containing the requested Home Workout features.
 - The cool-down is collapsed by default to avoid crowding Today.
 - No set tracking, weight progression, rest tracking, or ratings were added to warm-up/cool-down; those remain reserved for the main workout.
 - Intended workout flow: Warm-Up → Main Workout → Treadmill Finisher → Cool-Down.
+
+## v53 Cool-Down Flow Fix
+Cool-Down is now positioned at the end of the workout flow:
+Warm-Up → Main Workout → Treadmill Finisher → Cool-Down.
