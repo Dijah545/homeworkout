@@ -1983,7 +1983,7 @@ function repsEntryMarkup(ex,date=isoDate()){
 }
 function bindPerformanceInputs(){
  document.querySelectorAll("[data-load-ex]").forEach(input=>{
-   input.onchange=()=>{
+   const saveLoad=()=>{
      const ex=getExercise(input.dataset.loadEx); if(!ex) return;
      state.exerciseProfiles=state.exerciseProfiles||{};
      const unit=input.dataset.loadUnit||"lb";
@@ -1993,15 +1993,19 @@ function bindPerformanceInputs(){
      state.exercisePerformance[key]={...(state.exercisePerformance[key]||{}),load:value,unit};
      save();
    };
+   input.oninput=saveLoad;
+   input.onchange=saveLoad;
  });
  document.querySelectorAll("[data-reps-ex]").forEach(input=>{
-   input.onchange=()=>{
+   const saveReps=()=>{
      const ex=getExercise(input.dataset.repsEx); if(!ex) return;
      const key=performanceKey(ex), current=state.exercisePerformance[key]||{}, reps=[...(current.reps||[])];
      reps[Number(input.dataset.repsSet)]=input.value===""?null:Number(input.value);
      state.exercisePerformance[key]={...current,reps};
      save();
    };
+   input.oninput=saveReps;
+   input.onchange=saveReps;
  });
 }
 function evaluateProgressionForWorkout(plan,date=isoDate()){
@@ -2149,6 +2153,30 @@ function startWorkout(plan,resumeState=null){
    saveActiveWorkoutSession(session());
  }
 
+ function updateTimerDisplay(){
+   const ring=modal.querySelector(".timer-ring");
+   const center=modal.querySelector(".timer-center");
+   const restSummary=modal.querySelector(".rest-summary");
+   if(ring){
+     const pct=phase==="rest"
+       ?Math.max(0,100-(restRemaining/state.restSeconds*100))
+       :Math.min(100,(elapsed/60)*100);
+     ring.style.setProperty("--p",pct);
+   }
+   if(center){
+     const spans=center.querySelectorAll("span");
+     if(spans[0]) spans[0].textContent=phase==="rest"?"REST":"MOVE";
+     const timer=center.querySelector("b");
+     if(timer) timer.textContent=phase==="rest"?format(restRemaining):format(elapsed);
+   }
+   if(restSummary){
+     const total=restSummary.querySelector("strong");
+     if(total) total.textContent=formatShort(totalRest + (restStart!==null?Math.round((Date.now()-restStart)/1000):0));
+     const spans=restSummary.querySelectorAll("span");
+     if(spans[1]) spans[1].textContent=`${restSessions} period${restSessions===1?"":"s"}`;
+   }
+ }
+
  function draw(){
    const ex=plan[idx];
    if(!ex){clearInterval(tick);clearActiveWorkout();closeModal();return;}
@@ -2264,7 +2292,8 @@ function startWorkout(plan,resumeState=null){
    }
    // Persist often enough that a browser/app interruption loses at most ~1 second.
    saveActiveWorkoutSession(session());
-   draw();
+   // Do not rebuild the modal every second: doing so destroys focus in reps/weight inputs.
+   updateTimerDisplay();
  },1000);
 
  modal.classList.remove("hidden");

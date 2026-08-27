@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v55-cooldown-instructions";
+const CACHE="home-workout-v56-input-focus";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=55",
-  "./app.js?v=55",
+  "./styles.css?v=56",
+  "./app.js?v=56",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

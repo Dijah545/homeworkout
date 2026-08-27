@@ -427,3 +427,9 @@ The prior version still rendered Cool-Down inside the upper heat-map card. v54 r
 - The recovery section was calling a non-existent `openExercise()` function.
 - Cool-Down now uses the same shared `preview()` instruction modal as Today, Week and the Workout Library.
 - Exercise images, instructions and form reminders therefore load from the same source everywhere.
+
+## v56 Reps / Weight Input Focus Fix
+- Fixed the reps and weight/resistance fields jumping out while typing.
+- The workout modal previously rebuilt itself every second to refresh the timer, which destroyed input focus.
+- The timer now updates only its timer/rest text and progress ring without rebuilding the exercise form.
+- Weight and reps are saved while typing (`input`) as well as on change, reducing the risk of losing an entry.
