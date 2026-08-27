@@ -841,3 +841,9 @@ body:has(.today-fixed-actions) main{
 .body-history-list{display:grid;gap:7px}.body-history-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px;border-radius:10px;background:var(--surface2)}
 .body-history-row strong{display:block;font-size:10px}.body-history-row small{display:block;color:var(--muted);font-size:8px;line-height:1.5;margin-top:3px}.body-history-row button{border:1px solid var(--border);background:transparent;color:var(--danger);border-radius:8px;padding:6px 8px;font-size:8px}
 @media(max-width:380px){.bottom-nav .nav-item small{font-size:7px}.body-form-grid,.body-summary-grid{grid-template-columns:1fr 1fr}}
+
+/* v59 editable body measurements */
+.body-history-actions{display:flex;gap:5px;flex-shrink:0}
+.body-history-actions button{border:1px solid var(--border);background:transparent;border-radius:8px;padding:6px 8px;font-size:8px}
+.body-history-actions button.edit{color:var(--accent)}
+.body-history-actions button:not(.edit){color:var(--danger)}

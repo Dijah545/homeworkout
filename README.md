@@ -448,3 +448,10 @@ The prior version still rendered Cool-Down inside the upper heat-map card. v54 r
 - Fixed the Body tab not rendering.
 - The Body button existed in the navigation, but the central route map did not include `body: renderBodyTracker`.
 - Selecting Body now properly replaces the Today content with the Body Tracker screen.
+
+## v59 Editable Body Measurements
+- Added **Edit** beside every Body Tracker history entry.
+- Edit loads the selected date and all saved values back into the form.
+- The button changes to **Update Entry** while editing.
+- You can change only the values that need correcting and save them back to that date.
+- Existing Delete functionality remains available.

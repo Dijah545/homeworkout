@@ -1831,6 +1831,30 @@ function saveBodyMetricsEntry(){
  showToast("Body measurements saved");
  renderBodyTracker();
 }
+
+function editBodyMetricsEntry(date){
+ const entry=(state.bodyMetrics||[]).find(r=>r.date===date);
+ if(!entry){showToast("Measurement entry could not be found");return;}
+ const set=(id,value)=>{
+   const input=document.getElementById(id);
+   if(input) input.value=value==null?"":value;
+ };
+ set("bodyMetricDate",entry.date);
+ set("metricWeight",entry.weight);
+ set("metricWaist",entry.waist);
+ set("metricHips",entry.hips);
+ set("metricChest",entry.chest);
+ set("metricThigh",entry.thigh);
+ set("metricArm",entry.arm);
+
+ const saveBtn=document.getElementById("saveBodyMetric");
+ if(saveBtn) saveBtn.textContent="Update Entry";
+
+ const form=document.querySelector(".body-form-grid");
+ if(form) form.closest(".card")?.scrollIntoView({behavior:"smooth",block:"start"});
+ showToast(`Editing ${date}`);
+}
+
 function deleteBodyMetricsEntry(date){
  if(!confirm(`Delete measurements for ${date}?`)) return;
  state.bodyMetrics=(state.bodyMetrics||[]).filter(r=>r.date!==date);
@@ -1892,12 +1916,16 @@ function renderBodyTracker(){
            ${r.arm!=null?` · Arm ${r.arm} ${mUnit}`:""}
          </small>
        </div>
-       <button type="button" data-delete-metric="${r.date}">Delete</button>
+       <div class="body-history-actions">
+         <button type="button" class="edit" data-edit-metric="${r.date}">Edit</button>
+         <button type="button" data-delete-metric="${r.date}">Delete</button>
+       </div>
      </div>`).join("")}
    </div>`:`<div class="empty">Add your first entry to start tracking trends.</div>`}
  </section>`;
 
  document.getElementById("saveBodyMetric").onclick=saveBodyMetricsEntry;
+ document.querySelectorAll("[data-edit-metric]").forEach(btn=>btn.onclick=()=>editBodyMetricsEntry(btn.dataset.editMetric));
  document.querySelectorAll("[data-delete-metric]").forEach(btn=>btn.onclick=()=>deleteBodyMetricsEntry(btn.dataset.deleteMetric));
 }
 
