@@ -317,7 +317,7 @@ const librarySourceImagesByName={"90/90 Hamstring":"https://raw.githubuserconten
 
 const exerciseImages={"pushup":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","dbsquat":null,"kbswing":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg","bandrow":null,"jumprope":null,"glutebridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","climbers":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","stepups":null,"sliders":null,"dbpress":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg","bentrow":null,"rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg","bike":null,"bandwalk":null,"deadbug":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg","sliderlunge":null,"bandpress":null,"db-goblet-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg","db-front-squat":null,"db-sumo-squat":null,"db-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg","db-stiff-leg-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg","db-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-forward-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-walking-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-lateral-lunge":null,"db-bulgarian-split-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Split_Squat/0.jpg","db-step-up":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Step_Ups/0.jpg","db-glute-bridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg","db-hip-thrust":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg","db-calf-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Calf_Raise/0.jpg","db-single-leg-rdl":null,"db-chest-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg","db-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg","db-chest-fly":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Flyes/0.jpg","db-shoulder-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg","db-arnold-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arnold_Dumbbell_Press/0.jpg","db-front-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Dumbbell_Raise/0.jpg","db-lateral-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg","db-bent-over-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Two-Dumbbell_Row/0.jpg","db-single-arm-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg","db-reverse-fly":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Flyes/0.jpg","db-pullover":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent-Arm_Dumbbell_Pullover/0.jpg","db-bicep-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bicep_Curl/0.jpg","db-hammer-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg","db-concentration-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Concentration_Curls/0.jpg","db-tricep-extension":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Triceps_Extension/0.jpg","db-tricep-kickback":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Tricep_Dumbbell_Kickback/0.jpg","db-skull-crusher":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_One-Arm_Triceps_Extension/0.jpg","db-thruster":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg","db-squat-to-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg","db-clean-press":null,"db-deadlift-row":null,"db-renegade-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Renegade_Row/0.jpg","db-farmers-carry":null,"db-reverse-lunge-curl":null,"db-rdl-row":null,"bb-back-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Squat/0.jpg","bb-front-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Barbell_Squat/0.jpg","bb-sumo-squat":null,"bb-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg","bb-conventional-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg","bb-good-morning":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Good_Morning/0.jpg","bb-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Lunge/0.jpg","bb-hip-thrust":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg","bb-glute-bridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg","bb-calf-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Barbell_Calf_Raise/0.jpg","bb-bent-over-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg","bb-overhead-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Military_Press/0.jpg","bb-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Floor_Press/0.jpg","bb-bicep-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg","bb-upright-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Upright_Barbell_Row/0.jpg","bb-close-grip-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Barbell_Bench_Press/0.jpg","bb-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg","bb-clean-press":null,"bb-thruster":null,"bb-squat-to-press":null,"kb-goblet-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg","kb-sumo-squat":null,"kb-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg","kb-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg","kb-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pass_Between_The_Legs/0.jpg","kb-lateral-lunge":null,"kb-single-leg-deadlift":null,"kb-swing":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg","kb-clean":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean/0.jpg","kb-clean-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean_And_Jerk/0.jpg","kb-thruster":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Thruster/0.jpg","kb-high-pull":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pirate_Ships/0.jpg","kb-deadlift-high-pull":null,"kb-squat-press":null,"kb-farmers-carry":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Farmers_Walk/0.jpg","kb-figure-eight":null,"loop-0":null,"loop-1":null,"loop-2":null,"loop-3":null,"loop-4":null,"loop-5":null,"loop-6":null,"loop-7":null,"loop-8":null,"loop-9":null,"loop-10":null,"loop-11":null,"loop-12":null,"loop-13":null,"loop-14":null,"loop-15":null,"loop-16":null,"loop-core-0":null,"loop-core-1":null,"loop-core-2":null,"loop-core-3":null,"tube-u-0":null,"tube-u-1":null,"tube-u-2":null,"tube-u-3":null,"tube-u-4":null,"tube-u-5":null,"tube-u-6":null,"tube-u-7":null,"tube-u-8":null,"tube-u-9":null,"tube-u-10":null,"tube-u-11":null,"tube-u-12":null,"tube-u-13":null,"tube-l-0":null,"tube-l-1":null,"tube-l-2":null,"tube-l-3":null,"tube-l-4":null,"tube-l-5":null,"tube-c-0":null,"tube-c-1":null,"tube-c-2":null,"tube-c-3":null,"slider-c-0":null,"slider-c-1":null,"slider-c-2":null,"slider-c-3":null,"slider-c-4":null,"slider-c-5":null,"slider-c-6":null,"slider-c-7":null,"slider-l-0":null,"slider-l-1":null,"slider-l-2":null,"slider-l-3":null,"slider-l-4":null,"slider-l-5":null,"slider-l-6":null,"slider-f-0":null,"slider-f-1":null,"slider-f-2":null,"rope-0":null,"rope-1":null,"rope-2":null,"rope-3":null,"rope-4":null,"rope-5":null,"rope-6":null,"rope-7":null,"rope-8":null,"rope-9":null,"rope-int-0":null,"rope-int-1":null,"rope-int-2":null,"rope-int-3":null,"rope-int-4":null,"tm-w-0":null,"tm-w-1":null,"tm-w-2":null,"tm-w-3":null,"tm-w-4":null,"tm-w-5":null,"tm-r-0":null,"tm-r-1":null,"tm-r-2":null,"tm-r-3":null,"tm-r-4":null,"stepper-regular":null,"stepper-fast":null,"stepper-slow-resistance":null,"stepper-interval":null,"stepper-deep":null,"stepper-half-squat":null,"stepper-bicep-curl":null,"stepper-hammer-curl":null,"stepper-shoulder-press":null,"stepper-front-raise":null,"stepper-lateral-raise":null,"stepper-upright-row":null,"stepper-tricep-extension":null,"stepper-row":null,"bike-easy":null,"bike-moderate":null,"bike-high-resistance":null,"bike-low-resistance-speed":null,"bike-hill-climb":null,"bike-sprint-intervals":null,"bike-resistance-intervals":null,"bike-recovery":null,"mat-l-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","mat-l-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","mat-l-2":null,"mat-l-3":null,"mat-l-4":null,"mat-l-5":null,"mat-l-6":null,"mat-l-7":null,"mat-l-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","mat-l-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Single_Leg_Glute_Bridge/0.jpg","mat-l-10":null,"mat-l-11":null,"mat-l-12":null,"mat-l-13":null,"mat-l-14":null,"mat-l-15":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg","mat-l-16":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wall_Squat/0.jpg","mat-u-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","mat-u-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","mat-u-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Push-Up/0.jpg","mat-u-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Push-Up/0.jpg","mat-u-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Push-Up/0.jpg","mat-u-5":null,"mat-u-6":null,"mat-u-7":null,"mat-u-8":null,"mat-u-9":null,"mat-cb-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Crunches/0.jpg","mat-cb-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Crunch/0.jpg","mat-cb-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg","mat-cb-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg","mat-cb-4":null,"mat-cb-5":null,"mat-cb-6":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg","mat-cb-7":null,"mat-cb-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg","mat-cb-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg","mat-cb-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Bridge/0.jpg","mat-cb-11":null,"mat-ca-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Flat_Bench_Lying_Leg_Raise/0.jpg","mat-ca-1":null,"mat-ca-2":null,"mat-ca-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Russian_Twist/0.jpg","mat-ca-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/V-Ups/0.jpg","mat-ca-5":null,"mat-ca-6":null,"mat-ca-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","mat-ca-8":null,"mat-ca-9":null,"mat-ca-10":null,"mat-ca-11":null,"hiit-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Jumping_Jack/0.jpg","hiit-1":null,"hiit-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/High_Knees/0.jpg","hiit-3":null,"hiit-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","hiit-5":null,"hiit-6":null,"hiit-7":null,"hiit-8":null,"hiit-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg","hiit-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg","hiit-11":null,"hiit-12":null,"hiit-13":null,"hiit-14":null,"hiit-15":null,"warm-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/0.jpg","warm-1":null,"warm-2":null,"warm-3":null,"warm-4":null,"warm-5":null,"warm-6":null,"warm-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Worlds_Greatest_Stretch/0.jpg","warm-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg","warm-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg","warm-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","warm-11":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","warm-12":null,"cool-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hamstring_And_Calf_Stretch/0.jpg","cool-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Quadriceps/0.jpg","cool-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kneeling_Hip_Flexor/0.jpg","cool-3":null,"cool-4":null,"cool-5":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Childs_Pose/0.jpg","cool-6":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cobra/0.jpg","cool-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Doorway_Chest_Stretch/0.jpg","cool-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cross_Body_Shoulder_Stretch/0.jpg","cool-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Stretch/0.jpg","cool-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Stretch_Hands_Against_Wall/0.jpg","cool-11":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg","warm-90-90-hamstring":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/90_90_Hamstring/0.jpg","warm-standing-hip-circles":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hip_Circles/0.jpg","warm-standing-hip-flexors":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hip_Flexors/0.jpg","warm-shoulder-stretch":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Shoulder_Stretch/0.jpg","warm-knee-across-body":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Knee_Across_The_Body/0.jpg"};
 
-const defaults={swapChoices:{},exercisePerformance:{},exerciseProfiles:{},workoutRatings:{},activeWorkout:null,todayOrder:{},planSeed:0,
+const defaults={bodyMetrics:[],bodyMetricUnit:"lb",measurementUnit:"in",swapChoices:{},exercisePerformance:{},exerciseProfiles:{},workoutRatings:{},activeWorkout:null,todayOrder:{},planSeed:0,
  theme:"dark",workoutDays:4,duration:45,difficulty:"Moderate",restDays:[0,6],
  equipment:["Adjustable Dumbbells","Barbell","Kettlebell","Skipping Rope","Disc Sliders","Treadmill","Mini Stepper","Resistance Loop Bands","Resistance/Toning Tubes","Stationary Bike","Exercise Mat"],
  history:[],selectedDay:new Date().getDay(),restSeconds:45,setProgress:{},restLogs:{}
@@ -1758,6 +1758,149 @@ function weekStreak(){
  return streak;
 }
 
+
+function bodyMetricRows(){
+ return [...(state.bodyMetrics||[])].sort((a,b)=>a.date.localeCompare(b.date));
+}
+function bodyMetricLatest(){
+ const rows=bodyMetricRows();
+ return rows.length?rows[rows.length-1]:null;
+}
+function bodyMetricPrevious(){
+ const rows=bodyMetricRows();
+ return rows.length>1?rows[rows.length-2]:null;
+}
+function metricDelta(current,previous,key){
+ if(!current||!previous||current[key]==null||previous[key]==null) return null;
+ const d=Number(current[key])-Number(previous[key]);
+ return Number.isFinite(d)?d:null;
+}
+function formatMetricDelta(d,unit=""){
+ if(d==null) return "—";
+ const sign=d>0?"+":"";
+ return `${sign}${d.toFixed(1)}${unit?` ${unit}`:""}`;
+}
+function bodyTrendChart(key,label,unit){
+ const rows=bodyMetricRows().filter(r=>r[key]!=null).slice(-12);
+ if(rows.length<2) return `<div class="empty">Add at least two ${label.toLowerCase()} entries to see a trend.</div>`;
+ const values=rows.map(r=>Number(r[key]));
+ const min=Math.min(...values),max=Math.max(...values),span=Math.max(0.1,max-min);
+ const W=300,H=120,P=18;
+ const points=values.map((v,i)=>{
+   const x=P+(i*(W-P*2))/Math.max(1,values.length-1);
+   const y=H-P-((v-min)/span)*(H-P*2);
+   return `${x.toFixed(1)},${y.toFixed(1)}`;
+ }).join(" ");
+ return `<div class="body-chart-card">
+   <div class="body-chart-head"><strong>${label}</strong><small>${values[values.length-1]} ${unit}</small></div>
+   <svg class="body-chart" viewBox="0 0 ${W} ${H}" aria-label="${label} trend" role="img">
+     <polyline points="${points}" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+     ${values.map((v,i)=>{
+       const x=P+(i*(W-P*2))/Math.max(1,values.length-1);
+       const y=H-P-((v-min)/span)*(H-P*2);
+       return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="currentColor"></circle>`;
+     }).join("")}
+   </svg>
+   <div class="body-chart-dates"><span>${rows[0].date}</span><span>${rows[rows.length-1].date}</span></div>
+ </div>`;
+}
+function saveBodyMetricsEntry(){
+ const value=id=>{
+   const raw=document.getElementById(id)?.value;
+   return raw===""||raw==null?null:Number(raw);
+ };
+ const entry={
+   date:document.getElementById("bodyMetricDate")?.value||isoDate(),
+   weight:value("metricWeight"),
+   waist:value("metricWaist"),
+   hips:value("metricHips"),
+   chest:value("metricChest"),
+   thigh:value("metricThigh"),
+   arm:value("metricArm")
+ };
+ if(["weight","waist","hips","chest","thigh","arm"].every(k=>entry[k]==null)){
+   showToast("Enter at least one value");
+   return;
+ }
+ state.bodyMetrics=state.bodyMetrics||[];
+ const idx=state.bodyMetrics.findIndex(r=>r.date===entry.date);
+ if(idx>=0) state.bodyMetrics[idx]={...state.bodyMetrics[idx],...entry};
+ else state.bodyMetrics.push(entry);
+ state.bodyMetrics.sort((a,b)=>a.date.localeCompare(b.date));
+ save();
+ showToast("Body measurements saved");
+ renderBodyTracker();
+}
+function deleteBodyMetricsEntry(date){
+ if(!confirm(`Delete measurements for ${date}?`)) return;
+ state.bodyMetrics=(state.bodyMetrics||[]).filter(r=>r.date!==date);
+ save();
+ renderBodyTracker();
+}
+function renderBodyTracker(){
+ const latest=bodyMetricLatest();
+ const previous=bodyMetricPrevious();
+ const mUnit=state.measurementUnit||"in";
+ const wUnit=state.bodyMetricUnit||"lb";
+ view.innerHTML=`
+ <div class="eyebrow">Progress</div>
+ <div class="body-title-row"><h1>Body Tracker</h1><small>${(state.bodyMetrics||[]).length} entries</small></div>
+
+ ${latest?`<section class="card">
+   <div class="section-title"><h2>Latest</h2><small>${latest.date}</small></div>
+   <div class="body-summary-grid">
+     <div><b>${latest.weight??"—"}</b><span>Weight (${wUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"weight"),wUnit)}</small></div>
+     <div><b>${latest.waist??"—"}</b><span>Waist (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"waist"),mUnit)}</small></div>
+     <div><b>${latest.hips??"—"}</b><span>Hips (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"hips"),mUnit)}</small></div>
+     <div><b>${latest.chest??"—"}</b><span>Chest (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"chest"),mUnit)}</small></div>
+   </div>
+ </section>`:""}
+
+ <section class="card">
+   <div class="section-title"><h2>Add / Update Entry</h2><small>${wUnit} / ${mUnit}</small></div>
+   <div class="body-form-grid">
+     <label>Date<input id="bodyMetricDate" type="date" value="${isoDate()}"></label>
+     <label>Weight (${wUnit})<input id="metricWeight" type="number" step="0.1" inputmode="decimal"></label>
+     <label>Waist (${mUnit})<input id="metricWaist" type="number" step="0.1" inputmode="decimal"></label>
+     <label>Hips (${mUnit})<input id="metricHips" type="number" step="0.1" inputmode="decimal"></label>
+     <label>Chest (${mUnit})<input id="metricChest" type="number" step="0.1" inputmode="decimal"></label>
+     <label>Thigh (${mUnit})<input id="metricThigh" type="number" step="0.1" inputmode="decimal"></label>
+     <label>Upper Arm (${mUnit})<input id="metricArm" type="number" step="0.1" inputmode="decimal"></label>
+   </div>
+   <button type="button" class="primary" id="saveBodyMetric" style="width:100%;margin-top:10px">Save Entry</button>
+ </section>
+
+ <section class="card">
+   <div class="section-title"><h2>Trends</h2><small>Last 12 entries</small></div>
+   ${bodyTrendChart("weight","Weight",wUnit)}
+   ${bodyTrendChart("waist","Waist",mUnit)}
+   ${bodyTrendChart("hips","Hips",mUnit)}
+ </section>
+
+ <section class="card">
+   <div class="section-title"><h2>Measurement History</h2><small>${(state.bodyMetrics||[]).length} entries</small></div>
+   ${(state.bodyMetrics||[]).length?`<div class="body-history-list">
+     ${bodyMetricRows().reverse().map(r=>`<div class="body-history-row">
+       <div>
+         <strong>${r.date}</strong>
+         <small>
+           ${r.weight!=null?`Weight ${r.weight} ${wUnit}`:""}
+           ${r.waist!=null?` · Waist ${r.waist} ${mUnit}`:""}
+           ${r.hips!=null?` · Hips ${r.hips} ${mUnit}`:""}
+           ${r.chest!=null?` · Chest ${r.chest} ${mUnit}`:""}
+           ${r.thigh!=null?` · Thigh ${r.thigh} ${mUnit}`:""}
+           ${r.arm!=null?` · Arm ${r.arm} ${mUnit}`:""}
+         </small>
+       </div>
+       <button type="button" data-delete-metric="${r.date}">Delete</button>
+     </div>`).join("")}
+   </div>`:`<div class="empty">Add your first entry to start tracking trends.</div>`}
+ </section>`;
+
+ document.getElementById("saveBodyMetric").onclick=saveBodyMetricsEntry;
+ document.querySelectorAll("[data-delete-metric]").forEach(btn=>btn.onclick=()=>deleteBodyMetricsEntry(btn.dataset.deleteMetric));
+}
+
 function renderHistory(){
  const weekStart=startOfCalendarWeek(new Date());
  const thisWeek=historyForWeek(weekStart);
@@ -1859,6 +2002,10 @@ function renderSettings(){
  <div class="setting-row"><div><label>Difficulty</label><small>Controls pacing guidance</small></div><select id="difficulty">${["Beginner","Moderate","Advanced"].map(x=>`<option ${x===state.difficulty?"selected":""}>${x}</option>`).join("")}</select></div>
  <div class="setting-row"><div><label>Default rest between sets</label><small>Actual rest time is recorded during workouts</small></div><select id="restSec">${[30,45,60,90].map(n=>`<option value="${n}" ${n===state.restSeconds?"selected":""}>${n} sec</option>`).join("")}</select></div></section>
  <section class="card"><div class="section-title"><h2>Choose Rest Days</h2><small>${state.restDays.length} selected</small></div><div class="rest-days">${DAYS.map((d,i)=>`<button class="rest-day ${isRest(i)?"selected":""}" data-rest="${i}">${d}</button>`).join("")}</div><p style="font-size:11px;color:var(--muted);margin:12px 0 0">The app will keep at least 4 workout days per week.</p></section>
+ <section class="card"><div class="section-title"><h2>Body Tracker Units</h2></div>
+ <div class="setting-row"><div><label>Weight unit</label><small>Used in Body Tracker</small></div><select id="bodyWeightUnit"><option value="lb" ${state.bodyMetricUnit==="lb"?"selected":""}>lb</option><option value="kg" ${state.bodyMetricUnit==="kg"?"selected":""}>kg</option></select></div>
+ <div class="setting-row"><div><label>Measurement unit</label><small>Used for waist, hips, chest, thigh and arm</small></div><select id="bodyMeasurementUnit"><option value="in" ${state.measurementUnit==="in"?"selected":""}>inches</option><option value="cm" ${state.measurementUnit==="cm"?"selected":""}>cm</option></select></div>
+ </section>
  <section class="card"><div class="section-title"><h2>Your Equipment</h2></div><div class="equipment-grid">${equipment.map(e=>`<label class="equip"><input type="checkbox" data-equip="${e}" ${state.equipment.includes(e)?"checked":""}>${e}</label>`).join("")}</div></section>
  <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v50</small></div>
  <button class="secondary" id="backup" style="width:100%">Export Full Backup</button><div style="height:8px"></div>
@@ -1872,6 +2019,10 @@ function renderSettings(){
  document.getElementById("durationSetting").onchange=e=>{state.duration=Math.max(20,Math.min(90,Math.round((Number(e.target.value)||45)/5)*5));save();showToast(`Workout duration: ${state.duration} min`);renderSettings()};
  document.getElementById("difficulty").onchange=e=>{state.difficulty=e.target.value;save()};
  document.getElementById("restSec").onchange=e=>{state.restSeconds=Number(e.target.value);save()};
+ const bodyWeightUnit=document.getElementById("bodyWeightUnit");
+ if(bodyWeightUnit) bodyWeightUnit.onchange=e=>{state.bodyMetricUnit=e.target.value;save()};
+ const bodyMeasurementUnit=document.getElementById("bodyMeasurementUnit");
+ if(bodyMeasurementUnit) bodyMeasurementUnit.onchange=e=>{state.measurementUnit=e.target.value;save()};
  document.querySelectorAll("[data-rest]").forEach(b=>b.onclick=()=>{const day=Number(b.dataset.rest);const chosen=isRest(day);if(chosen){state.restDays=state.restDays.filter(x=>x!==day)}else{if(7-(state.restDays.length+1)<4){showToast("At least 4 workout days are required");return}state.restDays.push(day)}state.workoutDays=Math.max(4,7-state.restDays.length);save();renderSettings()});
  document.querySelectorAll("[data-equip]").forEach(c=>c.onchange=()=>{state.equipment=[...document.querySelectorAll("[data-equip]:checked")].map(x=>x.dataset.equip);save()});
  document.getElementById("backup").onclick=exportFullBackup;

@@ -824,3 +824,20 @@ body:has(.today-fixed-actions) main{
 .recovery-row{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;border:0;background:var(--surface2);color:var(--text);border-radius:9px;padding:8px 9px;text-align:left}
 .recovery-row div{display:grid;gap:2px}.recovery-row b{font-size:9px}.recovery-row small,.recovery-row>span{font-size:8px;color:var(--muted)}
 .recovery-section.cooldown{border-color:color-mix(in srgb,var(--accent) 25%,var(--border))}
+
+/* v57 Body Tracker */
+.bottom-nav{grid-template-columns:repeat(6,1fr)!important}
+.body-title-row{display:flex;justify-content:space-between;align-items:center;gap:10px}.body-title-row h1{margin-right:auto}.body-title-row small{color:var(--muted);font-size:9px}
+.body-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.body-summary-grid>div{background:var(--surface2);border-radius:11px;padding:10px}
+.body-summary-grid b{display:block;font-size:18px}.body-summary-grid span{display:block;color:var(--muted);font-size:9px;margin-top:3px}.body-summary-grid small{display:block;color:var(--accent);font-size:8px;margin-top:5px}
+.body-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.body-form-grid label{display:grid;gap:4px;color:var(--muted);font-size:9px}
+.body-form-grid input{width:100%;box-sizing:border-box;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:9px}
+.body-chart-card{margin:9px 0 14px;padding:10px;border-radius:11px;background:var(--surface2)}
+.body-chart-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.body-chart-head strong{font-size:10px}.body-chart-head small{color:var(--accent);font-size:9px}
+.body-chart{display:block;width:100%;height:auto;color:var(--accent);margin-top:5px}
+.body-chart-dates{display:flex;justify-content:space-between;color:var(--muted);font-size:7px}
+.body-history-list{display:grid;gap:7px}.body-history-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px;border-radius:10px;background:var(--surface2)}
+.body-history-row strong{display:block;font-size:10px}.body-history-row small{display:block;color:var(--muted);font-size:8px;line-height:1.5;margin-top:3px}.body-history-row button{border:1px solid var(--border);background:transparent;color:var(--danger);border-radius:8px;padding:6px 8px;font-size:8px}
+@media(max-width:380px){.bottom-nav .nav-item small{font-size:7px}.body-form-grid,.body-summary-grid{grid-template-columns:1fr 1fr}}

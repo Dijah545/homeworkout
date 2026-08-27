@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v56-input-focus";
+const CACHE="home-workout-v57-body-tracker";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=56",
-  "./app.js?v=56",
+  "./styles.css?v=57",
+  "./app.js?v=57",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

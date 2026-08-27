@@ -433,3 +433,13 @@ The prior version still rendered Cool-Down inside the upper heat-map card. v54 r
 - The workout modal previously rebuilt itself every second to refresh the timer, which destroyed input focus.
 - The timer now updates only its timer/rest text and progress ring without rebuilding the exercise form.
 - Weight and reps are saved while typing (`input`) as well as on change, reducing the risk of losing an entry.
+
+## v57 Body Weight & Measurement Tracker
+- Added a dedicated **Body** tab.
+- Track weight, waist, hips, chest, thigh and upper-arm measurements by date.
+- Saving the same date updates that entry rather than creating a duplicate.
+- Latest values show change from the previous measurement entry.
+- Trend charts show the last 12 entries for Weight, Waist and Hips.
+- Full measurement history is retained and entries can be deleted.
+- Settings allows lb/kg for body weight and inches/cm for measurements.
+- Body-tracker data is included automatically in the existing full backup because it is stored in the main app state.
