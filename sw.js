@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v57-body-tracker";
+const CACHE="home-workout-v58-body-tab-fix";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=57",
-  "./app.js?v=57",
+  "./styles.css?v=58",
+  "./app.js?v=58",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

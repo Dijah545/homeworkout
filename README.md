@@ -443,3 +443,8 @@ The prior version still rendered Cool-Down inside the upper heat-map card. v54 r
 - Full measurement history is retained and entries can be deleted.
 - Settings allows lb/kg for body weight and inches/cm for measurements.
 - Body-tracker data is included automatically in the existing full backup because it is stored in the main app state.
+
+## v58 Body Tab Route Fix
+- Fixed the Body tab not rendering.
+- The Body button existed in the navigation, but the central route map did not include `body: renderBodyTracker`.
+- Selecting Body now properly replaces the Today content with the Body Tracker screen.

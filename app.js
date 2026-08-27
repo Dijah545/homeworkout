@@ -723,7 +723,7 @@ themeApply();
 
 function route(name){
  document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.route===name));
- ({today:renderToday,week:renderWeek,library:renderLibrary,history:renderHistory,settings:renderSettings}[name]||renderToday)();
+ ({today:renderToday,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings}[name]||renderToday)();
 }
 document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>{
  if(b.dataset.route==="week") state.selectedDay=new Date().getDay();
