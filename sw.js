@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v64-library-image-batch";
+const CACHE="home-workout-v65-repdb";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=64",
-  "./app.js?v=64",
+  "./styles.css?v=65",
+  "./app.js?v=65",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
@@ -44,7 +44,7 @@ async function assetResponse(request){
   if(cached) return cached;
   try{
     const fresh=await fetch(request);
-    if(fresh && fresh.ok){
+    if(fresh && (fresh.ok || fresh.type==="opaque")){
       const cache=await caches.open(CACHE);
       cache.put(request,fresh.clone());
     }

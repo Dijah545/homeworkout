@@ -514,29 +514,64 @@ function femaleHeatmap(plan){
 
 
 
+const REPDB_ALIASES={
+ "Dumbbell Goblet Squat":"goblet-squat",
+ "Kettlebell Goblet Squat":"goblet-squat",
+ "Barbell Back Squat":"squat",
+ "Barbell Bench Press":"bench-press",
+ "Dumbbell Romanian Deadlift":"dumbbell-romanian-deadlift",
+ "Barbell Romanian Deadlift":"romanian-deadlift",
+ "Romanian Deadlift":"romanian-deadlift",
+ "Dumbbell Front Raise":"dumbbell-front-raise",
+ "Dumbbell Front Squat":"dumbbell-front-squat",
+ "Dumbbell Tricep Kickback":"tricep-kickback",
+ "Mountain Climbers":"mountain-climbers",
+ "Mountain Climber":"mountain-climbers",
+ "Dead Bug":"dead-bug",
+ "Superman":"superman",
+ "Bicycle Crunch":"bicycle-crunch",
+ "Push-Up":"push-up",
+ "Push-Ups":"push-up",
+ "Reverse Lunge":"reverse-lunge",
+ "Seated Dumbbell Shoulder Press":"seated-db-press"
+};
+
 function repdbSlug(name){
- return name.toLowerCase()
+ return String(name||"").toLowerCase()
    .replace(/['’]/g,"")
    .replace(/&/g," and ")
    .replace(/\//g," ")
-   .replace(/\bconfiguration\b/g,"")
-   .replace(/\bbodyweight\b/g,"")
    .replace(/\s+/g," ")
    .trim()
    .replace(/[^a-z0-9]+/g,"-")
    .replace(/^-+|-+$/g,"");
 }
+
+function repdbCandidates(ex){
+ const slug=REPDB_ALIASES[ex.name] || repdbSlug(ex.name);
+ if(!slug) return [];
+ return [
+   `https://exercise-dataset.com/images/flat/${slug}-start.webp`,
+   `https://exercise-dataset.com/images/flat/${slug}-main.webp`,
+   `https://exercise-dataset.com/images/flat/${slug}-peak.webp`
+ ];
+}
+
 function imageCandidates(ex){
  const list=[];
+
+ // Exact image selected for this exercise always wins.
+ if(ex.img) list.push(ex.img);
+
+ // RepDB is preferred for exercises without a selected local image.
+ if(!ex.img) list.push(...repdbCandidates(ex));
+
+ // Existing sources remain available as fallbacks.
  const sourced=librarySourceData[String(ex.id)];
  if(sourced?.image) list.push(sourced.image);
  if(librarySourceImagesByName[ex.name]) list.push(librarySourceImagesByName[ex.name]);
  if(exerciseImages[ex.id]) list.push(exerciseImages[ex.id]);
- const slug=repdbSlug(ex.name);
- // RepDB's free dataset uses these predictable repo-relative image patterns.
- list.push(`https://exercise-dataset.com/images/flat/${slug}-start.webp`);
- list.push(`https://exercise-dataset.com/images/flat/${slug}-main.webp`);
- list.push(`https://exercise-dataset.com/images/flat/${slug}-peak.webp`);
+
  return [...new Set(list.filter(Boolean))];
 }
 function exerciseImageMarkup(ex,cls=""){
@@ -2035,7 +2070,10 @@ function renderSettings(){
  <div class="setting-row"><div><label>Measurement unit</label><small>Used for waist, hips, chest, thigh and arm</small></div><select id="bodyMeasurementUnit"><option value="in" ${state.measurementUnit==="in"?"selected":""}>inches</option><option value="cm" ${state.measurementUnit==="cm"?"selected":""}>cm</option></select></div>
  </section>
  <section class="card"><div class="section-title"><h2>Your Equipment</h2></div><div class="equipment-grid">${equipment.map(e=>`<label class="equip"><input type="checkbox" data-equip="${e}" ${state.equipment.includes(e)?"checked":""}>${e}</label>`).join("")}</div></section>
- <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v50</small></div>
+ <section class="card"><div class="section-title"><h2>Exercise Media Credits</h2></div>
+ <p style="font-size:12px;color:var(--muted);line-height:1.5;margin:0">Some exercise illustrations are loaded from RepDB's free exercise dataset. <a href="https://repdb.co" target="_blank" rel="noopener noreferrer">Exercise data by RepDB (repdb.co)</a>.</p>
+ </section>
+ <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v65</small></div>
  <button class="secondary" id="backup" style="width:100%">Export Full Backup</button><div style="height:8px"></div>
  <label class="secondary import-label" style="width:100%;box-sizing:border-box;text-align:center">Import Backup<input id="importBackup" type="file" accept="application/json" hidden></label><div style="height:8px"></div>
  <button class="secondary" id="exportCsv" style="width:100%">Export History CSV</button><div style="height:8px"></div>

@@ -476,3 +476,12 @@ Added the supplied Dumbbell Squat demonstration image to the shared exercise rec
 
 ## v64 Library Image Batch
 Added 9 exact user-supplied workout images queued after v63; prior images and functionality retained.
+
+
+## v65 – RepDB Image Fallback
+- Existing user-selected exercise images are preserved and remain first priority.
+- Exercises without a selected local image now try lightweight RepDB WebP illustrations first.
+- Existing external image sources remain as fallbacks.
+- Visible RepDB attribution added in Settings.
+- Successfully loaded cross-origin images can be cached by the service worker for later reuse.
+- Exercise data by RepDB: https://repdb.co
