@@ -499,3 +499,9 @@ v66 now:
 - keeps the existing Free Exercise DB / legacy image sources as fallbacks;
 - does not add the RepDB image library to the ZIP, keeping the repository small;
 - keeps the app usable when RepDB is unavailable or the device is offline.
+
+
+## v67 – Body Tracker Latest Measurements
+- Latest now displays Weight, Waist, Hips, Chest, Thigh, and Upper Arm.
+- Delta vs previous entry is shown for all six measurements.
+- Existing Body Tracker history/edit/delete/trends and all other app functionality are retained.

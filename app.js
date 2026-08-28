@@ -1940,6 +1940,8 @@ function renderBodyTracker(){
      <div><b>${latest.waist??"—"}</b><span>Waist (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"waist"),mUnit)}</small></div>
      <div><b>${latest.hips??"—"}</b><span>Hips (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"hips"),mUnit)}</small></div>
      <div><b>${latest.chest??"—"}</b><span>Chest (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"chest"),mUnit)}</small></div>
+     <div><b>${latest.thigh??"—"}</b><span>Thigh (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"thigh"),mUnit)}</small></div>
+     <div><b>${latest.arm??"—"}</b><span>Upper Arm (${mUnit})</span><small>${formatMetricDelta(metricDelta(latest,previous,"arm"),mUnit)}</small></div>
    </div>
  </section>`:""}
 
@@ -2101,7 +2103,7 @@ function renderSettings(){
  <section class="card"><div class="section-title"><h2>Exercise Media Credits</h2></div>
  <p style="font-size:12px;color:var(--muted);line-height:1.5;margin:0">Some exercise illustrations are loaded from RepDB's free exercise dataset. <a href="https://repdb.co" target="_blank" rel="noopener noreferrer">Exercise data by RepDB (repdb.co)</a>.</p>
  </section>
- <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v66</small></div>
+ <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v67</small></div>
  <button class="secondary" id="backup" style="width:100%">Export Full Backup</button><div style="height:8px"></div>
  <label class="secondary import-label" style="width:100%;box-sizing:border-box;text-align:center">Import Backup<input id="importBackup" type="file" accept="application/json" hidden></label><div style="height:8px"></div>
  <button class="secondary" id="exportCsv" style="width:100%">Export History CSV</button><div style="height:8px"></div>
