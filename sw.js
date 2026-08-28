@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v65-repdb";
+const CACHE="home-workout-v66-repdb-json-fix";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=65",
-  "./app.js?v=65",
+  "./styles.css?v=66",
+  "./app.js?v=66",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

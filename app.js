@@ -514,59 +514,87 @@ function femaleHeatmap(plan){
 
 
 
-const REPDB_ALIASES={
- "Dumbbell Goblet Squat":"goblet-squat",
- "Kettlebell Goblet Squat":"goblet-squat",
- "Barbell Back Squat":"squat",
- "Barbell Bench Press":"bench-press",
- "Dumbbell Romanian Deadlift":"dumbbell-romanian-deadlift",
- "Barbell Romanian Deadlift":"romanian-deadlift",
- "Romanian Deadlift":"romanian-deadlift",
- "Dumbbell Front Raise":"dumbbell-front-raise",
- "Dumbbell Front Squat":"dumbbell-front-squat",
- "Dumbbell Tricep Kickback":"tricep-kickback",
- "Mountain Climbers":"mountain-climbers",
- "Mountain Climber":"mountain-climbers",
- "Dead Bug":"dead-bug",
- "Superman":"superman",
- "Bicycle Crunch":"bicycle-crunch",
- "Push-Up":"push-up",
- "Push-Ups":"push-up",
- "Reverse Lunge":"reverse-lunge",
- "Seated Dumbbell Shoulder Press":"seated-db-press"
-};
+const REPDB_DATA_URL="https://exercise-dataset.com/exercises.json";
+const REPDB_MEDIA_BASE="https://exercise-dataset.com/";
+const repdbImageIndex=new Map();
+let repdbIndexLoaded=false;
 
-function repdbSlug(name){
- return String(name||"").toLowerCase()
+function repdbKey(value){
+ return String(value||"").toLowerCase()
    .replace(/['’]/g,"")
    .replace(/&/g," and ")
-   .replace(/\//g," ")
+   .replace(/\bpushups\b/g,"push ups")
+   .replace(/\bpullups\b/g,"pull ups")
    .replace(/\s+/g," ")
-   .trim()
-   .replace(/[^a-z0-9]+/g,"-")
-   .replace(/^-+|-+$/g,"");
+   .replace(/[^a-z0-9 ]+/g," ")
+   .replace(/\s+/g," ")
+   .trim();
+}
+
+function repdbImageUrls(record){
+ const flat=record?.images?.flat||{};
+ const paths=[flat.peak,flat.main,flat.start].filter(Boolean);
+ return [...new Set(paths.map(path=>new URL(path,REPDB_MEDIA_BASE).href))];
+}
+
+function indexRepdbRecord(record){
+ const urls=repdbImageUrls(record);
+ if(!urls.length) return;
+ const keys=[
+   repdbKey(record.name_en),
+   repdbKey(record.id),
+   repdbKey(String(record.name_en||"").replace(/\bmachine\b/gi,"")),
+ ].filter(Boolean);
+ keys.forEach(key=>repdbImageIndex.set(key,urls));
 }
 
 function repdbCandidates(ex){
- const slug=REPDB_ALIASES[ex.name] || repdbSlug(ex.name);
- if(!slug) return [];
- return [
-   `https://exercise-dataset.com/images/flat/${slug}-start.webp`,
-   `https://exercise-dataset.com/images/flat/${slug}-main.webp`,
-   `https://exercise-dataset.com/images/flat/${slug}-peak.webp`
- ];
+ if(!repdbIndexLoaded) return [];
+ const keys=[
+   repdbKey(ex.name),
+   repdbKey(ex.id),
+   repdbKey(String(ex.name||"").replace(/\bconfiguration\b/gi,"")),
+ ].filter(Boolean);
+ for(const key of keys){
+   const found=repdbImageIndex.get(key);
+   if(found?.length) return found;
+ }
+ return [];
+}
+
+async function loadRepdbIndex(){
+ try{
+   const controller=new AbortController();
+   const timer=setTimeout(()=>controller.abort(),5000);
+   const response=await fetch(REPDB_DATA_URL,{signal:controller.signal,cache:"force-cache"});
+   clearTimeout(timer);
+   if(!response.ok) throw new Error(`RepDB ${response.status}`);
+   const data=await response.json();
+   (data.exercises||[]).forEach(indexRepdbRecord);
+   repdbIndexLoaded=true;
+
+   // Refresh only views whose exercise cards contain imagery.
+   const active=document.querySelector(".nav-item.active")?.dataset.route;
+   if(active==="library") renderLibrary();
+   else if(active==="week") renderWeek();
+   else if(active==="today" && !document.querySelector("#activeWorkoutModal:not(.hidden)")) renderToday();
+ }catch(err){
+   // Existing local/external fallbacks keep the app functional offline.
+   console.info("RepDB index unavailable; using existing image fallbacks.");
+ }
 }
 
 function imageCandidates(ex){
  const list=[];
 
- // Exact image selected for this exercise always wins.
+ // Exact image selected by the user remains first priority.
  if(ex.img) list.push(ex.img);
 
- // RepDB is preferred for exercises without a selected local image.
+ // Use only image paths explicitly supplied by the RepDB JSON dataset.
+ // Do not guess filenames from Home Workout exercise names.
  if(!ex.img) list.push(...repdbCandidates(ex));
 
- // Existing sources remain available as fallbacks.
+ // Existing library sources remain as fallbacks.
  const sourced=librarySourceData[String(ex.id)];
  if(sourced?.image) list.push(sourced.image);
  if(librarySourceImagesByName[ex.name]) list.push(librarySourceImagesByName[ex.name]);
@@ -2073,7 +2101,7 @@ function renderSettings(){
  <section class="card"><div class="section-title"><h2>Exercise Media Credits</h2></div>
  <p style="font-size:12px;color:var(--muted);line-height:1.5;margin:0">Some exercise illustrations are loaded from RepDB's free exercise dataset. <a href="https://repdb.co" target="_blank" rel="noopener noreferrer">Exercise data by RepDB (repdb.co)</a>.</p>
  </section>
- <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v65</small></div>
+ <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v66</small></div>
  <button class="secondary" id="backup" style="width:100%">Export Full Backup</button><div style="height:8px"></div>
  <label class="secondary import-label" style="width:100%;box-sizing:border-box;text-align:center">Import Backup<input id="importBackup" type="file" accept="application/json" hidden></label><div style="height:8px"></div>
  <button class="secondary" id="exportCsv" style="width:100%">Export History CSV</button><div style="height:8px"></div>
@@ -2544,3 +2572,4 @@ document.addEventListener("click",(e)=>{
  }
 });
 route("today");
+loadRepdbIndex();

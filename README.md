@@ -485,3 +485,17 @@ Added 9 exact user-supplied workout images queued after v63; prior images and fu
 - Visible RepDB attribution added in Settings.
 - Successfully loaded cross-origin images can be cached by the service worker for later reuse.
 - Exercise data by RepDB: https://repdb.co
+
+
+## v66 – RepDB Rendering Fix
+The v65 RepDB implementation incorrectly guessed image filenames from Home Workout exercise names.
+RepDB image filenames must come from the official `exercises.json` record for each exercise.
+
+v66 now:
+- loads the official RepDB free-tier JSON index at runtime;
+- uses only the actual `images.flat.start`, `peak`, or `main` paths returned by RepDB;
+- matches Home Workout exercises to RepDB by normalized exercise name/ID;
+- preserves all user-selected local images as first priority;
+- keeps the existing Free Exercise DB / legacy image sources as fallbacks;
+- does not add the RepDB image library to the ZIP, keeping the repository small;
+- keeps the app usable when RepDB is unavailable or the device is offline.
