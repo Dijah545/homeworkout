@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v59-editable-measurements";
+const CACHE="home-workout-v64-library-image-batch";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=59",
-  "./app.js?v=59",
+  "./styles.css?v=64",
+  "./app.js?v=64",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

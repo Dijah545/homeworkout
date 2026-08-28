@@ -455,3 +455,24 @@ The prior version still rendered Cool-Down inside the upper heat-map card. v54 r
 - The button changes to **Update Entry** while editing.
 - You can change only the values that need correcting and save them back to that date.
 - Existing Delete functionality remains available.
+
+## v60 Dumbbell Squat Image
+Added the supplied Dumbbell Squat demonstration image to the shared exercise record in the Workout Library. It will also appear wherever the app opens Dumbbell Squat instructions from Today or Week.
+
+## v61 Resistance Band Row Image
+- Added the user-supplied image to **Resistance Band Row** (`bandrow`).
+- Retains the prior Dumbbell Squat image and all v60 functionality.
+- The image is available offline and through the shared Library/Today/Week exercise record.
+
+## v62 Bent-Over Dumbbell Row Image
+- Added the supplied image to **Dumbbell Bent-Over Row** (`db-bent-over-row`).
+- Retains the Dumbbell Squat and Resistance Band Row images from prior builds.
+- Image is available through the shared Library/Today/Week exercise record and offline cache.
+
+## v63 Barbell Romanian Deadlift Image
+- Added the user-supplied image to **Barbell Romanian Deadlift** (`rdl`).
+- Retains the previously supplied Dumbbell Squat, Resistance Band Row, and Dumbbell Bent-Over Row images.
+- The image is available in the shared Workout Library/Today/Week exercise record and offline cache.
+
+## v64 Library Image Batch
+Added 9 exact user-supplied workout images queued after v63; prior images and functionality retained.

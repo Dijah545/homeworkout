@@ -2070,5 +2070,96 @@
     "equipment": "Exercise Mat",
     "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg",
     "source_type": "Free Exercise DB public-domain exact mapping"
+  },
+  {
+    "exerciseId": "dbsquat",
+    "exercise": "Dumbbell Squat",
+    "asset": "assets/dumbbell-squat.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v60"
+  },
+  {
+    "exerciseId": "bandrow",
+    "exercise": "Resistance Band Row",
+    "asset": "assets/resistance-band-row.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v61"
+  },
+  {
+    "exerciseId": "db-bent-over-row",
+    "exercise": "Dumbbell Bent-Over Row",
+    "asset": "assets/dumbbell-bent-over-row.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v62"
+  },
+  {
+    "exerciseId": "rdl",
+    "exercise": "Barbell Romanian Deadlift",
+    "asset": "assets/barbell-romanian-deadlift.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v63"
+  },
+  {
+    "exerciseId": "bandwalk",
+    "exercise": "Loop Band Lateral Walk",
+    "asset": "assets/loop-band-lateral-walk.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "sliderlunge",
+    "exercise": "Slider Reverse Lunge",
+    "asset": "assets/slider-reverse-lunge.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "bandpress",
+    "exercise": "Resistance Band Chest Press",
+    "asset": "assets/resistance-band-chest-press.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "tube-u-11",
+    "exercise": "Resistance Band Tricep Extension",
+    "asset": "assets/resistance-band-tricep-extension.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "mat-u-5",
+    "exercise": "Plank Shoulder Tap",
+    "asset": "assets/plank-shoulder-tap.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "treadmill-finisher",
+    "exercise": "Treadmill Finisher",
+    "asset": "assets/treadmill-finisher.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "warm-standing-hip-circles",
+    "exercise": "Standing Hip Circles",
+    "asset": "assets/standing-hip-circles.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "cool-8",
+    "exercise": "Shoulder Stretch",
+    "asset": "assets/shoulder-stretch.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
+  },
+  {
+    "exerciseId": "cool-0",
+    "exercise": "Hamstring Stretch",
+    "asset": "assets/hamstring-stretch.jpg",
+    "source": "user-supplied image in conversation",
+    "updatedBuild": "v64"
   }
 ]
