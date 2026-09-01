@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v71-missing-image-batch-2";
+const CACHE="home-workout-v72-band-image-refresh";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=71",
-  "./app.js?v=71",
+  "./styles.css?v=72",
+  "./app.js?v=72",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

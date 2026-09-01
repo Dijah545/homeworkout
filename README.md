@@ -544,3 +544,11 @@ and Banded Lateral Walk.
 
 No generated or recreated images were added. Where RepDB lacks the exact compound variation,
 the closest reviewed movement/equipment illustration is used instead of leaving the card blank.
+
+## v72 – Resistance/Loop Band Image Refresh
+Reviewed the requested band exercise batch specifically against RepDB's loop-band catalog.
+Exact RepDB band illustrations are used where available, including Banded Squat, Banded Lateral Walk,
+Banded Glute Bridge, Banded Hip Thrust, Banded Fire Hydrant, Banded Clamshell, and
+Banded Standing Hip Abduction. Banded Monster Walk uses RepDB's Banded Sumo Walk.
+Exercises without an exact RepDB band illustration use the closest movement illustration rather than
+an unrelated band exercise. No images were generated or recreated.

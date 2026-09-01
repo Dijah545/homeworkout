@@ -611,7 +611,20 @@ const REPDB_REVIEWED_IMAGE_ALIASES={
  "Banded Squat":"banded-squat",
  "Banded Sumo Squat":"banded-squat",
  "Banded Squat Pulses":"banded-squat",
- "Banded Lateral Walk":"banded-lateral-walk"
+ "Banded Lateral Walk":"banded-lateral-walk",
+ "Banded Monster Walk":"banded-sumo-walk",
+ "Banded Glute Bridge Abduction":"banded-glute-bridge",
+ "Banded Hip Trust":"banded-hip-thrust",
+ "Banded Hip Thrust":"banded-hip-thrust",
+ "Banded Donkey Kick":"glute-kickback",
+ "Banded Fire Hydrant":"banded-fire-hydrant",
+ "Banded Side Leg Raise":"banded-standing-hip-abduction",
+ "Banded Clamshell":"banded-clamshell",
+ "Banded Hip Abduction":"banded-standing-hip-abduction",
+ "Banded Reverse Lunge":"bodyweight-reverse-lunge",
+ "Banded Curtsy Lunge":"reverse-lunge",
+ "Banded Standing Hip Extension":"glute-kickback",
+ "Banded Plank Leg Raises":"plank"
 };
 
 function repdbCandidates(ex){
