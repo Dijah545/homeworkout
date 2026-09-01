@@ -595,7 +595,23 @@ const REPDB_REVIEWED_IMAGE_ALIASES={
  "Quad Stretch":"standing-quad-stretch",
  "Figure-Four Glute Stretch":"bench-figure-4-glute-stretch",
  "Plank with Sliders":"mountain-climbers",
- "Mini Stepper Intervals":"stair-climber"
+ "Mini Stepper Intervals":"stair-climber",
+ "Dumbbell Thruster":"dumbbell-push-press",
+ "Dumbbell Squat to Press":"dumbbell-push-press",
+ "Dumbbell Clean and Press":"dumbbell-clean-and-press",
+ "Dumbbell Farmer's Carry":"dumbbell-farmers-walk",
+ "Dumbbell Reverse Lunge to Curl":"dumbbell-reverse-lunge",
+ "Barbell Clean and Press":"barbell-clean-and-press",
+ "Barbell Thruster":"barbell-push-press",
+ "Barbell Squat to Press":"barbell-push-press",
+ "Kettlebell Clean and Press":"double-kettlebell-clean-and-press",
+ "Kettlebell Deadlift to High Pull":"kettlebell-high-pull",
+ "Kettlebell Squat to Press":"kettlebell-push-press",
+ "Kettlebell Figure Eight":"kettlebell-around-the-body",
+ "Banded Squat":"banded-squat",
+ "Banded Sumo Squat":"banded-squat",
+ "Banded Squat Pulses":"banded-squat",
+ "Banded Lateral Walk":"banded-lateral-walk"
 };
 
 function repdbCandidates(ex){

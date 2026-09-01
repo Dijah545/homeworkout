@@ -533,3 +533,14 @@ Slider Single-Leg Lunge, Quad Stretch, and Figure-Four Glute Stretch.
 
 These are URL-based mappings to RepDB's licensed in-app illustrations; no generated images were created.
 Where RepDB does not have the exact equipment-specific movement, the closest reviewed movement illustration is used.
+
+## v71 – Missing Image Batch 2
+Added reviewed RepDB image mappings for:
+Dumbbell Thruster, Dumbbell Squat to Press, Dumbbell Clean and Press, Dumbbell Farmer's Carry,
+Dumbbell Reverse Lunge to Curl, Barbell Clean and Press, Barbell Thruster, Barbell Squat to Press,
+Kettlebell Clean and Press, Kettlebell Deadlift to High Pull, Kettlebell Squat to Press,
+Kettlebell Figure Eight, Banded Squat, Banded Sumo Squat, Banded Squat Pulses,
+and Banded Lateral Walk.
+
+No generated or recreated images were added. Where RepDB lacks the exact compound variation,
+the closest reviewed movement/equipment illustration is used instead of leaving the card blank.
