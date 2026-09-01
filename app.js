@@ -849,7 +849,7 @@ function saveCompletedWorkout(plan){
 
 
 let todayRestTimer=null;
-let todayRestStartedAt=null;
+let todayRestStartedAt=Number(state.todayRestStartedAt||0)||null;
 let todayRestElapsed=0;
 
 function restEntries(date=isoDate()){
@@ -894,6 +894,7 @@ function renderRestTracker(){
      state.restLogs[isoDate()]=state.restLogs[isoDate()]||[];
      state.restLogs[isoDate()].push({seconds,endedAt:new Date().toISOString()});
      todayRestStartedAt=null;
+     state.todayRestStartedAt=null;
      todayRestElapsed=0;
      if(todayRestTimer){clearInterval(todayRestTimer);todayRestTimer=null;}
      save();
@@ -902,6 +903,8 @@ function renderRestTracker(){
    }else{
      todayRestElapsed=0;
      todayRestStartedAt=Date.now();
+     state.todayRestStartedAt=todayRestStartedAt;
+     save();
      todayRestTimer=setInterval(renderRestTracker,1000);
      renderRestTracker();
    }
@@ -2360,80 +2363,175 @@ function startWorkout(plan,resumeState=null){
  let elapsed=resumeState?.elapsed??0;
  let phase=resumeState?.phase??"work";
  let restRemaining=resumeState?.restRemaining??state.restSeconds;
- let running=true;
+ let running=resumeState?.running!==false;
  let tick;
- let restStart=null;
+ let workStartedAt=resumeState?.workStartedAt??(running && phase==="work"?Date.now():null);
+ let restStart=resumeState?.restStart??(running && phase==="rest"?Date.now():null);
  let totalRest=resumeState?.totalRest??0;
  let restSessions=resumeState?.restSessions??0;
+ let closed=false;
 
- const session=()=>({plan,idx,elapsed,phase,restRemaining,totalRest,restSessions});
+ const effectiveElapsed=()=>{
+   if(running && phase==="work" && workStartedAt!==null){
+     return elapsed+Math.max(0,Math.floor((Date.now()-workStartedAt)/1000));
+   }
+   return elapsed;
+ };
+ const effectiveRestRemaining=()=>{
+   if(running && phase==="rest" && restStart!==null){
+     return Math.max(0,restRemaining-Math.max(0,Math.floor((Date.now()-restStart)/1000)));
+   }
+   return Math.max(0,restRemaining);
+ };
+ const effectiveTotalRest=()=>{
+   if(running && phase==="rest" && restStart!==null){
+     const spent=Math.max(0,Math.floor((Date.now()-restStart)/1000));
+     return totalRest+Math.min(restRemaining,spent);
+   }
+   return totalRest;
+ };
 
- function persistPaused(){
+ const session=()=>({
+   plan,idx,elapsed,phase,restRemaining,totalRest,restSessions,running,
+   workStartedAt,restStart,savedAt:Date.now()
+ });
+
+ function saveRunningSnapshot(){
+   saveActiveWorkoutSession(session());
+ }
+
+ function commitWorkTime(){
+   if(workStartedAt!==null){
+     elapsed=effectiveElapsed();
+     workStartedAt=null;
+   }
+ }
+
+ function commitRestTime(){
    if(restStart!==null){
-     totalRest+=Math.max(0,Math.round((Date.now()-restStart)/1000));
+     const spent=Math.max(0,Math.floor((Date.now()-restStart)/1000));
+     const counted=Math.min(restRemaining,spent);
+     totalRest+=counted;
+     restRemaining=Math.max(0,restRemaining-spent);
      restStart=null;
    }
+ }
+
+ function persistPaused(){
+   if(phase==="work") commitWorkTime();
+   else commitRestTime();
    running=false;
    saveActiveWorkoutSession(session());
  }
 
- function closeActiveRest(){
-   if(restStart!==null){
-     totalRest+=Math.max(0,Math.round((Date.now()-restStart)/1000));
+ function syncBackgroundTime(){
+   if(!running || phase!=="rest" || restStart===null) return;
+   const endAt=restStart+(restRemaining*1000);
+   if(Date.now()>=endAt){
+     // Rest completed even if JavaScript was suspended while the screen/app was inactive.
+     totalRest+=restRemaining;
+     restRemaining=state.restSeconds;
      restStart=null;
+     phase="work";
+     // Work begins at the actual instant the rest countdown ended, not when the app wakes up.
+     workStartedAt=endAt;
    }
  }
 
  function enterRest(){
-   closeActiveRest();
+   if(phase==="work") commitWorkTime();
    phase="rest";
    restRemaining=state.restSeconds;
-   restStart=Date.now();
+   restStart=running?Date.now():null;
+   workStartedAt=null;
    restSessions++;
-   saveActiveWorkoutSession(session());
+   saveRunningSnapshot();
  }
 
  function leaveRest(){
-   closeActiveRest();
+   if(phase==="rest") commitRestTime();
    phase="work";
    restRemaining=state.restSeconds;
-   saveActiveWorkoutSession(session());
+   workStartedAt=running?Date.now():null;
+   saveRunningSnapshot();
  }
 
  function updateTimerDisplay(){
+   syncBackgroundTime();
+   const currentElapsed=effectiveElapsed();
+   const currentRestRemaining=effectiveRestRemaining();
+   const currentTotalRest=effectiveTotalRest();
    const ring=modal.querySelector(".timer-ring");
    const center=modal.querySelector(".timer-center");
    const restSummary=modal.querySelector(".rest-summary");
    if(ring){
      const pct=phase==="rest"
-       ?Math.max(0,100-(restRemaining/state.restSeconds*100))
-       :Math.min(100,(elapsed/60)*100);
+       ?Math.max(0,100-(currentRestRemaining/state.restSeconds*100))
+       :Math.min(100,(currentElapsed/60)*100);
      ring.style.setProperty("--p",pct);
    }
    if(center){
      const spans=center.querySelectorAll("span");
      if(spans[0]) spans[0].textContent=phase==="rest"?"REST":"MOVE";
      const timer=center.querySelector("b");
-     if(timer) timer.textContent=phase==="rest"?format(restRemaining):format(elapsed);
+     if(timer) timer.textContent=phase==="rest"?format(currentRestRemaining):format(currentElapsed);
    }
    if(restSummary){
      const total=restSummary.querySelector("strong");
-     if(total) total.textContent=formatShort(totalRest + (restStart!==null?Math.round((Date.now()-restStart)/1000):0));
+     if(total) total.textContent=formatShort(currentTotalRest);
      const spans=restSummary.querySelectorAll("span");
      if(spans[1]) spans[1].textContent=`${restSessions} period${restSessions===1?"":"s"}`;
    }
  }
 
+ function cleanupLifecycleListeners(){
+   if(closed) return;
+   closed=true;
+   document.removeEventListener("visibilitychange",onVisibilityChange);
+   window.removeEventListener("pagehide",onPageHide);
+ }
+
+ function onVisibilityChange(){
+   if(document.visibilityState==="hidden"){
+     // Keep the running timestamps intact; only save them.
+     saveRunningSnapshot();
+   }else{
+     syncBackgroundTime();
+     saveRunningSnapshot();
+     updateTimerDisplay();
+   }
+ }
+
+ function onPageHide(){
+   // iOS may suspend the page immediately after this event.
+   // Persist the wall-clock anchors so elapsed time can be reconstructed on return/relaunch.
+   saveRunningSnapshot();
+ }
+
+ document.addEventListener("visibilitychange",onVisibilityChange);
+ window.addEventListener("pagehide",onPageHide);
+
  function draw(){
+   syncBackgroundTime();
    const ex=plan[idx];
-   if(!ex){clearInterval(tick);clearActiveWorkout();closeModal();return;}
+   if(!ex){
+     clearInterval(tick);
+     cleanupLifecycleListeners();
+     clearActiveWorkout();
+     closeModal();
+     return;
+   }
+   const currentElapsed=effectiveElapsed();
+   const currentRestRemaining=effectiveRestRemaining();
+   const currentTotalRest=effectiveTotalRest();
+
    modal.innerHTML=`<div class="modal-card">
      <div class="modal-head">
        <div><div class="eyebrow">Workout in Progress</div><h2>${ex.name}</h2></div>
        <button class="close" aria-label="Pause and close workout">×</button>
      </div>
 
-     <div class="resume-note">Closing this window pauses and saves your workout. You can resume from Today without losing progress.</div>
+     <div class="resume-note">The timer keeps running if your screen turns off or you switch apps. Closing this workout window manually pauses and saves it.</div>
 
      <div class="modal-set-tracker">
        <div class="set-tracker-title">SETS / REPS</div>
@@ -2442,17 +2540,17 @@ function startWorkout(plan,resumeState=null){
        ${repsEntryMarkup(ex,isoDate())}
      </div>
 
-     <div class="timer-ring" style="--p:${phase==="rest"?Math.max(0,100-(restRemaining/state.restSeconds*100)):Math.min(100,(elapsed/60)*100)}">
+     <div class="timer-ring" style="--p:${phase==="rest"?Math.max(0,100-(currentRestRemaining/state.restSeconds*100)):Math.min(100,(currentElapsed/60)*100)}">
        <div class="timer-center">
          <span>${phase==="rest"?"REST":"MOVE"}</span>
-         <b>${phase==="rest"?format(restRemaining):format(elapsed)}</b>
+         <b>${phase==="rest"?format(currentRestRemaining):format(currentElapsed)}</b>
          <span>${ex.sets}</span>
        </div>
      </div>
 
      <div class="rest-summary">
        <span>Recorded rest</span>
-       <strong>${formatShort(totalRest + (restStart!==null?Math.round((Date.now()-restStart)/1000):0))}</strong>
+       <strong>${formatShort(currentTotalRest)}</strong>
        <span>${restSessions} period${restSessions===1?"":"s"}</span>
      </div>
 
@@ -2472,6 +2570,7 @@ function startWorkout(plan,resumeState=null){
    modal.querySelector(".close").onclick=()=>{
      clearInterval(tick);
      persistPaused();
+     cleanupLifecycleListeners();
      closeModal();
      renderToday();
      showToast("Workout paused and saved");
@@ -2479,21 +2578,25 @@ function startWorkout(plan,resumeState=null){
 
    modal.querySelector("#pause").onclick=()=>{
      if(running){
-       closeActiveRest();
+       if(phase==="work") commitWorkTime();
+       else commitRestTime();
        running=false;
-       saveActiveWorkoutSession(session());
      }else{
        running=true;
-       if(phase==="rest") restStart=Date.now();
+       if(phase==="work") workStartedAt=Date.now();
+       else restStart=Date.now();
      }
+     saveRunningSnapshot();
      draw();
    };
 
    modal.querySelector("#prev").onclick=()=>{
      if(phase==="rest") leaveRest();
+     else commitWorkTime();
      idx=Math.max(0,idx-1);
      elapsed=0;
-     saveActiveWorkoutSession(session());
+     workStartedAt=running?Date.now():null;
+     saveRunningSnapshot();
      draw();
    };
 
@@ -2508,38 +2611,36 @@ function startWorkout(plan,resumeState=null){
  }
 
  function next(){
+   syncBackgroundTime();
    if(phase==="rest") leaveRest();
+   else commitWorkTime();
+
    if(idx<plan.length-1){
      idx++;
      elapsed=0;
-     saveActiveWorkoutSession(session());
+     phase="work";
+     restRemaining=state.restSeconds;
+     workStartedAt=running?Date.now():null;
+     saveRunningSnapshot();
      draw();
    }else{
      clearInterval(tick);
-     closeActiveRest();
+     totalRest=effectiveTotalRest();
+     cleanupLifecycleListeners();
      clearActiveWorkout();
      completeWorkout(plan,totalRest,restSessions);
    }
  }
 
- // Save immediately so a reload or accidental closure can still recover the session.
- saveActiveWorkoutSession(session());
+ // Save timestamps immediately so background suspension/reloads can reconstruct elapsed time.
+ saveRunningSnapshot();
 
  tick=setInterval(()=>{
    if(!running) return;
-   if(phase==="rest"){
-     restRemaining--;
-     if(restRemaining<=0){
-       leaveRest();
-       draw();
-       return;
-     }
-   }else{
-     elapsed++;
-   }
-   // Persist often enough that a browser/app interruption loses at most ~1 second.
-   saveActiveWorkoutSession(session());
-   // Do not rebuild the modal every second: doing so destroys focus in reps/weight inputs.
+   syncBackgroundTime();
+   saveRunningSnapshot();
+   // The display is derived from Date.now(), so missing interval callbacks while backgrounded
+   // do not lose elapsed time.
    updateTimerDisplay();
  },1000);
 

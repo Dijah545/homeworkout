@@ -505,3 +505,12 @@ v66 now:
 - Latest now displays Weight, Waist, Hips, Chest, Thigh, and Upper Arm.
 - Delta vs previous entry is shown for all six measurements.
 - Existing Body Tracker history/edit/delete/trends and all other app functionality are retained.
+
+
+## v68 – Background-Safe Timers
+- Active workout timer now uses wall-clock timestamps instead of relying on one JavaScript interval callback per second.
+- Workout timing continues accurately when the phone screen turns off or the browser/PWA is backgrounded.
+- Active rest countdown also catches up after background suspension. If the rest period expires while the app is inactive, the workout timer resumes from the actual rest-end time.
+- Running workout timestamps are persisted on visibility/page-hide events so timing can be reconstructed after returning to the app.
+- The standalone Today Rest Tracker start timestamp is also persisted, so it continues across backgrounding and app reloads.
+- Manually pressing Pause or closing the active workout window still pauses the workout intentionally.
