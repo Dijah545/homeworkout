@@ -514,3 +514,22 @@ v66 now:
 - Running workout timestamps are persisted on visibility/page-hide events so timing can be reconstructed after returning to the app.
 - The standalone Today Rest Tracker start timestamp is also persisted, so it continues across backgrounding and app reloads.
 - Manually pressing Pause or closing the active workout window still pauses the workout intentionally.
+
+## v69 – Exercise Image Library Refresh
+- Refreshed RepDB integration against the current free dataset (601 exercises as of September 2026).
+- Added conservative normalized/fuzzy exercise matching so naming differences no longer leave as many blank cards.
+- RepDB media paths still come only from RepDB's official JSON; the app does not invent image filenames.
+- User-selected local exercise images remain first priority.
+- Existing Free Exercise DB / legacy URLs remain fallback sources.
+- No bulk image files were added, keeping the ZIP small.
+- All v68 background-safe timer behavior is retained.
+
+## v70 – Missing Image Batch 1
+Added reviewed RepDB image mappings for the 13 exercises supplied by the user:
+Skipping Rope, Mini Stepper Intervals, Plank with Sliders, Bent-Over Dumbbell Row,
+Dumbbell Sumo Squat, Dumbbell Stiff-leg Deadlift, Dumbbell Lateral Lunge,
+Kettlebell Sumo Squat, Resistance Band Squat, Banded Standing Kickback,
+Slider Single-Leg Lunge, Quad Stretch, and Figure-Four Glute Stretch.
+
+These are URL-based mappings to RepDB's licensed in-app illustrations; no generated images were created.
+Where RepDB does not have the exact equipment-specific movement, the closest reviewed movement illustration is used.

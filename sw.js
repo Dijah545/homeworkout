@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v68-background-timers";
+const CACHE="home-workout-v70-missing-image-batch-1";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=68",
-  "./app.js?v=68",
+  "./styles.css?v=70",
+  "./app.js?v=70",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

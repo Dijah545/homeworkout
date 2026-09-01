@@ -517,18 +517,51 @@ function femaleHeatmap(plan){
 const REPDB_DATA_URL="https://exercise-dataset.com/exercises.json";
 const REPDB_MEDIA_BASE="https://exercise-dataset.com/";
 const repdbImageIndex=new Map();
+const repdbRecords=[];
+const repdbMatchCache=new Map();
 let repdbIndexLoaded=false;
 
 function repdbKey(value){
  return String(value||"").toLowerCase()
    .replace(/['’]/g,"")
    .replace(/&/g," and ")
-   .replace(/\bpushups\b/g,"push ups")
-   .replace(/\bpullups\b/g,"pull ups")
+   .replace(/\bpushups?\b/g,"push up")
+   .replace(/\bpullups?\b/g,"pull up")
+   .replace(/\bdb\b/g,"dumbbell")
+   .replace(/\bkb\b/g,"kettlebell")
+   .replace(/\brdl\b/g,"romanian deadlift")
+   .replace(/\bconfiguration\b/g,"")
+   .replace(/\bfinisher\b/g,"")
    .replace(/\s+/g," ")
    .replace(/[^a-z0-9 ]+/g," ")
    .replace(/\s+/g," ")
    .trim();
+}
+
+const REPDB_STOPWORDS=new Set(["standing","seated","lying","alternating","alternate","single","one","two","arm","leg","with","and","the","bodyweight"]);
+function repdbTokens(value){
+ return repdbKey(value).split(" ").filter(t=>t && !REPDB_STOPWORDS.has(t));
+}
+function tokenScore(a,b){
+ const A=new Set(repdbTokens(a)), B=new Set(repdbTokens(b));
+ if(!A.size||!B.size) return 0;
+ let common=0;
+ A.forEach(t=>{if(B.has(t)) common++;});
+ return (2*common)/(A.size+B.size);
+}
+function equipmentKey(value){
+ const v=repdbKey(value);
+ if(v.includes("dumbbell")) return "dumbbell";
+ if(v.includes("barbell")) return "barbell";
+ if(v.includes("kettlebell")) return "kettlebell";
+ if(v.includes("loop band")) return "loop_band";
+ if(v.includes("resistance band")||v==="band"||v.includes("toning tube")) return "resistance_band";
+ if(v.includes("treadmill")) return "treadmill";
+ if(v.includes("stationary bike")||v.includes("bike")) return "stationary_bike";
+ if(v.includes("jump rope")||v.includes("skipping rope")) return "jump_rope";
+ if(v.includes("slider")) return "slider";
+ if(v.includes("mat")||v.includes("bodyweight")||v==="none") return "";
+ return "";
 }
 
 function repdbImageUrls(record){
@@ -546,20 +579,77 @@ function indexRepdbRecord(record){
    repdbKey(String(record.name_en||"").replace(/\bmachine\b/gi,"")),
  ].filter(Boolean);
  keys.forEach(key=>repdbImageIndex.set(key,urls));
+ repdbRecords.push({record,urls,key:repdbKey(record.name_en)});
 }
+
+const REPDB_REVIEWED_IMAGE_ALIASES={
+ "Skipping Rope":"jump-rope",
+ "Bent-Over Dumbbell Row":"bent-over-dumbbell-row",
+ "Dumbbell Sumo Squat":"db-sumo-squat",
+ "Dumbbell Stiff-leg Deadlift":"dumbbell-romanian-deadlift",
+ "Dumbbell Lateral Lunge":"dumbbell-lunge",
+ "Kettlebell Sumo Squat":"goblet-squat",
+ "Resistance Band Squat":"banded-squat",
+ "Banded Standing Kickback":"glute-kickback",
+ "Slider Single-Leg Lunge":"reverse-lunge",
+ "Quad Stretch":"standing-quad-stretch",
+ "Figure-Four Glute Stretch":"bench-figure-4-glute-stretch",
+ "Plank with Sliders":"mountain-climbers",
+ "Mini Stepper Intervals":"stair-climber"
+};
 
 function repdbCandidates(ex){
  if(!repdbIndexLoaded) return [];
+ const cacheKey=String(ex.id||ex.name);
+ if(repdbMatchCache.has(cacheKey)) return repdbMatchCache.get(cacheKey);
+
+ // Reviewed aliases are explicit mappings for Home Workout names that differ from RepDB.
+ const reviewedId=REPDB_REVIEWED_IMAGE_ALIASES[ex.name];
+ if(reviewedId){
+   const reviewed=repdbImageIndex.get(repdbKey(reviewedId));
+   if(reviewed?.length){
+     repdbMatchCache.set(cacheKey,reviewed);
+     return reviewed;
+   }
+ }
+
  const keys=[
    repdbKey(ex.name),
    repdbKey(ex.id),
    repdbKey(String(ex.name||"").replace(/\bconfiguration\b/gi,"")),
  ].filter(Boolean);
+
+ // Exact normalized match first.
  for(const key of keys){
    const found=repdbImageIndex.get(key);
-   if(found?.length) return found;
+   if(found?.length){
+     repdbMatchCache.set(cacheKey,found);
+     return found;
+   }
  }
- return [];
+
+ // Then find a conservative near-match. This handles naming differences such as
+ // "Bent-Over Dumbbell Row" vs "Dumbbell Bent Over Row" without guessing media paths.
+ const wantedEquip=equipmentKey(ex.equipment);
+ let best=null,bestScore=0;
+ for(const item of repdbRecords){
+   let score=tokenScore(ex.name,item.record.name_en);
+   const recordEquip=String(item.record.equipment||"");
+   if(wantedEquip && recordEquip===wantedEquip) score+=0.12;
+   else if(wantedEquip && recordEquip && recordEquip!==wantedEquip) score-=0.18;
+
+   // Strongly prefer the same broad movement words.
+   const wanted=repdbTokens(ex.name);
+   const got=new Set(repdbTokens(item.record.name_en));
+   const movementWords=["squat","lunge","row","press","curl","deadlift","raise","plank","crunch","bridge","stretch","walk","swing","clean","thruster","climber","burpee","jack"];
+   const core=wanted.find(t=>movementWords.includes(t));
+   if(core && !got.has(core)) score-=0.25;
+
+   if(score>bestScore){bestScore=score;best=item;}
+ }
+ const result=(best && bestScore>=0.72)?best.urls:[];
+ repdbMatchCache.set(cacheKey,result);
+ return result;
 }
 
 async function loadRepdbIndex(){
@@ -570,6 +660,9 @@ async function loadRepdbIndex(){
    clearTimeout(timer);
    if(!response.ok) throw new Error(`RepDB ${response.status}`);
    const data=await response.json();
+   repdbImageIndex.clear();
+   repdbRecords.length=0;
+   repdbMatchCache.clear();
    (data.exercises||[]).forEach(indexRepdbRecord);
    repdbIndexLoaded=true;
 
@@ -2104,7 +2197,7 @@ function renderSettings(){
  </section>
  <section class="card"><div class="section-title"><h2>Your Equipment</h2></div><div class="equipment-grid">${equipment.map(e=>`<label class="equip"><input type="checkbox" data-equip="${e}" ${state.equipment.includes(e)?"checked":""}>${e}</label>`).join("")}</div></section>
  <section class="card"><div class="section-title"><h2>Exercise Media Credits</h2></div>
- <p style="font-size:12px;color:var(--muted);line-height:1.5;margin:0">Some exercise illustrations are loaded from RepDB's free exercise dataset. <a href="https://repdb.co" target="_blank" rel="noopener noreferrer">Exercise data by RepDB (repdb.co)</a>.</p>
+ <p style="font-size:12px;color:var(--muted);line-height:1.5;margin:0">Missing exercise illustrations are matched against RepDB's free exercise dataset when an exact user-selected image is not available. <a href="https://repdb.co" target="_blank" rel="noopener noreferrer">Exercise data by RepDB (repdb.co)</a>.</p>
  </section>
  <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v67</small></div>
  <button class="secondary" id="backup" style="width:100%">Export Full Backup</button><div style="height:8px"></div>
