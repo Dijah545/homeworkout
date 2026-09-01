@@ -577,3 +577,13 @@ Tricep Extension, Plank Shoulder Tap, Treadmill Finisher, Standing Hip Circles, 
 and Hamstring Stretch.
 
 No replacement images were generated or recreated.
+
+## v75 – RepDB Reindex and Image Re-render
+- Changed the RepDB dataset index source to the raw GitHub dataset URL to avoid the browser/CORS issue that could prevent the index from loading.
+- The RepDB illustration host remains exercise-dataset.com, using only image paths supplied by the official dataset.
+- Corrected Bent-Over Dumbbell Row mapping to RepDB's actual `bent-over-db-row` ID.
+- Added a cached copy of the last successfully loaded RepDB index in browser storage for resilience.
+- Re-renders Today, Week, or Library after the RepDB index finishes loading.
+- Explicitly re-binds image fallback handlers after re-render.
+- If every image candidate fails, the app now shows a visible Exercise guide placeholder instead of a blank/broken image.
+- No exercise images were recreated.

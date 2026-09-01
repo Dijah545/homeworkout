@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v74-reviewed-local-image-cleanup";
+const CACHE="home-workout-v75-repdb-reindex-rerender";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=74",
-  "./app.js?v=74",
+  "./styles.css?v=75",
+  "./app.js?v=75",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

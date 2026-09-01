@@ -514,7 +514,7 @@ function femaleHeatmap(plan){
 
 
 
-const REPDB_DATA_URL="https://exercise-dataset.com/exercises.json";
+const REPDB_DATA_URL="https://raw.githubusercontent.com/RepDB/exercise-dataset/main/exercises.json";
 const REPDB_MEDIA_BASE="https://exercise-dataset.com/";
 const repdbImageIndex=new Map();
 const repdbRecords=[];
@@ -584,7 +584,7 @@ function indexRepdbRecord(record){
 
 const REPDB_REVIEWED_IMAGE_ALIASES={
  "Skipping Rope":"jump-rope",
- "Bent-Over Dumbbell Row":"bent-over-dumbbell-row",
+ "Bent-Over Dumbbell Row":"bent-over-db-row",
  "Dumbbell Sumo Squat":"db-sumo-squat",
  "Dumbbell Stiff-leg Deadlift":"dumbbell-romanian-deadlift",
  "Dumbbell Lateral Lunge":"dumbbell-lunge",
@@ -686,27 +686,46 @@ function repdbCandidates(ex){
 }
 
 async function loadRepdbIndex(){
- try{
-   const controller=new AbortController();
-   const timer=setTimeout(()=>controller.abort(),5000);
-   const response=await fetch(REPDB_DATA_URL,{signal:controller.signal,cache:"no-cache"});
-   clearTimeout(timer);
-   if(!response.ok) throw new Error(`RepDB ${response.status}`);
-   const data=await response.json();
+ const populate=(data)=>{
    repdbImageIndex.clear();
    repdbRecords.length=0;
    repdbMatchCache.clear();
-   (data.exercises||[]).forEach(indexRepdbRecord);
-   repdbIndexLoaded=true;
+   (data?.exercises||[]).forEach(indexRepdbRecord);
+   repdbIndexLoaded=repdbRecords.length>0;
+   if(repdbIndexLoaded){
+     try{localStorage.setItem("repdb-index-v75",JSON.stringify(data));}catch(e){}
+   }
+   return repdbIndexLoaded;
+ };
 
-   // Refresh only views whose exercise cards contain imagery.
-   const active=document.querySelector(".nav-item.active")?.dataset.route;
-   if(active==="library") renderLibrary();
-   else if(active==="week") renderWeek();
-   else if(active==="today" && !document.querySelector("#activeWorkoutModal:not(.hidden)")) renderToday();
+ try{
+   const controller=new AbortController();
+   const timer=setTimeout(()=>controller.abort(),8000);
+   const response=await fetch(REPDB_DATA_URL,{signal:controller.signal,cache:"no-store"});
+   clearTimeout(timer);
+   if(!response.ok) throw new Error(`RepDB ${response.status}`);
+   const data=await response.json();
+   if(!populate(data)) throw new Error("RepDB index empty");
  }catch(err){
-   // Existing local/external fallbacks keep the app functional offline.
-   console.info("RepDB index unavailable; using existing image fallbacks.");
+   // If network fetching fails, reuse the last successfully indexed RepDB dataset.
+   try{
+     const cached=JSON.parse(localStorage.getItem("repdb-index-v75")||"null");
+     populate(cached);
+   }catch(e){}
+ }
+
+ // Re-render image-bearing views after the index is ready, then explicitly
+ // bind image fallback handlers after the DOM has been repainted.
+ if(repdbIndexLoaded){
+   const rerender=()=>{
+     const active=document.querySelector(".nav-item.active")?.dataset.route;
+     if(active==="library") renderLibrary();
+     else if(active==="week") renderWeek();
+     else if(active==="today" && !document.querySelector("#activeWorkoutModal:not(.hidden)")) renderToday();
+     requestAnimationFrame(()=>bindExerciseImages());
+   };
+   rerender();
+   setTimeout(rerender,150);
  }
 }
 
@@ -749,22 +768,21 @@ function bindExerciseImages(){
    img.dataset.boundImageFallback="1";
    img.addEventListener("error",()=>{
      let candidates=[];
-     try{candidates=JSON.parse(decodeURIComponent(img.dataset.imageCandidates||"%5B%5D"));}catch(e){}
-     let index=Number(img.dataset.imageIndex||0)+1;
-     if(index<candidates.length){
-       img.dataset.imageIndex=String(index);
-       img.src=candidates[index];
-     }else{
-       const parent=img.parentElement;
-       if(parent){
-         parent.classList.add("missing");
-         parent.innerHTML='<div class="image-placeholder">Image unavailable<br><small>Instructions are available below.</small></div>';
-       }
+     try{candidates=JSON.parse(decodeURIComponent(img.dataset.imageCandidates||""));}catch(e){}
+     let idx=Number(img.dataset.imageIndex||0)+1;
+     while(idx<candidates.length && !candidates[idx]) idx++;
+     if(idx<candidates.length){
+       img.dataset.imageIndex=String(idx);
+       img.src=candidates[idx];
+       return;
      }
+     const placeholder=document.createElement("div");
+     placeholder.className="image-placeholder";
+     placeholder.textContent="Exercise guide";
+     img.replaceWith(placeholder);
    });
  });
 }
-
 function save(){localStorage.setItem("homefit-state",JSON.stringify(state))}
 function showToast(msg){toast.textContent=msg;toast.classList.remove("hidden");setTimeout(()=>toast.classList.add("hidden"),1900)}
 function isoDate(d=new Date()){
