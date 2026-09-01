@@ -2072,13 +2072,6 @@
     "source_type": "Free Exercise DB public-domain exact mapping"
   },
   {
-    "exerciseId": "dbsquat",
-    "exercise": "Dumbbell Squat",
-    "asset": "assets/dumbbell-squat.jpg",
-    "source": "user-supplied image in conversation",
-    "updatedBuild": "v60"
-  },
-  {
     "exerciseId": "bandrow",
     "exercise": "Resistance Band Row",
     "asset": "assets/resistance-band-row.jpg",
@@ -2091,20 +2084,6 @@
     "asset": "assets/dumbbell-bent-over-row.jpg",
     "source": "user-supplied image in conversation",
     "updatedBuild": "v62"
-  },
-  {
-    "exerciseId": "rdl",
-    "exercise": "Barbell Romanian Deadlift",
-    "asset": "assets/barbell-romanian-deadlift.jpg",
-    "source": "user-supplied image in conversation",
-    "updatedBuild": "v63"
-  },
-  {
-    "exerciseId": "bandwalk",
-    "exercise": "Loop Band Lateral Walk",
-    "asset": "assets/loop-band-lateral-walk.jpg",
-    "source": "user-supplied image in conversation",
-    "updatedBuild": "v64"
   },
   {
     "exerciseId": "sliderlunge",

@@ -4,7 +4,7 @@ const DAY_NAMES=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Sa
 
 const exercises=[
 {id:"pushup",name:"Push-Ups",area:"Upper Body & Core",equipment:"Exercise Mat",img:null,sets:"3 sets × 10–12 reps",tips:["Hands slightly wider than shoulders.","Brace your core and keep a straight line.","Lower with control, then press through your palms."]},
-{id:"dbsquat",name:"Dumbbell Squat",area:"Lower Body",equipment:"Adjustable Dumbbells",img:"assets/dumbbell-squat.jpg",sets:"3 sets × 10–12 reps",tips:["Hold dumbbells at your sides or shoulders.","Sit hips back and keep knees tracking over toes.","Drive through the whole foot to stand."]},
+{id:"dbsquat",name:"Dumbbell Squat",area:"Lower Body",equipment:"Adjustable Dumbbells",sets:"3 sets × 10–12 reps",tips:["Hold dumbbells at your sides or shoulders.","Sit hips back and keep knees tracking over toes.","Drive through the whole foot to stand."]},
 {id:"kbswing",name:"Kettlebell Swing",area:"Full Body",equipment:"Kettlebell",img:null,sets:"3 sets × 15 reps",tips:["Hinge at the hips rather than squatting.","Snap hips forward to power the bell.","Keep arms relaxed and ribs stacked."]},
 {id:"bandrow",name:"Resistance Band Row",area:"Upper Body",equipment:"Resistance Bands",img:"assets/resistance-band-row.jpg",sets:"3 sets × 12 reps",tips:["Anchor the band securely.","Pull elbows toward your ribs.","Squeeze shoulder blades without shrugging."]},
 {id:"jumprope",name:"Skipping Rope",area:"Cardio",equipment:"Skipping Rope",img:null,sets:"5 × 45 sec",tips:["Keep jumps low and land softly.","Rotate the rope from your wrists.","Maintain a relaxed upright posture."]},
@@ -14,9 +14,9 @@ const exercises=[
 {id:"sliders",name:"Plank with Sliders",area:"Core",equipment:"Disc Sliders",img:null,sets:"3 × 8 each side",tips:["Start in a strong plank.","Slide one foot out or forward without twisting.","Move slowly and keep tension through the core."]},
 {id:"dbpress",name:"Dumbbell Shoulder Press",area:"Upper Body",equipment:"Adjustable Dumbbells",img:null,sets:"3 sets × 10 reps",tips:["Brace your core.","Press overhead without flaring ribs.","Lower weights under control."]},
 {id:"bentrow",name:"Bent-Over Dumbbell Row",area:"Upper Body",equipment:"Adjustable Dumbbells",img:null,sets:"3 sets × 12 reps",tips:["Hinge with a neutral spine.","Pull elbows toward hips.","Pause briefly at the top."]},
-{id:"rdl",name:"Barbell Romanian Deadlift",area:"Lower Body",equipment:"Barbell",img:"assets/barbell-romanian-deadlift.jpg",sets:"3 sets × 10 reps",tips:["Keep the bar close to the legs.","Push hips backward with soft knees.","Stop when hamstrings are loaded without rounding."]},
+{id:"rdl",name:"Barbell Romanian Deadlift",area:"Lower Body",equipment:"Barbell",sets:"3 sets × 10 reps",tips:["Keep the bar close to the legs.","Push hips backward with soft knees.","Stop when hamstrings are loaded without rounding."]},
 {id:"bike",name:"Stationary Bike Intervals",area:"Cardio",equipment:"Stationary Bike",img:null,sets:"10 min",tips:["Warm up before hard intervals.","Keep cadence smooth.","Increase resistance gradually."]},
-{id:"bandwalk",name:"Loop Band Lateral Walk",area:"Lower Body",equipment:"Resistance Bands",img:"assets/loop-band-lateral-walk.jpg",sets:"3 × 12 steps each way",tips:["Keep band under constant tension.","Take small controlled steps.","Keep knees softly bent."]},
+{id:"bandwalk",name:"Loop Band Lateral Walk",area:"Lower Body",equipment:"Resistance Bands",sets:"3 × 12 steps each way",tips:["Keep band under constant tension.","Take small controlled steps.","Keep knees softly bent."]},
 {id:"deadbug",name:"Dead Bug",area:"Core",equipment:"Exercise Mat",img:null,sets:"3 × 10 each side",tips:["Press lower back gently into the mat.","Move opposite arm and leg slowly.","Exhale as you extend."]},
 {id:"sliderlunge",name:"Slider Reverse Lunge",area:"Lower Body",equipment:"Disc Sliders",img:"assets/slider-reverse-lunge.jpg",sets:"3 × 10 each side",tips:["Keep most weight in the front foot.","Slide the rear foot backward.","Drive through front heel to return."]},
 {id:"bandpress",name:"Resistance Band Chest Press",area:"Upper Body",equipment:"Resistance Bands",img:"assets/resistance-band-chest-press.jpg",sets:"3 sets × 12 reps",tips:["Secure anchor behind you.","Press forward at chest height.","Control the return."]},
@@ -624,7 +624,11 @@ const REPDB_REVIEWED_IMAGE_ALIASES={
  "Banded Reverse Lunge":"bodyweight-reverse-lunge",
  "Banded Curtsy Lunge":"reverse-lunge",
  "Banded Standing Hip Extension":"glute-kickback",
- "Banded Plank Leg Raises":"plank"
+ "Banded Plank Leg Raises":"plank",
+ "Dumbbell Squat":"db-squat",
+ "Barbell Romanian Deadlift":"romanian-deadlift",
+ "Loop Band Lateral Walk":"banded-lateral-walk"
+
 };
 
 function repdbCandidates(ex){
@@ -685,7 +689,7 @@ async function loadRepdbIndex(){
  try{
    const controller=new AbortController();
    const timer=setTimeout(()=>controller.abort(),5000);
-   const response=await fetch(REPDB_DATA_URL,{signal:controller.signal,cache:"force-cache"});
+   const response=await fetch(REPDB_DATA_URL,{signal:controller.signal,cache:"no-cache"});
    clearTimeout(timer);
    if(!response.ok) throw new Error(`RepDB ${response.status}`);
    const data=await response.json();
@@ -708,15 +712,24 @@ async function loadRepdbIndex(){
 
 function imageCandidates(ex){
  const list=[];
+ const localUserImage=typeof ex.img==="string" && (ex.img.startsWith("assets/") || ex.img.startsWith("./assets/"));
 
- // Exact image selected by the user remains first priority.
- if(ex.img) list.push(ex.img);
+ // Preserve exact user-supplied local images as the highest priority.
+ if(localUserImage) list.push(ex.img);
 
- // Use only image paths explicitly supplied by the RepDB JSON dataset.
- // Do not guess filenames from Home Workout exercise names.
- if(!ex.img) list.push(...repdbCandidates(ex));
+ // Reviewed RepDB mappings must come BEFORE old generic/external mappings.
+ // v72 put RepDB behind ex.img, which allowed recycled legacy images to win.
+ if(REPDB_REVIEWED_IMAGE_ALIASES[ex.name]){
+   list.push(...repdbCandidates(ex));
+ }
 
- // Existing library sources remain as fallbacks.
+ // For exercises without a reviewed mapping, use RepDB normally.
+ if(!REPDB_REVIEWED_IMAGE_ALIASES[ex.name] && !localUserImage){
+   list.push(...repdbCandidates(ex));
+ }
+
+ // Old external ex.img values and legacy image databases are fallback only.
+ if(ex.img && !localUserImage) list.push(ex.img);
  const sourced=librarySourceData[String(ex.id)];
  if(sourced?.image) list.push(sourced.image);
  if(librarySourceImagesByName[ex.name]) list.push(librarySourceImagesByName[ex.name]);

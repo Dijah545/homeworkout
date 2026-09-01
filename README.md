@@ -552,3 +552,28 @@ Banded Glute Bridge, Banded Hip Thrust, Banded Fire Hydrant, Banded Clamshell, a
 Banded Standing Hip Abduction. Banded Monster Walk uses RepDB's Banded Sumo Walk.
 Exercises without an exact RepDB band illustration use the closest movement illustration rather than
 an unrelated band exercise. No images were generated or recreated.
+
+## v73 – Banded Image Priority Fix
+Fixed the cause of recycled images on reviewed band exercises. Legacy `ex.img` URLs were being placed
+ahead of the new RepDB band mappings, so the browser displayed the old generic image and never reached
+the correct band illustration. Reviewed RepDB mappings now take priority over legacy/external mappings,
+while exact user-supplied local images remain first priority.
+
+Verified current RepDB records include dedicated loop-band images for Banded Squat, Banded Fire Hydrant,
+Banded Clamshell, Banded Lateral Walk, Banded Glute Bridge, and other band movements.
+
+## v74 – Reviewed Manual Image Cleanup
+Audited the manually supplied local exercise images conservatively.
+
+Removed from the ZIP and switched to reviewed RepDB equivalents:
+- Dumbbell Squat → RepDB Dumbbell Squat
+- Barbell Romanian Deadlift → RepDB Romanian Deadlift
+- Loop Band Lateral Walk → RepDB Banded Lateral Walk
+
+Retained the other manually supplied images because the available database alternatives are not
+sufficiently exact in movement/equipment or represent custom app content. This includes Resistance
+Band Row, Dumbbell Bent-Over Row, Slider Reverse Lunge, Resistance Band Chest Press, Resistance Band
+Tricep Extension, Plank Shoulder Tap, Treadmill Finisher, Standing Hip Circles, Shoulder Stretch,
+and Hamstring Stretch.
+
+No replacement images were generated or recreated.
