@@ -587,3 +587,9 @@ No replacement images were generated or recreated.
 - Explicitly re-binds image fallback handlers after re-render.
 - If every image candidate fails, the app now shows a visible Exercise guide placeholder instead of a blank/broken image.
 - No exercise images were recreated.
+
+## v76 – History Month Navigation
+- Added left/right controls to move backward and forward between months in History.
+- Month and year update with the selected calendar month.
+- Tap the month/year heading to return to the current month.
+- Existing historical workout indicators and past-workout controls continue to work for the displayed month.

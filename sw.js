@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v75-repdb-reindex-rerender";
+const CACHE="home-workout-v76-history-month-navigation";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=75",
-  "./app.js?v=75",
+  "./styles.css?v=76",
+  "./app.js?v=76",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

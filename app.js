@@ -2150,6 +2150,8 @@ function renderBodyTracker(){
  document.querySelectorAll("[data-delete-metric]").forEach(btn=>btn.onclick=()=>deleteBodyMetricsEntry(btn.dataset.deleteMetric));
 }
 
+let historyMonthOffset=0;
+
 function renderHistory(){
  const weekStart=startOfCalendarWeek(new Date());
  const thisWeek=historyForWeek(weekStart);
@@ -2209,8 +2211,17 @@ function renderHistory(){
 
 
  <section class="card">
-   <div class="section-title"><h2>${new Date().toLocaleDateString(undefined,{month:"long",year:"numeric"})}</h2><small>Monthly activity</small></div>
-   ${calendarMonthMarkup(new Date().getFullYear(),new Date().getMonth())}
+   ${(()=>{
+     const now=new Date();
+     const viewed=new Date(now.getFullYear(),now.getMonth()+historyMonthOffset,1,12);
+     return `<div class="history-month-nav">
+       <button type="button" class="history-month-btn" id="historyPrevMonth" aria-label="Previous month">‹</button>
+       <button type="button" class="history-month-title" id="historyCurrentMonth" title="Return to current month">${viewed.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</button>
+       <button type="button" class="history-month-btn" id="historyNextMonth" aria-label="Next month">›</button>
+     </div>
+     <small class="history-month-caption">Monthly activity</small>
+     ${calendarMonthMarkup(viewed.getFullYear(),viewed.getMonth())}`;
+   })()}
  </section>
 
  <section class="card">
@@ -2229,6 +2240,12 @@ function renderHistory(){
  </section>`;
  const pastBtn=document.getElementById("markPastWorkout");
  if(pastBtn) pastBtn.onclick=openPastCompletionPicker;
+ const prevMonth=document.getElementById("historyPrevMonth");
+ const nextMonth=document.getElementById("historyNextMonth");
+ const currentMonth=document.getElementById("historyCurrentMonth");
+ if(prevMonth) prevMonth.onclick=()=>{historyMonthOffset--;renderHistory();};
+ if(nextMonth) nextMonth.onclick=()=>{historyMonthOffset++;renderHistory();};
+ if(currentMonth) currentMonth.onclick=()=>{historyMonthOffset=0;renderHistory();};
  document.querySelectorAll("[data-history-date]").forEach(btn=>btn.onclick=()=>{
    const date=btn.dataset.historyDate;
    const d=localDateFromISO(date);
