@@ -1039,7 +1039,7 @@ function saveCompletedWorkout(plan){
  const day=new Date().getDay(), finisher=plan.find(x=>x.isFinisher);
  const record={
    date:isoDate(),focus:workoutType(day),minutes:state.duration,exercises:plan.length,
-   restSeconds:totalLoggedRest(),restSessions:restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",
+   restSeconds:totalLoggedRest(),restSessions:restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",finisherSnapshot:finisher?{id:String(finisher.id||""),sourceExerciseId:String(finisher.sourceExerciseId||finisher.id||""),name:finisher.name||"",type:finisher.finisherType||"",minutes:Number(finisher.minutes||0),sets:finisher.sets||"",equipment:finisher.equipment||"",area:finisher.area||""}:null,
    setsCompleted:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    manuallyCompleted:true
@@ -1421,7 +1421,7 @@ function markPastWorkoutCompleted(date){
    exercises:plan.length,
    restSeconds:0,
    restSessions:0,
-   treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",
+   treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",finisherSnapshot:finisher?{id:String(finisher.id||""),sourceExerciseId:String(finisher.sourceExerciseId||finisher.id||""),name:finisher.name||"",type:finisher.finisherType||"",minutes:Number(finisher.minutes||0),sets:finisher.sets||"",equipment:finisher.equipment||"",area:finisher.area||""}:null,
    setsCompleted:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    retroactive:true
@@ -2291,7 +2291,7 @@ function renderHistory(){
          <div>
            <h3>${h.focus}</h3>
            <p>${new Date(h.date+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})} · ${h.minutes} min · ${h.exercises} exercises</p>
-           <p>Sets: ${h.setsCompleted??0}/${h.setsPlanned??0} completed · Rest: ${formatShort(h.restSeconds||0)} across ${h.restSessions||0} rest periods · Finisher: ${h.finisherMinutes??h.treadmillMinutes??0} min${h.finisherName?` (${h.finisherName})`:""}</p>
+           <p>Sets: ${h.setsCompleted??0}/${h.setsPlanned??0} completed · Rest: ${formatShort(h.restSeconds||0)} across ${h.restSessions||0} rest periods · Finisher: ${h.finisherSnapshot?.minutes??h.finisherMinutes??h.treadmillMinutes??0} min${(h.finisherSnapshot?.name||h.finisherName)?` (${h.finisherSnapshot?.name||h.finisherName}${(h.finisherSnapshot?.type||h.finisherType)?` · ${h.finisherSnapshot?.type||h.finisherType}`:""})`:""}</p>
          </div>
        </div>`).join(""):
      `<div class="empty">Complete a workout and it will appear here.</div>`}
@@ -2572,14 +2572,14 @@ function showWorkoutSummary(record,suggestions=[]){
      <div><b>${record.minutes}</b><span>Minutes</span></div>
      <div><b>${record.exercises}</b><span>Exercises</span></div>
      <div><b>${record.setsCompleted}/${record.setsPlanned}</b><span>Sets</span></div>
-     <div><b>${record.finisherMinutes??record.treadmillMinutes??0}</b><span>Finisher</span></div>
+     <div><b>${record.finisherSnapshot?.minutes??record.finisherMinutes??record.treadmillMinutes??0}</b><span>Finisher</span></div>
      <div><b>${formatShort(record.restSeconds||0)}</b><span>Rest</span></div>
    </div>
    ${progressionSuggestionMarkup(suggestions)}
    <div class="rating-block"><h3>How did the workout feel?</h3>
      <div class="rating-buttons">${["Easy","Good","Hard","Too Hard"].map(x=>`<button type="button" data-workout-rating="${x}">${x}</button>`).join("")}</div>
    </div>
-   ${((record.finisherMinutes??record.treadmillMinutes)||0)>0?`<div class="rating-block"><h3>${record.finisherName||"Finisher"}</h3>
+   ${((record.finisherSnapshot?.minutes??record.finisherMinutes??record.treadmillMinutes)||0)>0?`<div class="rating-block"><h3>${record.finisherSnapshot?.name||record.finisherName||"Finisher"}</h3>
      <div class="rating-buttons">${["Too Easy","Good","Too Hard"].map(x=>`<button type="button" data-treadmill-rating="${x}">${x}</button>`).join("")}</div>
    </div>`:""}
    <button class="primary" id="summaryDone">Done</button>
@@ -2597,8 +2597,8 @@ function exportFullBackup(){
  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`home-workout-backup-${isoDate()}.json`;a.click();URL.revokeObjectURL(a.href);
 }
 function exportHistoryCSV(){
- const rows=[["Date","Focus","Minutes","Exercises","Sets Completed","Sets Planned","Rest Seconds","Finisher Minutes","Finisher Name","Rating"]];
- state.history.forEach(h=>rows.push([h.date,h.focus,h.minutes,h.exercises,h.setsCompleted??"",h.setsPlanned??"",h.restSeconds??0,h.finisherMinutes??h.treadmillMinutes??0,h.finisherName??"",h.rating??""]));
+ const rows=[["Date","Focus","Minutes","Exercises","Sets Completed","Sets Planned","Rest Seconds","Finisher Minutes","Finisher Name","Finisher Type","Rating"]];
+ state.history.forEach(h=>rows.push([h.date,h.focus,h.minutes,h.exercises,h.setsCompleted??"",h.setsPlanned??"",h.restSeconds??0,h.finisherSnapshot?.minutes??h.finisherMinutes??h.treadmillMinutes??0,h.finisherSnapshot?.name??h.finisherName??"",h.finisherSnapshot?.type??h.finisherType??"",h.rating??""]));
  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
  const blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`home-workout-history-${isoDate()}.csv`;a.click();URL.revokeObjectURL(a.href);
 }
@@ -2900,7 +2900,7 @@ function completeWorkout(plan,totalRest,restSessions){
  const day=new Date().getDay(), finisher=plan.find(x=>x.isFinisher);
  const record={
    date:isoDate(),focus:workoutType(day),minutes:state.duration,exercises:plan.length,
-   restSeconds:totalRest+totalLoggedRest(),restSessions:restSessions+restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",
+   restSeconds:totalRest+totalLoggedRest(),restSessions:restSessions+restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",finisherSnapshot:finisher?{id:String(finisher.id||""),sourceExerciseId:String(finisher.sourceExerciseId||finisher.id||""),name:finisher.name||"",type:finisher.finisherType||"",minutes:Number(finisher.minutes||0),sets:finisher.sets||"",equipment:finisher.equipment||"",area:finisher.area||""}:null,
    setsCompleted:plan.reduce((sum,ex)=>sum+Object.values((state.setProgress||{})[progressKey(ex,isoDate())]||{}).filter(Boolean).length,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0)
  };

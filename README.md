@@ -601,3 +601,9 @@ No replacement images were generated or recreated.
 - Custom finishers support 5, 10, 15, or 20 minute durations and stay last in the workout.
 - Treadmill remains the default for existing users and keeps the dynamic 10–15 minute treadmill plan.
 - History and workout summaries now show the selected finisher rather than assuming every finisher is treadmill-based.
+
+## v78 – Finisher History Snapshots
+- Every completed workout now saves the exact finisher used on that workout date.
+- Snapshot includes finisher name, type, duration, exercise/source ID, equipment, area, and set/plan description.
+- Changing the finisher later does not rewrite prior History entries.
+- History and CSV export read the saved snapshot first while remaining compatible with older v77 History records.
