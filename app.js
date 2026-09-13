@@ -318,6 +318,7 @@ const librarySourceImagesByName={"90/90 Hamstring":"https://raw.githubuserconten
 const exerciseImages={"pushup":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","dbsquat":null,"kbswing":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg","bandrow":null,"jumprope":null,"glutebridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","climbers":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","stepups":null,"sliders":null,"dbpress":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg","bentrow":null,"rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg","bike":null,"bandwalk":null,"deadbug":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg","sliderlunge":null,"bandpress":null,"db-goblet-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg","db-front-squat":null,"db-sumo-squat":null,"db-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg","db-stiff-leg-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg","db-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-forward-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-walking-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-lateral-lunge":null,"db-bulgarian-split-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Split_Squat/0.jpg","db-step-up":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Step_Ups/0.jpg","db-glute-bridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg","db-hip-thrust":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg","db-calf-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Calf_Raise/0.jpg","db-single-leg-rdl":null,"db-chest-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg","db-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg","db-chest-fly":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Flyes/0.jpg","db-shoulder-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg","db-arnold-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arnold_Dumbbell_Press/0.jpg","db-front-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Dumbbell_Raise/0.jpg","db-lateral-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg","db-bent-over-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Two-Dumbbell_Row/0.jpg","db-single-arm-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg","db-reverse-fly":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Flyes/0.jpg","db-pullover":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent-Arm_Dumbbell_Pullover/0.jpg","db-bicep-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bicep_Curl/0.jpg","db-hammer-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg","db-concentration-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Concentration_Curls/0.jpg","db-tricep-extension":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Triceps_Extension/0.jpg","db-tricep-kickback":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Tricep_Dumbbell_Kickback/0.jpg","db-skull-crusher":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_One-Arm_Triceps_Extension/0.jpg","db-thruster":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg","db-squat-to-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg","db-clean-press":null,"db-deadlift-row":null,"db-renegade-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Renegade_Row/0.jpg","db-farmers-carry":null,"db-reverse-lunge-curl":null,"db-rdl-row":null,"bb-back-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Squat/0.jpg","bb-front-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Barbell_Squat/0.jpg","bb-sumo-squat":null,"bb-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg","bb-conventional-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg","bb-good-morning":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Good_Morning/0.jpg","bb-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Lunge/0.jpg","bb-hip-thrust":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg","bb-glute-bridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg","bb-calf-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Barbell_Calf_Raise/0.jpg","bb-bent-over-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg","bb-overhead-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Military_Press/0.jpg","bb-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Floor_Press/0.jpg","bb-bicep-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg","bb-upright-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Upright_Barbell_Row/0.jpg","bb-close-grip-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Barbell_Bench_Press/0.jpg","bb-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg","bb-clean-press":null,"bb-thruster":null,"bb-squat-to-press":null,"kb-goblet-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg","kb-sumo-squat":null,"kb-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg","kb-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg","kb-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pass_Between_The_Legs/0.jpg","kb-lateral-lunge":null,"kb-single-leg-deadlift":null,"kb-swing":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg","kb-clean":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean/0.jpg","kb-clean-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean_And_Jerk/0.jpg","kb-thruster":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Thruster/0.jpg","kb-high-pull":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pirate_Ships/0.jpg","kb-deadlift-high-pull":null,"kb-squat-press":null,"kb-farmers-carry":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Farmers_Walk/0.jpg","kb-figure-eight":null,"loop-0":null,"loop-1":null,"loop-2":null,"loop-3":null,"loop-4":null,"loop-5":null,"loop-6":null,"loop-7":null,"loop-8":null,"loop-9":null,"loop-10":null,"loop-11":null,"loop-12":null,"loop-13":null,"loop-14":null,"loop-15":null,"loop-16":null,"loop-core-0":null,"loop-core-1":null,"loop-core-2":null,"loop-core-3":null,"tube-u-0":null,"tube-u-1":null,"tube-u-2":null,"tube-u-3":null,"tube-u-4":null,"tube-u-5":null,"tube-u-6":null,"tube-u-7":null,"tube-u-8":null,"tube-u-9":null,"tube-u-10":null,"tube-u-11":null,"tube-u-12":null,"tube-u-13":null,"tube-l-0":null,"tube-l-1":null,"tube-l-2":null,"tube-l-3":null,"tube-l-4":null,"tube-l-5":null,"tube-c-0":null,"tube-c-1":null,"tube-c-2":null,"tube-c-3":null,"slider-c-0":null,"slider-c-1":null,"slider-c-2":null,"slider-c-3":null,"slider-c-4":null,"slider-c-5":null,"slider-c-6":null,"slider-c-7":null,"slider-l-0":null,"slider-l-1":null,"slider-l-2":null,"slider-l-3":null,"slider-l-4":null,"slider-l-5":null,"slider-l-6":null,"slider-f-0":null,"slider-f-1":null,"slider-f-2":null,"rope-0":null,"rope-1":null,"rope-2":null,"rope-3":null,"rope-4":null,"rope-5":null,"rope-6":null,"rope-7":null,"rope-8":null,"rope-9":null,"rope-int-0":null,"rope-int-1":null,"rope-int-2":null,"rope-int-3":null,"rope-int-4":null,"tm-w-0":null,"tm-w-1":null,"tm-w-2":null,"tm-w-3":null,"tm-w-4":null,"tm-w-5":null,"tm-r-0":null,"tm-r-1":null,"tm-r-2":null,"tm-r-3":null,"tm-r-4":null,"stepper-regular":null,"stepper-fast":null,"stepper-slow-resistance":null,"stepper-interval":null,"stepper-deep":null,"stepper-half-squat":null,"stepper-bicep-curl":null,"stepper-hammer-curl":null,"stepper-shoulder-press":null,"stepper-front-raise":null,"stepper-lateral-raise":null,"stepper-upright-row":null,"stepper-tricep-extension":null,"stepper-row":null,"bike-easy":null,"bike-moderate":null,"bike-high-resistance":null,"bike-low-resistance-speed":null,"bike-hill-climb":null,"bike-sprint-intervals":null,"bike-resistance-intervals":null,"bike-recovery":null,"mat-l-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","mat-l-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","mat-l-2":null,"mat-l-3":null,"mat-l-4":null,"mat-l-5":null,"mat-l-6":null,"mat-l-7":null,"mat-l-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","mat-l-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Single_Leg_Glute_Bridge/0.jpg","mat-l-10":null,"mat-l-11":null,"mat-l-12":null,"mat-l-13":null,"mat-l-14":null,"mat-l-15":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg","mat-l-16":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wall_Squat/0.jpg","mat-u-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","mat-u-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","mat-u-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Push-Up/0.jpg","mat-u-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Push-Up/0.jpg","mat-u-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Push-Up/0.jpg","mat-u-5":null,"mat-u-6":null,"mat-u-7":null,"mat-u-8":null,"mat-u-9":null,"mat-cb-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Crunches/0.jpg","mat-cb-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Crunch/0.jpg","mat-cb-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg","mat-cb-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg","mat-cb-4":null,"mat-cb-5":null,"mat-cb-6":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg","mat-cb-7":null,"mat-cb-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg","mat-cb-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg","mat-cb-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Bridge/0.jpg","mat-cb-11":null,"mat-ca-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Flat_Bench_Lying_Leg_Raise/0.jpg","mat-ca-1":null,"mat-ca-2":null,"mat-ca-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Russian_Twist/0.jpg","mat-ca-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/V-Ups/0.jpg","mat-ca-5":null,"mat-ca-6":null,"mat-ca-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","mat-ca-8":null,"mat-ca-9":null,"mat-ca-10":null,"mat-ca-11":null,"hiit-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Jumping_Jack/0.jpg","hiit-1":null,"hiit-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/High_Knees/0.jpg","hiit-3":null,"hiit-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","hiit-5":null,"hiit-6":null,"hiit-7":null,"hiit-8":null,"hiit-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg","hiit-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg","hiit-11":null,"hiit-12":null,"hiit-13":null,"hiit-14":null,"hiit-15":null,"warm-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/0.jpg","warm-1":null,"warm-2":null,"warm-3":null,"warm-4":null,"warm-5":null,"warm-6":null,"warm-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Worlds_Greatest_Stretch/0.jpg","warm-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg","warm-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg","warm-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","warm-11":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","warm-12":null,"cool-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hamstring_And_Calf_Stretch/0.jpg","cool-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Quadriceps/0.jpg","cool-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kneeling_Hip_Flexor/0.jpg","cool-3":null,"cool-4":null,"cool-5":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Childs_Pose/0.jpg","cool-6":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cobra/0.jpg","cool-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Doorway_Chest_Stretch/0.jpg","cool-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cross_Body_Shoulder_Stretch/0.jpg","cool-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Stretch/0.jpg","cool-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Stretch_Hands_Against_Wall/0.jpg","cool-11":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg","warm-90-90-hamstring":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/90_90_Hamstring/0.jpg","warm-standing-hip-circles":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hip_Circles/0.jpg","warm-standing-hip-flexors":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hip_Flexors/0.jpg","warm-shoulder-stretch":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Shoulder_Stretch/0.jpg","warm-knee-across-body":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Knee_Across_The_Body/0.jpg"};
 
 const defaults={bodyMetrics:[],bodyMetricUnit:"lb",measurementUnit:"in",swapChoices:{},exercisePerformance:{},exerciseProfiles:{},workoutRatings:{},activeWorkout:null,todayOrder:{},planSeed:0,
+ finisherMode:"treadmill",finisherExerciseId:"",finisherMinutes:10,
  theme:"dark",workoutDays:4,duration:45,difficulty:"Moderate",restDays:[0,6],
  equipment:["Adjustable Dumbbells","Barbell","Kettlebell","Skipping Rope","Disc Sliders","Treadmill","Mini Stepper","Resistance Loop Bands","Resistance/Toning Tubes","Stationary Bike","Exercise Mat"],
  history:[],selectedDay:new Date().getDay(),restSeconds:45,setProgress:{},restLogs:{}
@@ -801,6 +802,29 @@ function dateForWeekday(day){
 }
 
 function allowed(ex){return state.equipment.includes(ex.equipment)}
+function finisherEquipmentAllowed(ex){
+ if(!ex) return false;
+ if(allowed(ex)) return true;
+ const eq=String(ex.equipment||"");
+ if(eq.includes("Exercise Mat") && state.equipment.includes("Exercise Mat")) return true;
+ if(eq.includes("Bodyweight")) return true;
+ return false;
+}
+function finisherChoices(mode=state.finisherMode){
+ if(!["cardio","core"].includes(mode)) return [];
+ const wanted=mode==="cardio"?"Cardio":"Core";
+ return exercises.filter(ex=>ex && !ex.area.includes("Mobility") && ex.area.includes(wanted) && finisherEquipmentAllowed(ex) && ex.equipment!=="Treadmill");
+}
+function selectedFinisherBase(){
+ const choices=finisherChoices();
+ if(!choices.length) return null;
+ return choices.find(ex=>String(ex.id)===String(state.finisherExerciseId))||choices[0];
+}
+function configuredFinisherMinutes(){
+ if(state.finisherMode==="none") return 0;
+ if(state.finisherMode==="treadmill") return state.equipment.includes("Treadmill")?12:0;
+ return Math.max(5,Math.min(20,Number(state.finisherMinutes)||10));
+}
 function isRest(day){return state.restDays.includes(day)}
 function workoutType(day){
  const types=["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Full Body","Upper Body","Lower Body & Core"];
@@ -889,7 +913,7 @@ function treadmillPlanForDay(day,strengthPlan=[]){
 function treadmillMinutes(day=new Date().getDay(),strengthPlan=[]){
  return treadmillPlanForDay(day,strengthPlan).minutes;
 }
-function strengthMinutes(){return Math.max(10,state.duration-12)}
+function strengthMinutes(){return Math.max(10,state.duration-configuredFinisherMinutes())}
 function strengthExerciseCount(){
  return Math.max(2,Math.min(9,Math.round(strengthMinutes()/6)));
 }
@@ -904,12 +928,35 @@ function treadmillExercise(day=new Date().getDay(),strengthPlan=[]){
    reason:p.reason,
    segments:p.segments,
    isFinisher:true,
+   finisherType:"Treadmill",
    tips:[
      p.reason,
      "Use the suggested speeds as a starting point and adjust down if needed.",
      "All suggested speeds stay within your treadmill range of 0.6–6.2 and use 0.2 increments."
    ]
  };
+}
+function customFinisherExercise(){
+ const base=selectedFinisherBase();
+ if(!base) return null;
+ const minutes=Math.max(5,Math.min(20,Number(state.finisherMinutes)||10));
+ const category=state.finisherMode==="core"?"Core":"Cardio";
+ return {
+   ...base,
+   id:`custom-finisher-${base.id}`,
+   sourceExerciseId:String(base.id),
+   name:`${base.name} Finisher`,
+   sets:`${minutes} min · ${category} finisher`,
+   minutes,
+   isFinisher:true,
+   finisherType:category,
+   tips:[...(base.tips||[]),`Use ${base.name} as your ${minutes}-minute ${category.toLowerCase()} finisher. Work at a pace you can maintain with good form.`]
+ };
+}
+function finisherForDay(day=new Date().getDay(),strengthPlan=[]){
+ if(state.finisherMode==="none") return null;
+ if(state.finisherMode==="treadmill") return state.equipment.includes("Treadmill")?treadmillExercise(day,strengthPlan):null;
+ return customFinisherExercise();
 }
 function planForDay(day){
  if(isRest(day)) return [];
@@ -929,8 +976,11 @@ function planForDay(day){
    if(other.length){pool.push(other.shift());more=true}
  }
  pool=[...pool,...rotate(filtered.filter(x=>!ranked.includes(x)),day*3+seed*5)];
+ const selectedBase=(state.finisherMode==="cardio"||state.finisherMode==="core")?selectedFinisherBase():null;
+ if(selectedBase) pool=pool.filter(x=>String(x.id)!==String(selectedBase.id));
  const strength=pool.slice(0,strengthExerciseCount());
- return [...strength,treadmillExercise(day,strength)];
+ const finisher=finisherForDay(day,strength);
+ return finisher?[...strength,finisher]:strength;
 }
 function themeApply(){
  document.documentElement.dataset.theme=state.theme==="system"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):state.theme;
@@ -950,7 +1000,7 @@ document.getElementById("themeQuick").onclick=()=>{state.theme=(document.documen
 function todayLabel(day){return DAY_NAMES[day]}
 function durationControl(){
  return `<div class="duration-control">
-   <div><strong>Workout Duration</strong><small>Total time includes the treadmill finisher</small></div>
+   <div><strong>Workout Duration</strong><small>Total time includes your selected finisher</small></div>
    <div class="duration-input-wrap">
      <button class="duration-step" data-delta="-5">−</button>
      <input id="todayDuration" type="number" min="20" max="90" step="5" value="${state.duration}">
@@ -986,10 +1036,10 @@ function saveCompletedWorkout(plan){
  clearActiveWorkout();
  if(workoutCompletedOn()){showToast("Today's workout is already marked complete");return;}
  markAllSetsComplete(plan);
- const day=new Date().getDay(), treadmill=plan.find(x=>x.isFinisher);
+ const day=new Date().getDay(), finisher=plan.find(x=>x.isFinisher);
  const record={
    date:isoDate(),focus:workoutType(day),minutes:state.duration,exercises:plan.length,
-   restSeconds:totalLoggedRest(),restSessions:restEntries().length,treadmillMinutes:treadmill?.minutes||0,
+   restSeconds:totalLoggedRest(),restSessions:restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",
    setsCompleted:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    manuallyCompleted:true
@@ -1363,7 +1413,7 @@ function markPastWorkoutCompleted(date){
    return;
  }
  const plan=planForDay(day);
- const treadmill=plan.find(x=>x.isFinisher);
+ const finisher=plan.find(x=>x.isFinisher);
  state.history.push({
    date,
    focus:workoutType(day),
@@ -1371,7 +1421,7 @@ function markPastWorkoutCompleted(date){
    exercises:plan.length,
    restSeconds:0,
    restSessions:0,
-   treadmillMinutes:treadmill?.minutes||0,
+   treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",
    setsCompleted:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    retroactive:true
@@ -1472,7 +1522,7 @@ function renderToday(){
    <section class="card heatmap-card">
    ${femaleHeatmap(plan)}</section>
    <section class="card">${durationControl()}
-     <div class="duration-note">Changing the time automatically adds or removes strength exercises. Today's treadmill finish remains last.</div>
+     <div class="duration-note">Changing the time automatically adds or removes strength exercises. Your selected finisher remains last.</div>
    </section>
    ${warmupMarkup(warmup)}
    <section class="card rest-tracker-card"><div id="todayRestTracker"></div></section>
@@ -1501,7 +1551,7 @@ function renderToday(){
        ${plan.map((ex,i)=>todayReorderRow(ex,i,movableCount,isoDate())).join("")}
      </div>
 
-     ${finisher?`<div class="today-finisher-details">${treadmillPlanMarkup(finisher)}</div>`:""}
+     ${finisher?`<div class="today-finisher-details">${finisher.id==="treadmill-finisher"?treadmillPlanMarkup(finisher):`<div class="custom-finisher-plan"><div><span>${finisher.finisherType||"Custom"} finish</span><strong>${finisher.name}</strong></div><small>${finisher.minutes||state.finisherMinutes} min · Tap the exercise above for instructions.</small></div>`}</div>`:""}
 
      <div style="height:12px"></div>
      ${workoutCompletedOn()?
@@ -1759,6 +1809,14 @@ function getExercise(id){
  if(id==="treadmill-finisher"){
    const day=state.selectedDay??new Date().getDay();
    return treadmillExercise(day,[]);
+ }
+ if(String(id).startsWith("custom-finisher-")){
+   const sourceId=String(id).replace("custom-finisher-","");
+   const base=exerciseRegistry().get(sourceId)||selectedFinisherBase();
+   if(base){
+     const minutes=Math.max(5,Math.min(20,Number(state.finisherMinutes)||10));
+     return {...base,id:String(id),name:`${base.name} Finisher`,sets:`${minutes} min · ${(state.finisherMode==="core"?"Core":"Cardio")} finisher`,minutes,isFinisher:true,finisherType:state.finisherMode==="core"?"Core":"Cardio"};
+   }
  }
  return exerciseRegistry().get(String(id))||null;
 }
@@ -2233,7 +2291,7 @@ function renderHistory(){
          <div>
            <h3>${h.focus}</h3>
            <p>${new Date(h.date+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})} · ${h.minutes} min · ${h.exercises} exercises</p>
-           <p>Sets: ${h.setsCompleted??0}/${h.setsPlanned??0} completed · Rest: ${formatShort(h.restSeconds||0)} across ${h.restSessions||0} rest periods · Treadmill: ${h.treadmillMinutes||0} min</p>
+           <p>Sets: ${h.setsCompleted??0}/${h.setsPlanned??0} completed · Rest: ${formatShort(h.restSeconds||0)} across ${h.restSessions||0} rest periods · Finisher: ${h.finisherMinutes??h.treadmillMinutes??0} min${h.finisherName?` (${h.finisherName})`:""}</p>
          </div>
        </div>`).join(""):
      `<div class="empty">Complete a workout and it will appear here.</div>`}
@@ -2264,9 +2322,13 @@ function renderSettings(){
  <section class="card"><div class="section-title"><h2>Workout Preferences</h2></div>
  <div class="setting-row"><div><label>Workout days per week</label><small>Minimum 4</small></div><input id="days" type="number" min="4" max="7" value="${state.workoutDays}"></div>
  <div class="setting-row"><div><label>Default workout duration</label><small>20–90 minutes in 5-minute steps</small></div><input id="durationSetting" type="number" min="20" max="90" step="5" value="${state.duration}"></div>
- <div class="setting-row"><div><label>Treadmill finisher</label><small>Included in total workout time</small></div><strong>${treadmillMinutes()} min</strong></div>
  <div class="setting-row"><div><label>Difficulty</label><small>Controls pacing guidance</small></div><select id="difficulty">${["Beginner","Moderate","Advanced"].map(x=>`<option ${x===state.difficulty?"selected":""}>${x}</option>`).join("")}</select></div>
  <div class="setting-row"><div><label>Default rest between sets</label><small>Actual rest time is recorded during workouts</small></div><select id="restSec">${[30,45,60,90].map(n=>`<option value="${n}" ${n===state.restSeconds?"selected":""}>${n} sec</option>`).join("")}</select></div></section>
+ <section class="card"><div class="section-title"><h2>Finisher</h2><small>Choose what ends each workout</small></div>
+ <div class="setting-row"><div><label>Finisher type</label><small>Use treadmill, cardio, core, or turn it off</small></div><select id="finisherMode"><option value="treadmill" ${state.finisherMode==="treadmill"?"selected":""}>Treadmill</option><option value="cardio" ${state.finisherMode==="cardio"?"selected":""}>Cardio</option><option value="core" ${state.finisherMode==="core"?"selected":""}>Core</option><option value="none" ${state.finisherMode==="none"?"selected":""}>No finisher</option></select></div>
+ ${state.finisherMode==="treadmill"?`<div class="setting-row"><div><label>Treadmill finisher</label><small>${state.equipment.includes("Treadmill")?"Dynamic 10–15 minute finish based on the workout":"Treadmill is not selected under Your Equipment"}</small></div><strong>${state.equipment.includes("Treadmill")?treadmillMinutes()+" min":"Off"}</strong></div>`:""}
+ ${(state.finisherMode==="cardio"||state.finisherMode==="core")?(()=>{const choices=finisherChoices(state.finisherMode);const selected=choices.find(x=>String(x.id)===String(state.finisherExerciseId))||choices[0];return `<div class="setting-row finisher-choice-row"><div><label>${state.finisherMode==="core"?"Core":"Cardio"} exercise</label><small>Only exercises compatible with your selected equipment are shown</small></div><select id="finisherExercise">${choices.length?choices.map(x=>`<option value="${x.id}" ${selected&&String(x.id)===String(selected.id)?"selected":""}>${x.name} · ${x.equipment}</option>`).join(""):`<option value="">No compatible exercises available</option>`}</select></div><div class="setting-row"><div><label>Finisher duration</label><small>Included in your total workout time</small></div><select id="finisherMinutes">${[5,10,15,20].map(n=>`<option value="${n}" ${Number(state.finisherMinutes||10)===n?"selected":""}>${n} min</option>`).join("")}</select></div>`})():""}
+ </section>
  <section class="card"><div class="section-title"><h2>Choose Rest Days</h2><small>${state.restDays.length} selected</small></div><div class="rest-days">${DAYS.map((d,i)=>`<button class="rest-day ${isRest(i)?"selected":""}" data-rest="${i}">${d}</button>`).join("")}</div><p style="font-size:11px;color:var(--muted);margin:12px 0 0">The app will keep at least 4 workout days per week.</p></section>
  <section class="card"><div class="section-title"><h2>Body Tracker Units</h2></div>
  <div class="setting-row"><div><label>Weight unit</label><small>Used in Body Tracker</small></div><select id="bodyWeightUnit"><option value="lb" ${state.bodyMetricUnit==="lb"?"selected":""}>lb</option><option value="kg" ${state.bodyMetricUnit==="kg"?"selected":""}>kg</option></select></div>
@@ -2288,6 +2350,19 @@ function renderSettings(){
  document.getElementById("durationSetting").onchange=e=>{state.duration=Math.max(20,Math.min(90,Math.round((Number(e.target.value)||45)/5)*5));save();showToast(`Workout duration: ${state.duration} min`);renderSettings()};
  document.getElementById("difficulty").onchange=e=>{state.difficulty=e.target.value;save()};
  document.getElementById("restSec").onchange=e=>{state.restSeconds=Number(e.target.value);save()};
+ const finisherMode=document.getElementById("finisherMode");
+ if(finisherMode) finisherMode.onchange=e=>{
+   state.finisherMode=e.target.value;
+   if(state.finisherMode==="cardio"||state.finisherMode==="core"){
+     const choices=finisherChoices(state.finisherMode);
+     if(!choices.some(x=>String(x.id)===String(state.finisherExerciseId))) state.finisherExerciseId=choices[0]?.id||"";
+   }
+   save();renderSettings();
+ };
+ const finisherExercise=document.getElementById("finisherExercise");
+ if(finisherExercise) finisherExercise.onchange=e=>{state.finisherExerciseId=e.target.value;save();showToast("Finisher updated")};
+ const finisherMinutes=document.getElementById("finisherMinutes");
+ if(finisherMinutes) finisherMinutes.onchange=e=>{state.finisherMinutes=Number(e.target.value)||10;save();showToast(`Finisher: ${state.finisherMinutes} min`)};
  const bodyWeightUnit=document.getElementById("bodyWeightUnit");
  if(bodyWeightUnit) bodyWeightUnit.onchange=e=>{state.bodyMetricUnit=e.target.value;save()};
  const bodyMeasurementUnit=document.getElementById("bodyMeasurementUnit");
@@ -2497,14 +2572,14 @@ function showWorkoutSummary(record,suggestions=[]){
      <div><b>${record.minutes}</b><span>Minutes</span></div>
      <div><b>${record.exercises}</b><span>Exercises</span></div>
      <div><b>${record.setsCompleted}/${record.setsPlanned}</b><span>Sets</span></div>
-     <div><b>${record.treadmillMinutes||0}</b><span>Treadmill</span></div>
+     <div><b>${record.finisherMinutes??record.treadmillMinutes??0}</b><span>Finisher</span></div>
      <div><b>${formatShort(record.restSeconds||0)}</b><span>Rest</span></div>
    </div>
    ${progressionSuggestionMarkup(suggestions)}
    <div class="rating-block"><h3>How did the workout feel?</h3>
      <div class="rating-buttons">${["Easy","Good","Hard","Too Hard"].map(x=>`<button type="button" data-workout-rating="${x}">${x}</button>`).join("")}</div>
    </div>
-   ${(record.treadmillMinutes||0)>0?`<div class="rating-block"><h3>Treadmill finisher</h3>
+   ${((record.finisherMinutes??record.treadmillMinutes)||0)>0?`<div class="rating-block"><h3>${record.finisherName||"Finisher"}</h3>
      <div class="rating-buttons">${["Too Easy","Good","Too Hard"].map(x=>`<button type="button" data-treadmill-rating="${x}">${x}</button>`).join("")}</div>
    </div>`:""}
    <button class="primary" id="summaryDone">Done</button>
@@ -2522,8 +2597,8 @@ function exportFullBackup(){
  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`home-workout-backup-${isoDate()}.json`;a.click();URL.revokeObjectURL(a.href);
 }
 function exportHistoryCSV(){
- const rows=[["Date","Focus","Minutes","Exercises","Sets Completed","Sets Planned","Rest Seconds","Treadmill Minutes","Rating"]];
- state.history.forEach(h=>rows.push([h.date,h.focus,h.minutes,h.exercises,h.setsCompleted??"",h.setsPlanned??"",h.restSeconds??0,h.treadmillMinutes??0,h.rating??""]));
+ const rows=[["Date","Focus","Minutes","Exercises","Sets Completed","Sets Planned","Rest Seconds","Finisher Minutes","Finisher Name","Rating"]];
+ state.history.forEach(h=>rows.push([h.date,h.focus,h.minutes,h.exercises,h.setsCompleted??"",h.setsPlanned??"",h.restSeconds??0,h.finisherMinutes??h.treadmillMinutes??0,h.finisherName??"",h.rating??""]));
  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
  const blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`home-workout-history-${isoDate()}.csv`;a.click();URL.revokeObjectURL(a.href);
 }
@@ -2733,7 +2808,7 @@ function startWorkout(plan,resumeState=null){
      <div style="height:12px"></div>
      <button class="secondary" id="restBtn" style="width:100%">${phase==="rest"?"End Rest":"Start Rest ("+state.restSeconds+"s)"}</button>
      <p style="text-align:center;color:var(--muted);font-size:11px;margin:12px 0 0">
-       Exercise ${idx+1} of ${plan.length}${ex.isFinisher?" · Treadmill finisher":""}
+       Exercise ${idx+1} of ${plan.length}${ex.isFinisher?` · ${ex.finisherType||"Finisher"} finisher`:""}
      </p>
    </div>`;
 
@@ -2822,10 +2897,10 @@ function formatShort(sec){const m=Math.floor(sec/60),s=sec%60;return m?`${m}m ${
 function completeWorkout(plan,totalRest,restSessions){
  clearActiveWorkout();
  if(workoutCompletedOn()){closeModal();showToast("Today's workout is already marked complete");route("history");return;}
- const day=new Date().getDay(), treadmill=plan.find(x=>x.isFinisher);
+ const day=new Date().getDay(), finisher=plan.find(x=>x.isFinisher);
  const record={
    date:isoDate(),focus:workoutType(day),minutes:state.duration,exercises:plan.length,
-   restSeconds:totalRest+totalLoggedRest(),restSessions:restSessions+restEntries().length,treadmillMinutes:treadmill?.minutes||0,
+   restSeconds:totalRest+totalLoggedRest(),restSessions:restSessions+restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",
    setsCompleted:plan.reduce((sum,ex)=>sum+Object.values((state.setProgress||{})[progressKey(ex,isoDate())]||{}).filter(Boolean).length,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0)
  };

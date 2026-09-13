@@ -593,3 +593,11 @@ No replacement images were generated or recreated.
 - Month and year update with the selected calendar month.
 - Tap the month/year heading to return to the current month.
 - Existing historical workout indicators and past-workout controls continue to work for the displayed month.
+
+## v77 – Flexible Finishers
+- Added a Finisher section in Settings.
+- Users can choose Treadmill, Cardio, Core, or No Finisher.
+- Cardio/Core finishers can be selected from exercises compatible with the user's selected equipment.
+- Custom finishers support 5, 10, 15, or 20 minute durations and stay last in the workout.
+- Treadmill remains the default for existing users and keeps the dynamic 10–15 minute treadmill plan.
+- History and workout summaries now show the selected finisher rather than assuming every finisher is treadmill-based.
