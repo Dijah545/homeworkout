@@ -863,3 +863,6 @@ body:has(.today-fixed-actions) main{
 .custom-finisher-plan small{font-size:11px;color:var(--muted);text-align:right;max-width:45%}
 .finisher-choice-row select{max-width:58%;min-width:180px}
 @media(max-width:520px){.custom-finisher-plan{align-items:flex-start;flex-direction:column}.custom-finisher-plan small{max-width:none;text-align:left}.finisher-choice-row{align-items:flex-start;flex-direction:column}.finisher-choice-row select{max-width:100%;width:100%}}
+
+/* v79 automatic finisher */
+.finisher-auto-note{font-size:11px;color:var(--muted);margin:8px 0 0;line-height:1.45}

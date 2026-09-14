@@ -607,3 +607,11 @@ No replacement images were generated or recreated.
 - Snapshot includes finisher name, type, duration, exercise/source ID, equipment, area, and set/plan description.
 - Changing the finisher later does not rewrite prior History entries.
 - History and CSV export read the saved snapshot first while remaining compatible with older v77 History records.
+
+## v79 – Automatic Finishers
+- Added Automatic / Surprise Me as a finisher type.
+- Automatically chooses a compatible Cardio or Core exercise using the equipment selected in Settings.
+- Automatically chooses a 5, 10, 15, or 20 minute duration.
+- The generated finisher is held for that workout day rather than changing whenever the screen rerenders.
+- Added Generate another when the user wants a different suggestion.
+- Completed automatic finishers use the v78 History snapshot system, so later regeneration does not alter past History.
