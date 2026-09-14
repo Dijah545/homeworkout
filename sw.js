@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v79-auto-finishers";
+const CACHE="home-workout-v80-auto-finisher-category";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=79",
-  "./app.js?v=79",
+  "./styles.css?v=80",
+  "./app.js?v=80",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

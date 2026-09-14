@@ -615,3 +615,6 @@ No replacement images were generated or recreated.
 - The generated finisher is held for that workout day rather than changing whenever the screen rerenders.
 - Added Generate another when the user wants a different suggestion.
 - Completed automatic finishers use the v78 History snapshot system, so later regeneration does not alter past History.
+
+## v80 – Automatic Finisher Category
+Automatic generation now requires Cardio or Core selection. Generate Another remains within that category. Equipment filtering and History snapshots are retained.
