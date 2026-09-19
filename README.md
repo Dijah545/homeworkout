@@ -618,3 +618,16 @@ No replacement images were generated or recreated.
 
 ## v80 – Automatic Finisher Category
 Automatic generation now requires Cardio or Core selection. Generate Another remains within that category. Equipment filtering and History snapshots are retained.
+
+## v81 – Swap Exercise Fix
+- Fixed Swap Exercise so the selected replacement actually replaces the original exercise instead of moving the original to the bottom.
+- Swaps are saved per workout date and persist across rerenders/reopening the app.
+- A swapped exercise can be swapped again.
+- Replacement choices exclude exercises already in the current workout to reduce duplicates.
+- Existing History snapshots, finishers, images, timers, and month navigation are retained.
+
+## v82 – Workout on a Scheduled Rest Day
+- Scheduled rest days remain selected in Settings; no need to repeatedly change the weekly rest-day configuration.
+- A scheduled rest day now offers Workout Today / Workout This Day.
+- Activating it is date-specific and does not remove that weekday from the normal rest-day schedule.
+- Once activated, that date behaves like a regular workout day: generated plan, duration controls, warm-up, set/rest tracking, swapping/reordering, finisher, completion and History.

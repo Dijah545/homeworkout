@@ -866,3 +866,7 @@ body:has(.today-fixed-actions) main{
 
 /* v79 automatic finisher */
 .finisher-auto-note{font-size:11px;color:var(--muted);margin:8px 0 0;line-height:1.45}
+
+/* v82 optional workout on scheduled rest days */
+.rest-day-choice p{margin:0 0 14px;line-height:1.5}
+.rest-day-choice .primary,.rest-day-detail .primary{margin-top:12px;width:100%}

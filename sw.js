@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v80-auto-finisher-category";
+const CACHE="home-workout-v82-rest-day-workout-option";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=80",
-  "./app.js?v=80",
+  "./styles.css?v=82",
+  "./app.js?v=82",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
