@@ -625,3 +625,11 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 - A swapped exercise can be swapped again.
 - Replacement choices exclude exercises already in the current workout to reduce duplicates.
 - Existing History snapshots, finishers, images, timers, and month navigation are retained.
+
+## v83 – Today, Library Images & Instruction Repair
+- Fixed the runtime error that stopped Today from rendering.
+- Rest-day Workout Today / Workout This Day remains date-specific and does not alter recurring rest-day settings.
+- Week banners now switch from Rest Day to the generated workout when a rest-day workout is enabled.
+- RepDB image indexing now starts before the initial Today render, preventing a Today-view error from blocking Library image loading.
+- Exercise guides now use the matched RepDB exercise's actual instructions where available.
+- Form reminders now use exercise-specific RepDB tips where available, with movement-specific fallbacks instead of one generic paragraph.

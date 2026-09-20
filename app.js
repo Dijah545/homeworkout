@@ -686,6 +686,34 @@ function repdbCandidates(ex){
  return result;
 }
 
+function repdbRecordFor(ex){
+ if(!repdbIndexLoaded||!ex) return null;
+ const reviewedId=REPDB_REVIEWED_IMAGE_ALIASES[ex.name];
+ if(reviewedId){
+   const reviewed=repdbRecords.find(item=>repdbKey(item.record.id)===repdbKey(reviewedId));
+   if(reviewed) return reviewed.record;
+ }
+ const keys=[repdbKey(ex.name),repdbKey(ex.id),repdbKey(String(ex.name||"").replace(/\bconfiguration\b/gi,""))].filter(Boolean);
+ for(const key of keys){
+   const exact=repdbRecords.find(item=>item.key===key||repdbKey(item.record.id)===key);
+   if(exact) return exact.record;
+ }
+ const wantedEquip=equipmentKey(ex.equipment);
+ let best=null,bestScore=0;
+ for(const item of repdbRecords){
+   let score=tokenScore(ex.name,item.record.name_en);
+   const recordEquip=String(item.record.equipment||"");
+   if(wantedEquip&&recordEquip===wantedEquip) score+=0.12;
+   else if(wantedEquip&&recordEquip&&recordEquip!==wantedEquip) score-=0.18;
+   const wanted=repdbTokens(ex.name), got=new Set(repdbTokens(item.record.name_en));
+   const movementWords=["squat","lunge","row","press","curl","deadlift","raise","plank","crunch","bridge","stretch","walk","swing","clean","thruster","climber","burpee","jack"];
+   const core=wanted.find(t=>movementWords.includes(t));
+   if(core&&!got.has(core)) score-=0.25;
+   if(score>bestScore){bestScore=score;best=item.record;}
+ }
+ return bestScore>=0.72?best:null;
+}
+
 async function loadRepdbIndex(){
  const populate=(data)=>{
    repdbImageIndex.clear();
@@ -1553,7 +1581,7 @@ function bindRecoveryInstructions(){
 function renderToday(){
  const day=new Date().getDay();
  const todayDate=isoDate();
- const scheduledRest=resting;
+ const scheduledRest=isRest(day);
  const workoutOverride=scheduledRest&&restDayWorkoutEnabled(todayDate);
  const resting=scheduledRest&&!workoutOverride;
  const basePlan=workoutOverride?workoutPlanForRestOverride(day):planForDay(day);
@@ -1851,16 +1879,29 @@ function defaultInstructionsFor(ex){
 
 function instructionSteps(ex){
  const sourced=librarySourceData[String(ex.id)];
- if(sourced?.instructions?.length) return sourced.instructions;
- const supplied=Array.isArray(ex?.tips)?ex.tips.filter(Boolean):[];
+ if(sourced?.instructions?.length) return sourced.instructions.slice(0,6);
+ const repdb=repdbRecordFor(ex);
+ if(repdb?.instructions_en?.length) return repdb.instructions_en.slice(0,6);
  const fallback=defaultInstructionsFor(ex);
- // Keep useful exercise-specific tips, then fill to at least 3 actionable steps.
- const result=[...supplied];
- for(const step of fallback){
-   if(result.length>=3) break;
+ const supplied=Array.isArray(ex?.tips)?ex.tips.filter(Boolean):[];
+ const result=[...fallback];
+ for(const step of supplied){
+   if(result.length>=5) break;
    if(!result.includes(step)) result.push(step);
  }
  return result.slice(0,5);
+}
+function formRemindersFor(ex){
+ const repdb=repdbRecordFor(ex);
+ if(repdb?.tips_en?.length) return repdb.tips_en.slice(0,3);
+ const n=(ex.name||"").toLowerCase();
+ if(n.includes("squat")) return ["Keep your knees tracking in the same direction as your toes.","Keep your chest controlled and your whole foot planted.","Use a depth you can reach without your heels lifting or your lower back rounding."];
+ if(n.includes("lunge")) return ["Keep the front foot planted and the knee aligned over the foot.","Lower under control instead of dropping into the bottom position.","Keep your torso stable and push through the working foot to return."];
+ if(n.includes("row")) return ["Keep your neck neutral and avoid shrugging your shoulders.","Lead the pull with the elbow rather than yanking with the hand.","Control the return so the weight or band does not pull you out of position."];
+ if(n.includes("deadlift")||n.includes("romanian")) return ["Hinge from the hips rather than turning the movement into a squat.","Keep the load close to your legs and maintain a neutral spine.","Stop the descent when your hamstrings limit the hinge; do not chase extra depth by rounding."];
+ if(n.includes("press")) return ["Keep wrists stacked and stable through the press.","Brace your abdomen so your ribs do not flare excessively.","Lower the resistance under control before the next repetition."];
+ if(n.includes("plank")||n.includes("core")) return ["Keep your ribs and pelvis controlled rather than letting the lower back arch.","Breathe throughout the set while maintaining abdominal tension.","Reduce the range or duration when you can no longer hold the intended position."];
+ return ["Set up the equipment securely before starting.","Use a controlled range of motion rather than momentum.","Stop the set if you cannot maintain the exercise position or feel sharp pain."];
 }
 
 function exerciseRegistry(){
@@ -1912,7 +1953,7 @@ function preview(id){
    </div>
    <div class="instruction-block">
      <h3>Form reminders</h3>
-     <p>Move with control, keep your core engaged, and use a load or pace that lets you maintain good technique through the full set. Stop if you feel sharp pain.</p>
+     <ul class="instruction-list form-reminder-list">${formRemindersFor(ex).map(t=>`<li>${t}</li>`).join("")}</ul>
    </div>
    <button class="primary close2" type="button">Close Guide</button>
  </div>`;
@@ -1948,9 +1989,9 @@ function genericWeekBannerImage(focus){
  return weekBannerImages.full;
 }
 
-function weekBanner(selected,plan){
- const focus=workoutType(selected);
- if(isRest(selected)){
+function weekBanner(selected,plan,workoutOverride=false){
+ const focus=workoutOverride?workoutFocusForRestOverride(selected):workoutType(selected);
+ if(isRest(selected)&&!workoutOverride){
    return `<section class="week-day-banner rest-banner">
      <div class="rest-banner-icon">☾</div>
      <div>
@@ -1995,7 +2036,7 @@ function renderWeek(){
      </button>`).join("")}
  </div>
 
- ${weekBanner(selected,plan)}
+ ${weekBanner(selected,plan,workoutOverride)}
 
  <section class="card week-plan-card">
    <div class="section-title">
@@ -2974,7 +3015,7 @@ function completeWorkout(plan,totalRest,restSessions){
  if(workoutCompletedOn()){closeModal();showToast("Today's workout is already marked complete");route("history");return;}
  const day=new Date().getDay(), finisher=plan.find(x=>x.isFinisher);
  const record={
-   date:isoDate(),focus:workoutType(day),minutes:state.duration,exercises:plan.length,
+   date:isoDate(),focus:(isRest(day)&&restDayWorkoutEnabled(isoDate())?workoutFocusForRestOverride(day):workoutType(day)),minutes:state.duration,exercises:plan.length,
    restSeconds:totalRest+totalLoggedRest(),restSessions:restSessions+restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",finisherSnapshot:finisher?{id:String(finisher.id||""),sourceExerciseId:String(finisher.sourceExerciseId||finisher.id||""),name:finisher.name||"",type:finisher.finisherType||"",minutes:Number(finisher.minutes||0),sets:finisher.sets||"",equipment:finisher.equipment||"",area:finisher.area||""}:null,
    setsCompleted:plan.reduce((sum,ex)=>sum+Object.values((state.setProgress||{})[progressKey(ex,isoDate())]||{}).filter(Boolean).length,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0)
@@ -2994,5 +3035,5 @@ document.addEventListener("click",(e)=>{
    preview(recovery.dataset.recoveryEx);
  }
 });
-route("today");
 loadRepdbIndex();
+route("today");

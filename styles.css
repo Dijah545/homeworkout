@@ -868,3 +868,7 @@ body:has(.today-fixed-actions) main{
 .finisher-auto-note{font-size:11px;color:var(--muted);margin:8px 0 0;line-height:1.45}
 
 .rest-day-choice p{margin:0 0 14px;line-height:1.5}.rest-day-choice .primary,.rest-day-detail .primary{margin-top:12px;width:100%}
+
+/* v83 instruction clarity */
+.form-reminder-list{margin-top:8px}
+.instruction-list li{line-height:1.5;margin-bottom:8px}

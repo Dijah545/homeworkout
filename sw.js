@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v82-1-rest-day-hotfix";
+const CACHE="home-workout-v83-recovery-images-instructions";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=82.1",
-  "./app.js?v=82.1",
+  "./styles.css?v=83",
+  "./app.js?v=83",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
