@@ -633,3 +633,10 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 - RepDB image indexing now starts before the initial Today render, preventing a Today-view error from blocking Library image loading.
 - Exercise guides now use the matched RepDB exercise's actual instructions where available.
 - Form reminders now use exercise-specific RepDB tips where available, with movement-specific fallbacks instead of one generic paragraph.
+
+## v84 – Workout Type Controls & Missed-Day Carry Forward
+- Today now has a Workout Type selector so the day's focus can be changed without altering the weekly schedule.
+- Week previews also allow a date-specific workout type change.
+- If yesterday was a scheduled workout and has no completed History record, Today offers Carry Forward for yesterday's workout type.
+- Carry Forward changes today's focus only; it does not rewrite the recurring weekly pattern.
+- Rest-day Workout Today behavior remains compatible: after enabling a rest-day workout, its workout type can also be selected.
