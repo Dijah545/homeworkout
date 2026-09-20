@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v82-rest-day-workout-option";
+const CACHE="home-workout-v82-1-rest-day-hotfix";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=82",
-  "./app.js?v=82",
+  "./styles.css?v=82.1",
+  "./app.js?v=82.1",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

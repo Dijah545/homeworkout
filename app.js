@@ -852,23 +852,19 @@ function configuredFinisherMinutes(){
  return Math.max(5,Math.min(20,Number(state.finisherMinutes)||10));
 }
 function isRest(day){return state.restDays.includes(day)}
-function restDayWorkoutEnabled(date){
- return !!(state.restDayWorkoutOverrides&&state.restDayWorkoutOverrides[date]);
-}
-function enableRestDayWorkout(date){
- state.restDayWorkoutOverrides=state.restDayWorkoutOverrides||{};
- state.restDayWorkoutOverrides[date]=true;
- save();
-}
-function workoutType(day,forceWorkout=false){
+function restDayWorkoutEnabled(date){return !!(state.restDayWorkoutOverrides&&state.restDayWorkoutOverrides[date]);}
+function enableRestDayWorkout(date){state.restDayWorkoutOverrides=state.restDayWorkoutOverrides||{};state.restDayWorkoutOverrides[date]=true;save();}
+function workoutPlanForRestOverride(day){const original=state.restDays.slice();state.restDays=state.restDays.filter(d=>d!==day);try{return planForDay(day);}finally{state.restDays=original;}}
+function workoutFocusForRestOverride(day){const original=state.restDays.slice();state.restDays=state.restDays.filter(d=>d!==day);try{return workoutType(day);}finally{state.restDays=original;}}
+function workoutType(day){
  const types=["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Full Body","Upper Body","Lower Body & Core"];
- return (isRest(day)&&!forceWorkout)?"Rest / Active Recovery":types[day];
+ return isRest(day)?"Rest / Active Recovery":types[day];
 }
 function roundSpeed(v){
  return Math.max(0.6,Math.min(6.2,Math.round(v/0.2)*0.2));
 }
 function treadmillPlanForDay(day,strengthPlan=[]){
- const focus=workoutType(day,workoutOverride);
+ const focus=workoutType(day);
  const cardioCount=strengthPlan.filter(ex=>ex.area.includes("Cardio")).length;
  const lowerCount=strengthPlan.filter(ex=>ex.area.includes("Lower Body")).length;
  const fullCount=strengthPlan.filter(ex=>ex.area.includes("Full Body")).length;
@@ -996,9 +992,9 @@ function finisherForDay(day=new Date().getDay(),strengthPlan=[]){
  }
  return customFinisherExercise();
 }
-function planForDay(day,forceWorkout=false){
- if(isRest(day)&&!forceWorkout) return [];
- const focus=workoutType(day,forceWorkout);
+function planForDay(day){
+ if(isRest(day)) return [];
+ const focus=workoutType(day);
  const filtered=exercises.filter(x=>x && allowed(x) && x.id!=="bike" && !x.area.includes("Mobility"));
  const matches=x=>focus.includes(x.area.split(" & ")[0])||x.area.includes(focus.split(" & ")[0])||(focus.includes("Full Body")&&x.area.includes("Full Body"));
  const rotate=(arr,n)=>arr.length?[...arr.slice(n%arr.length),...arr.slice(0,n%arr.length)]:arr;
@@ -1076,7 +1072,7 @@ function saveCompletedWorkout(plan){
  markAllSetsComplete(plan);
  const day=new Date().getDay(), finisher=plan.find(x=>x.isFinisher);
  const record={
-   date:isoDate(),focus:workoutType(day,isRest(day)&&restDayWorkoutEnabled(isoDate())),minutes:state.duration,exercises:plan.length,
+   date:isoDate(),focus:(isRest(day)&&restDayWorkoutEnabled(isoDate())?workoutFocusForRestOverride(day):workoutType(day)),minutes:state.duration,exercises:plan.length,
    restSeconds:totalLoggedRest(),restSessions:restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",finisherSnapshot:finisher?{id:String(finisher.id||""),sourceExerciseId:String(finisher.sourceExerciseId||finisher.id||""),name:finisher.name||"",type:finisher.finisherType||"",minutes:Number(finisher.minutes||0),sets:finisher.sets||"",equipment:finisher.equipment||"",area:finisher.area||""}:null,
    setsCompleted:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0),
@@ -1560,12 +1556,12 @@ function renderToday(){
  const scheduledRest=resting;
  const workoutOverride=scheduledRest&&restDayWorkoutEnabled(todayDate);
  const resting=scheduledRest&&!workoutOverride;
- const basePlan=planForDay(day,workoutOverride);
+ const basePlan=workoutOverride?workoutPlanForRestOverride(day):planForDay(day);
  const plan=orderedTodayPlan(basePlan,isoDate());
  const warmup=preWorkoutWarmup(day);
  const cooldown=postWorkoutCooldown(day);
  const sessionPlan=[...warmup,...plan];
- const focus=workoutType(day);
+ const focus=workoutOverride?workoutFocusForRestOverride(day):workoutType(day);
  const finisher=plan.find(x=>x.isFinisher);
  const doneSets=completedSetsForPlan(plan), totalSets=plannedSetsForPlan(plan);
  const movableCount=plan.filter(ex=>!ex.isFinisher).length;
@@ -1604,7 +1600,7 @@ function renderToday(){
   </div>
 
   ${resting?
-    `<div class="empty rest-day-choice"><p>Today is scheduled as a rest day. You can keep it as recovery or work out today without changing your regular rest-day settings.</p><button type="button" class="primary" id="workoutOnRestDay">Workout Today</button></div>`:
+    `<div class="empty rest-day-choice"><p>Today is scheduled as a rest day. Keep it as recovery, or work out today without changing your regular rest-day schedule.</p><button type="button" class="primary" id="workoutOnRestDay">Workout Today</button></div>`:
     `<div class="today-order-toolbar">
        <div>
          <strong>Arrange your workout</strong>
@@ -1981,7 +1977,7 @@ function renderWeek(){
  const scheduledRest=isRest(selected);
  const workoutOverride=scheduledRest&&restDayWorkoutEnabled(selectedDate);
  const resting=scheduledRest&&!workoutOverride;
- const plan=planForDay(selected,workoutOverride);
+ const plan=workoutOverride?workoutPlanForRestOverride(selected):planForDay(selected);
  const dayLetters=["S","M","T","W","T","F","S"];
 
  view.innerHTML=`
