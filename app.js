@@ -456,6 +456,13 @@ const REPDB_REVIEWED_IMAGE_ALIASES={
  "Dumbbell Lateral Lunge":"dumbbell-lunge",
  "Kettlebell Sumo Squat":"goblet-squat",
  "Resistance Band Squat":"banded-squat",
+ "Resistance Band Glute Kickback":"glute-kickback",
+ "Resistance Band Reverse Lunge":"bodyweight-reverse-lunge",
+ "Resistance Band Hip Abduction":"banded-standing-hip-abduction",
+ "Resistance Band Fire Hydrant":"banded-fire-hydrant",
+ "Resistance Band Clamshell":"banded-clamshell",
+ "Resistance Band Glute Bridge":"banded-glute-bridge",
+ "Resistance Band Hip Thrust":"banded-hip-thrust",
  "Banded Standing Kickback":"glute-kickback",
  "Slider Single-Leg Lunge":"reverse-lunge",
  "Quad Stretch":"standing-quad-stretch",
@@ -942,7 +949,7 @@ document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=
  if(b.dataset.route==="week") state.selectedDay=new Date().getDay();
  route(b.dataset.route);
 }));
-document.getElementById("themeQuick").onclick=()=>{state.theme=(document.documentElement.dataset.theme==="dark"?"light":"dark");save();themeApply();route(document.querySelector(".nav-item.active").dataset.route)};
+const themeQuick=document.getElementById("themeQuick");if(themeQuick)themeQuick.onclick=()=>{state.theme=(document.documentElement.dataset.theme==="dark"?"light":"dark");save();themeApply();route(document.querySelector(".nav-item.active")?.dataset.route||"today")};
 
 function todayLabel(day){return DAY_NAMES[day]}
 function durationControl(){
@@ -1474,7 +1481,8 @@ function renderToday(){
  const plan=orderedTodayPlan(basePlan,isoDate());
  const warmup=preWorkoutWarmup(day);
  const cooldown=postWorkoutCooldown(day);
- const sessionPlan=[...warmup,...plan];
+ const cooldownPlan=cooldown.items.map(ex=>({...ex,isCooldown:true}));
+ const sessionPlan=[...warmup,...plan,...cooldownPlan];
  const finisher=plan.find(x=>x.isFinisher);
  const doneSets=completedSetsForPlan(plan), totalSets=plannedSetsForPlan(plan);
  const movableCount=plan.filter(ex=>!ex.isFinisher).length;
@@ -1505,6 +1513,10 @@ function renderToday(){
   `}
  </div>
 
+ ${resting?"":`<section class="card reference-phase-card warmup-phase">
+   <div class="reference-phase-head"><strong>Warm-Up</strong><span>${warmup.length} moves</span></div>
+   <div class="reference-phase-list">${warmup.map(ex=>`<button type="button" data-recovery-ex="${ex.id}"><span>${ex.name}</span><small>${ex.sets||"Mobility"}</small></button>`).join("")}</div>
+ </section>`}
  <section class="card today-workout-card">
   <div class="reference-workout-heading"><div><h2>${resting?"Rest Day":focus}</h2>${!resting?`<small>${doneSets}/${totalSets} sets · ${plan.length} exercises</small>`:""}</div></div>
   ${resting?
@@ -1516,8 +1528,12 @@ function renderToday(){
       `<div class="workout-actions today-fixed-actions">${hasActiveWorkoutToday()?`<button class="primary resume-workout-btn" id="resumeWorkout">Resume Workout</button><button class="secondary" id="restartWorkout">Restart</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">✓ Mark Complete</button></div>`}`
   }
  </section>
- ${resting?"":`<section class="card reference-muscles-card"><div class="reference-muscles-head"><strong>Muscles Today</strong><span>${focus}</span></div>${femaleHeatmap(plan)}</section>
- <div class="reference-hidden-support">${durationControl()}${warmupMarkup(warmup)}<div id="todayRestTracker"></div>${recoverySectionMarkup("Cool-Down","",cooldown.items,"cooldown")}</div>`}`; const workoutOnRestDay=document.getElementById("workoutOnRestDay");
+ ${resting?"":`<section class="card reference-phase-card cooldown-phase">
+   <div class="reference-phase-head"><strong>Cool-Down</strong><span>${cooldown.minutes} min</span></div>
+   <div class="reference-phase-list">${cooldown.items.map(ex=>`<button type="button" data-recovery-ex="${ex.id}"><span>${ex.name}</span><small>${ex.sets||"Stretch"}</small></button>`).join("")}</div>
+ </section>
+ <section class="card reference-muscles-card"><div class="reference-muscles-head"><strong>Muscles Today</strong><span>${focus}</span></div>${femaleHeatmap(plan)}</section>
+ <div class="reference-hidden-support">${durationControl()}<div id="todayRestTracker"></div></div>`}`; const workoutOnRestDay=document.getElementById("workoutOnRestDay");
  if(workoutOnRestDay) workoutOnRestDay.onclick=()=>{enableRestDayWorkout(todayDate);showToast("Workout enabled for today");renderToday();};
  const todayWorkoutType=document.getElementById("todayWorkoutType");
  if(todayWorkoutType) todayWorkoutType.onchange=e=>{setWorkoutTypeForDate(todayDate,e.target.value);state.todayOrder=state.todayOrder||{};delete state.todayOrder[todayDate];showToast(`Today's workout changed to ${e.target.value}`);renderToday();};
@@ -2689,15 +2705,17 @@ function startWorkout(plan,resumeState=null){
    </article>`;
  }
  function workoutGroups(){
-   const warm=plan.filter(ex=>(ex.area||"").includes("Warm-Up"));
+   const warm=plan.filter(ex=>ex.isWarmup||(ex.area||"").includes("Warm-Up"));
+   const cool=plan.filter(ex=>ex.isCooldown);
    const fin=plan.filter(ex=>ex.isFinisher);
-   const main=plan.filter(ex=>!warm.includes(ex)&&!ex.isFinisher);
+   const main=plan.filter(ex=>!warm.includes(ex)&&!cool.includes(ex)&&!ex.isFinisher);
    const groups=[];
-   if(warm.length)groups.push({title:"Warm-Up",items:warm,kind:"warmup"});
+   if(warm.length)groups.push({title:"Warm-Up",subtitle:`${warm.length} moves`,items:warm,kind:"warmup"});
    if(state.workoutStyle==="circuit"){
      for(let i=0;i<main.length;i+=3)groups.push({title:`Circuit ${Math.floor(i/3)+1}`,subtitle:`${Math.min(3,main.length-i)} exercises · 3 rounds`,items:main.slice(i,i+3),kind:"circuit"});
    }else if(main.length)groups.push({title:"Main Workout",subtitle:`${main.length} exercises`,items:main,kind:"sequential"});
    if(fin.length)groups.push({title:"Finisher",items:fin,kind:"finisher"});
+   if(cool.length)groups.push({title:"Cool-Down",subtitle:"Recovery",items:cool,kind:"cooldown"});
    return groups;
  }
  function updateClock(){

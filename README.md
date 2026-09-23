@@ -657,3 +657,11 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 
 ## v88 – Full Reference Redesign
 The app shell and workout experience were redesigned around the approved charcoal, cyan/teal and purple reference. Today now uses the date/timer header, segmented Sequential/Circuit control, compact exercise cards, inline active workout, and anatomical muscle summary. The bottom navigation matches the five-tab reference; Exercise Library is retained through Settings. Existing carry-forward, rest-day workout override, swapping, finishers, history snapshots, body tracking, RepDB images and background-safe timers are retained.
+
+## v89 – Stable Reference UI Repair
+- Fixed the startup error that prevented Today, Week and History from loading.
+- Restored Exercise Library to the bottom navigation.
+- Restored visible Warm-Up and Cool-Down sections on Today and included both in the active workout flow.
+- Circuit/Sequential behavior remains applied to the main workout; warm-up, finisher and cool-down remain distinct phases.
+- Added reviewed RepDB mappings for more resistance-band movements while retaining all existing user-supplied images.
+- Carry-forward, workout-type override, rest-day workout, swapping, finishers, History, Body tracking and background-safe timers remain intact.
