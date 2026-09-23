@@ -1599,14 +1599,8 @@ function bindRecoveryInstructions(){
 }
 
 
-function todayGuideCard(ex){
- return `<article class="today-lite-ex">
-  <div class="today-lite-row">
-   <span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span>
-   <div class="today-lite-copy"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></div>
-   <button type="button" class="instruction-link today-guide-btn" data-today-guide="${ex.id}">Instructions & Form</button>
-  </div>
- </article>`;
+function todayGuideCard(ex,index=0,total=1){
+ return `<article class="today-lite-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="order-btn" data-move-ex="${ex.id}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-move-ex="${ex.id}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
 }
 function circuitConfigFor(ex){
  state.circuitConfig=state.circuitConfig||{};
@@ -1629,13 +1623,13 @@ function safeCircuitEligible(ex){
  return true;
 }
 function safeCircuitGroups(plan){
- const circuit=plan.filter(safeCircuitEligible), standalone=plan.filter(x=>!safeCircuitEligible(x)), groups=[];
+ const circuit=plan.filter(safeCircuitEligible),standalone=plan.filter(x=>!safeCircuitEligible(x)),groups=[];
  const type=ex=>{const a=String(ex.area||"");return a.includes("Lower Body")?"lower":a.includes("Upper Body")?"upper":a.includes("Core")?"core":"other"};
  while(circuit.length){
-   const group=[];
-   ["lower","upper","core"].forEach(t=>{const i=circuit.findIndex(ex=>type(ex)===t);if(i>=0&&group.length<3)group.push(circuit.splice(i,1)[0])});
-   while(group.length<3&&circuit.length)group.push(circuit.shift());
-   if(group.length>=2)groups.push(group);else if(group.length===1)standalone.push(group[0]);
+  const group=[];
+  ["lower","upper","core"].forEach(t=>{if(group.length>=3)return;const i=circuit.findIndex(ex=>type(ex)===t);if(i>=0)group.push(circuit.splice(i,1)[0])});
+  while(group.length<3&&circuit.length)group.push(circuit.shift());
+  if(group.length>=2)groups.push(group.slice(0,3));else if(group.length===1)standalone.push(group[0]);
  }
  return {groups,standalone};
 }
@@ -1657,6 +1651,14 @@ function circuitPreview(plan){
  if(o.standalone.length)blocks.push(`<section class="today-circuit-block"><div class="today-circuit-head"><div><b>Standalone</b><small>Completed separately</small></div></div>${o.standalone.map(circuitPlanCard).join("")}</section>`);
  return blocks.join("");
 }
+function moveTodayExercise(id,dir,date=isoDate()){
+ const day=new Date().getDay(),focus=workoutTypeForDate(date,day),base=restDayWorkoutEnabled(date)?workoutPlanForRestOverride(day,focus):planForDay(day,focus);
+ const current=orderedTodayPlan(base,date),idx=current.findIndex(ex=>String(ex.id)===String(id)),to=idx+Number(dir);
+ if(idx<0||to<0||to>=current.length)return;
+ [current[idx],current[to]]=[current[to],current[idx]];
+ state.todayOrderByDate=state.todayOrderByDate||{};state.todayOrderByDate[date]=current.map(ex=>ex.id);save();renderToday();
+}
+
 function bindTodayCircuitConfig(){
  const setCfg=(id,patch)=>{state.circuitConfig=state.circuitConfig||{};state.circuitConfig[id]={...(state.circuitConfig[id]||{}),...patch};save();};
  document.querySelectorAll("[data-cfg-sets]").forEach(x=>x.onchange=()=>setCfg(x.dataset.cfgSets,{sets:Math.max(1,Math.min(8,Number(x.value)||1))}));
@@ -1668,6 +1670,7 @@ function todayCooldownExpanded(cooldown){
 }
 
 function renderToday(){
+ view.classList.remove("active-workout-view");
  const day=new Date().getDay(),date=isoDate(),scheduledRest=isRest(day),override=scheduledRest&&restDayWorkoutEnabled(date),resting=scheduledRest&&!override;
  const focus=workoutTypeForDate(date,day), base=override?workoutPlanForRestOverride(day,focus):planForDay(day,focus), plan=orderedTodayPlan(base,date);
  const warmup=preWorkoutWarmup(day), cooldown=postWorkoutCooldown(day), sessionPlan=[...warmup,...plan,...cooldown.items.map(ex=>({...ex,isCooldown:true}))];
@@ -1681,10 +1684,10 @@ function renderToday(){
  <section class="card today-select-card"><select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select></section>
  <section class="card today-duration-card">${durationControl()}</section>
  <section class="card today-rest-card"><div id="todayRestTracker"></div></section>
- <section class="card today-phase-card"><div class="today-section-head"><div><span>PRE-WORKOUT</span><h2>Warm-Up & Mobility</h2></div><b>${warmup.length} moves</b></div><div class="today-lite-list">${warmup.map(todayGuideCard).join("")}</div></section>`}
+ <section class="card today-phase-card"><div class="today-section-head"><div><span>PRE-WORKOUT</span><h2>Warm-Up & Mobility</h2></div><b>${warmup.length} moves</b></div><div class="today-lite-list">${warmup.map((ex,i)=>todayGuideCard(ex,i,warmup.length)).join("")}</div></section>`}
  <section class="card today-main-card"><div class="today-section-head"><div><span>TODAY'S WORKOUT</span><h2>${resting?"Active Recovery":focus}</h2></div>${resting?"":`<b>${done}/${total} sets</b>`}</div>
  ${resting?`<button type="button" class="primary" id="workoutOnRestDay">Workout Today</button>`:
-   `${state.workoutStyle==="circuit"?`<div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map(todayGuideCard).join("")}</div>`}
+   `${state.workoutStyle==="circuit"?`<div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map((ex,i)=>todayGuideCard(ex,i,plan.length)).join("")}</div>`}
     ${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
       `<div class="today-action-row">${hasActiveWorkoutToday()?`<button class="primary" id="resumeWorkout">Resume Workout</button><button class="secondary reset-workout-btn" id="restartWorkout">Reset Workout</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">Mark Complete</button></div>`}`}
  </section>
@@ -1694,6 +1697,7 @@ function renderToday(){
  const type=document.getElementById("todayWorkoutType");if(type)type.onchange=e=>{setWorkoutTypeForDate(date,e.target.value);renderToday()};
  bindDurationControls(renderToday);
  document.querySelectorAll("[data-today-guide]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();preview(btn.dataset.todayGuide)});
+ document.querySelectorAll("[data-move-ex]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();moveTodayExercise(btn.dataset.moveEx,btn.dataset.moveDir,date)});
  bindTodayCircuitConfig(); bindExerciseImages(); bindRecoveryInstructions();
  if(!resting)renderRestTracker();
  if(!resting&&!workoutCompletedOn()){
@@ -2848,6 +2852,11 @@ function startWorkout(plan,resumeState=null){
      </div>`:""}
    </article>`;
  }
+ function activeSimpleRow(ex){
+ const done=setDone(ex,0,isoDate());
+ return `<div class="active-simple-row"><span class="active-simple-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="active-simple-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${parseSetPlan(ex).label||ex.sets||""}</small></button><button type="button" class="active-simple-check ${done?"done":""}" data-simple-check="${ex.id}">${done?"✓":""}</button></div>`;
+ }
+ function activeSimpleList(items){return `<div class="active-simple-list">${items.map(activeSimpleRow).join("")}</div>`;}
  function activeCircuitRow(ex,round){
    const done=setDone(ex,round,isoDate()), range=repRangeFor(ex), perf=performanceFor(ex), profile=profileFor(ex);
    const load=perf.load??profile.load??"", unit=perf.unit||profile.unit||defaultLoadUnit(ex), reps=(perf.reps&&perf.reps[round])??(range?range.max:"");
@@ -2896,6 +2905,7 @@ function startWorkout(plan,resumeState=null){
      const card=document.querySelector(".today-main-card, .today-workout-card");
      if(!card)return;
      card.classList.add("active-session-host");
+     view.classList.add("active-workout-view");
      panel=document.createElement("section");panel.id="activeWorkoutPanel";panel.className="active-workout-panel";
      card.parentNode.insertBefore(panel,card);
    }
@@ -2907,7 +2917,7 @@ function startWorkout(plan,resumeState=null){
      <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
    </div>
    <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
-   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join("")}</section>`).join("")}`;
+   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):(g.kind==="sequential"?g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join(""):activeSimpleList(g.items))}</section>`).join("")}`;
 
    panel.querySelector("#activePause").onclick=togglePause;
    panel.querySelector("#activeReset").onclick=()=>{if(confirm("Reset this workout? This will clear all in-progress sets, reps and the workout timer, then return to the pre-start screen.")){cleanup();resetWorkoutToPreStart(plan)}};
@@ -2928,6 +2938,7 @@ function startWorkout(plan,resumeState=null){
      e.preventDefault();e.stopPropagation();
      const ex=getExercise(btn.dataset.circuitCheck);toggleSet(ex,Number(btn.dataset.circuitRound),isoDate());renderActive();
    });
+   panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();const ex=getExercise(btn.dataset.simpleCheck);toggleSet(ex,0,isoDate());renderActive();});
    bindSetTrackers();bindPerformanceInputs();bindExerciseImages();
    panel.scrollIntoView({behavior:"smooth",block:"start"});
  }

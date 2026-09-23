@@ -957,3 +957,12 @@ body:has(.today-fixed-actions) main{
 .active-circuit-thumb{width:50px;height:46px;border-radius:8px;overflow:hidden;background:#eef1f2}.active-circuit-thumb img{width:100%;height:100%;object-fit:cover}
 .active-circuit-name{border:0;background:transparent;color:var(--text);text-align:left;padding:4px 0;min-width:0;cursor:pointer}.active-circuit-name strong{display:block;font-size:12px}.active-circuit-name small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
 .active-circuit-check{width:36px;height:36px;border-radius:10px;border:2px solid #91a6b4;background:transparent;color:#041014;font-weight:900;font-size:18px}.active-circuit-check.done{background:var(--accent);border-color:var(--accent)}
+
+/* v85.8 */
+.active-workout-view>.today-cooldown{display:none!important}
+.active-simple-row{display:grid;grid-template-columns:50px minmax(0,1fr) 42px;align-items:center;gap:9px;padding:8px;border-bottom:1px solid var(--line)}
+.active-simple-thumb{width:50px;height:46px;border-radius:8px;overflow:hidden;background:#eef1f2}.active-simple-thumb img{width:100%;height:100%;object-fit:cover}
+.active-simple-name{border:0;background:transparent;color:var(--text);text-align:left;padding:4px 0}.active-simple-name strong{display:block;font-size:12px}.active-simple-name small{display:block;font-size:9px;color:var(--muted)}
+.active-simple-check{width:36px;height:36px;border-radius:10px;border:2px solid #91a6b4;background:transparent;font-weight:900}.active-simple-check.done{background:var(--accent);border-color:var(--accent)}
+#activePause{min-width:92px!important;min-height:48px!important;padding:11px 17px!important;font-size:14px!important;font-weight:900!important;border:2px solid #8299a6!important;border-radius:12px!important}
+.today-name-button{border:0;background:transparent;color:var(--text);text-align:left;padding:0}.today-row-actions{display:flex;gap:5px}.order-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--accent);font-size:16px;font-weight:900}.order-btn:disabled{opacity:.25}.today-lite-row{grid-template-columns:52px minmax(0,1fr) auto!important}

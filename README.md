@@ -680,3 +680,6 @@ Rebuilt directly from v85 after discarding the broken v85.1/v85.2 Today implemen
 - Circuit rounds are always visible with one checkbox beside each exercise.
 - Exercise names remain tappable for instructions/form.
 - The pre-start Today's Workout list is hidden while an active workout is displayed, removing the duplicate list. It returns normally after completion/reset with saved completion state.
+
+## v85.8
+Warm-Up and Cool-Down are listed open during active workouts with checkboxes. Sequential main exercises retain expanded set tracking; Circuit rounds retain per-exercise checkboxes. Duplicate Cool-Down is hidden while active. Pause is larger. Circuits are hard-capped at three eligible main exercises and continue excluding treadmill/timed cardio. Main exercises can be reordered before Start using Up/Down controls; order is saved for the date and used by the active workout. Exercise names remain tappable for instructions.

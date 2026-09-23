@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v85-7-circuit-active";
+const CACHE="home-workout-v85-8-active-reorder";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=85.7",
-  "./app.js?v=85.7",
+  "./styles.css?v=85.8",
+  "./app.js?v=85.8",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
