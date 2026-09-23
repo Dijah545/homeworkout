@@ -974,3 +974,10 @@ html,body{background:#061015!important}body{margin:0;color:var(--text);font-fami
 .reference-anatomy .heat-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 .reference-anatomy .heat-dot.primary{background:#c91f25}
 .reference-anatomy .heat-dot.secondary{background:#f4bf2a}
+
+/* v94 polished functional muscle map */
+.premium-heatmap{width:100%;max-width:440px;margin:0 auto}.hm-stage{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:3px 3px 0}.hm-figure{display:flex;flex-direction:column;align-items:center;min-width:0}.hm-figure svg{width:100%;max-width:178px;height:auto;overflow:visible}.hm-figure>span{font-size:10px;color:#93a2af;margin-top:-2px}
+.hm-base{fill:#172229;stroke:#6c7981;stroke-width:1.35;stroke-linejoin:round}.hm-muscle{stroke:#091116;stroke-width:1.8;stroke-linejoin:round;cursor:pointer;transition:.15s}.hm-muscle.heat-none{fill:#26343c}.hm-muscle.heat-secondary{fill:#eebd35}.hm-muscle.heat-primary{fill:#e84a57}.hm-muscle:focus,.hm-muscle.hm-selected{outline:none;stroke:#f5fbfc;stroke-width:2.7;filter:brightness(1.08)}
+.hm-legend{display:flex;justify-content:center;gap:18px;margin:7px 0;color:#93a2af;font-size:10px}.hm-legend span{display:flex;align-items:center;gap:5px}.hm-dot{width:8px;height:8px;border-radius:50%}.hm-dot.primary{background:#e84a57}.hm-dot.secondary{background:#eebd35}
+.hm-chips{display:flex;gap:6px;overflow-x:auto;padding:2px 1px 7px;scrollbar-width:none}.hm-chips::-webkit-scrollbar{display:none}.hm-chip{white-space:nowrap;border:1px solid #2c3b44;background:#111c22;color:#dce5ea;border-radius:999px;padding:7px 9px;font-size:10px}.hm-chip b{font-size:9px;color:#93a2af;margin-left:3px}.hm-chip.hm-selected{border-color:#20d4d8;color:#fff}
+.hm-detail{min-height:34px;border-top:1px solid #223039;padding:8px 2px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}.hm-detail strong{font-size:11px}.hm-detail span{font-size:10px;color:#93a2af}

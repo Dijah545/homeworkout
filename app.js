@@ -370,46 +370,41 @@ function heatScores(plan){
 function femaleHeatmap(plan){
  const h=heatScores(plan);
  const level=v=>v<=0?"none":v<.45?"secondary":"primary";
- const c=m=>`heat-${level(h[m]||0)}`;
- const tt=m=>`${muscleLabels[m]||m}: ${Math.round((h[m]||0)*100)}%`;
- const P=(m,d)=>`<path class="muscle ${c(m)}" title="${tt(m)}" d="${d}"/>`;
- return `<div class="reference-anatomy">
-  <div class="anatomy-views">
-   <div class="anatomy-view">
-    <svg class="dynamic-anatomy-svg" viewBox="0 0 190 390" role="img" aria-label="Front muscle heat map">
-     <ellipse class="body-neutral" cx="95" cy="31" rx="18" ry="25"/>
-     <path class="body-outline" d="M83 54 L82 69 Q62 72 49 85 Q39 100 34 128 L20 181 Q17 191 9 198 L15 207 Q28 201 31 190 L48 145 L53 217 Q57 250 63 287 L68 364 Q72 377 82 369 L88 291 L95 230 L102 291 L108 369 Q118 377 122 364 L127 287 Q133 250 137 217 L142 145 L159 190 Q162 201 175 207 L181 198 Q173 191 170 181 L156 128 Q151 100 141 85 Q128 72 108 69 L107 54 Z"/>
-     ${P("delts","M81 72 Q61 72 50 88 L48 105 Q60 97 73 101 L82 89Z")}${P("delts","M109 72 Q129 72 140 88 L142 105 Q130 97 117 101 L108 89Z")}
-     ${P("chest","M84 79 Q67 79 58 91 L60 119 Q72 127 91 120 L91 83Z")}${P("chest","M106 79 Q123 79 132 91 L130 119 Q118 127 99 120 L99 83Z")}
-     ${P("biceps","M50 105 Q40 111 39 129 L44 151 Q53 145 59 128 L62 107Z")}${P("biceps","M140 105 Q150 111 151 129 L146 151 Q137 145 131 128 L128 107Z")}
-     ${P("forearms","M39 137 L26 181 Q24 190 19 194 L28 196 L47 151Z")}${P("forearms","M151 137 L164 181 Q166 190 171 194 L162 196 L143 151Z")}
-     ${P("abs","M75 126 Q84 122 92 126 L92 188 Q83 190 76 183Z")}${P("abs","M98 126 Q106 122 115 126 L114 183 Q107 190 98 188Z")}
-     ${P("obliques","M60 124 Q68 128 74 126 L75 184 L65 197 L56 169Z")}${P("obliques","M130 124 Q122 128 116 126 L115 184 L125 197 L134 169Z")}
-     ${P("adductors","M82 199 L94 206 L91 273 L78 224Z")}${P("adductors","M108 199 L96 206 L99 273 L112 224Z")}
-     ${P("quads","M65 199 Q78 194 90 205 L86 274 Q75 285 66 270 L59 222Z")}${P("quads","M125 199 Q112 194 100 205 L104 274 Q115 285 124 270 L131 222Z")}
-     ${P("calves","M67 284 Q78 278 85 292 L80 348 Q74 358 69 346Z")}${P("calves","M123 284 Q112 278 105 292 L110 348 Q116 358 121 346Z")}
-    </svg><small>Front</small>
-   </div>
-   <div class="anatomy-view">
-    <svg class="dynamic-anatomy-svg" viewBox="0 0 190 390" role="img" aria-label="Back muscle heat map">
-     <ellipse class="body-neutral" cx="95" cy="31" rx="18" ry="25"/>
-     <path class="body-outline" d="M83 54 L82 69 Q62 72 49 85 Q39 100 34 128 L20 181 Q17 191 9 198 L15 207 Q28 201 31 190 L48 145 L53 217 Q57 250 63 287 L68 364 Q72 377 82 369 L88 291 L95 230 L102 291 L108 369 Q118 377 122 364 L127 287 Q133 250 137 217 L142 145 L159 190 Q162 201 175 207 L181 198 Q173 191 170 181 L156 128 Q151 100 141 85 Q128 72 108 69 L107 54 Z"/>
-     ${P("traps","M88 58 L95 69 L102 58 L111 83 L95 103 L79 83Z")}
-     ${P("delts","M79 73 Q58 75 49 91 L49 108 Q62 99 76 104 L86 88Z")}${P("delts","M111 73 Q132 75 141 91 L141 108 Q128 99 114 104 L104 88Z")}
-     ${P("triceps","M49 106 Q39 116 39 137 L46 154 Q56 145 60 126 L61 108Z")}${P("triceps","M141 106 Q151 116 151 137 L144 154 Q134 145 130 126 L129 108Z")}
-     ${P("lats","M65 96 L88 105 L91 158 L74 181 L59 151Z")}${P("lats","M125 96 L102 105 L99 158 L116 181 L131 151Z")}
-     ${P("lowerBack","M77 158 L95 169 L113 158 L119 190 L95 201 L71 190Z")}
-     ${P("glutes","M63 192 Q78 183 94 201 L91 229 Q78 239 64 226Z")}${P("glutes","M127 192 Q112 183 96 201 L99 229 Q112 239 126 226Z")}
-     ${P("hamstrings","M64 230 Q77 225 89 234 L85 286 Q74 294 67 279Z")}${P("hamstrings","M126 230 Q113 225 101 234 L105 286 Q116 294 123 279Z")}
-     ${P("adductors","M88 231 L95 237 L92 281 L84 250Z")}${P("adductors","M102 231 L95 237 L98 281 L106 250Z")}
-     ${P("calves","M68 288 Q78 280 85 294 L80 348 Q74 359 69 345Z")}${P("calves","M122 288 Q112 280 105 294 L110 348 Q116 359 121 345Z")}
-    </svg><small>Back</small>
-   </div>
+ const cls=m=>`heat-${level(h[m]||0)}`;
+ const label=m=>muscleLabels[m]||m.replace(/([A-Z])/g," $1").replace(/^./,x=>x.toUpperCase());
+ const region=(m,d)=>`<path tabindex="0" role="button" data-muscle="${m}" aria-label="${label(m)} ${Math.round((h[m]||0)*100)} percent activation" class="hm-muscle ${cls(m)}" d="${d}"><title>${label(m)} · ${Math.round((h[m]||0)*100)}%</title></path>`;
+ const active=Object.keys(h).filter(k=>(h[k]||0)>0).sort((a,b)=>(h[b]||0)-(h[a]||0));
+ const chips=active.slice(0,6).map(m=>`<button type="button" class="hm-chip ${cls(m)}" data-muscle-chip="${m}">${label(m)} <b>${Math.round((h[m]||0)*100)}%</b></button>`).join("");
+ return `<div class="premium-heatmap" data-heat-scores='${JSON.stringify(h)}'>
+  <div class="hm-stage">
+   <div class="hm-figure"><svg viewBox="0 0 180 400" aria-label="Front muscle activation"><g class="hm-base"><ellipse cx="90" cy="30" rx="17" ry="24"/><path d="M78 53Q72 65 76 72Q57 75 45 89Q37 100 34 122L19 180Q17 190 9 197L14 205Q27 201 30 189L46 145L51 202Q53 225 59 252L65 292L69 365Q72 377 82 368L87 294L90 233L93 294L98 368Q108 377 111 365L115 292L121 252Q127 225 129 202L134 145L150 189Q153 201 166 205L171 197Q163 190 161 180L146 122Q143 100 135 89Q123 75 104 72Q108 65 102 53Z"/></g>
+    ${region("delts","M77 74Q59 75 48 90L48 106Q61 98 74 102L82 88Z")}${region("delts","M103 74Q121 75 132 90L132 106Q119 98 106 102L98 88Z")}
+    ${region("chest","M82 81Q67 80 57 92L59 117Q70 124 87 119L87 84Z")}${region("chest","M98 81Q113 80 123 92L121 117Q110 124 93 119L93 84Z")}
+    ${region("biceps","M48 108Q39 115 39 132L44 151Q53 145 58 128L60 109Z")}${region("biceps","M132 108Q141 115 141 132L136 151Q127 145 122 128L120 109Z")}
+    ${region("forearms","M39 137L25 181Q23 190 18 194L27 196L46 151Z")}${region("forearms","M141 137L155 181Q157 190 162 194L153 196L134 151Z")}
+    ${region("abs","M72 123Q80 121 87 125L87 186Q80 190 73 183Z")}${region("abs","M93 125Q100 121 108 123L107 183Q100 190 93 186Z")}
+    ${region("obliques","M58 122Q65 126 71 124L72 182L64 195L55 166Z")}${region("obliques","M122 122Q115 126 109 124L108 182L116 195L125 166Z")}
+    ${region("adductors","M78 199L89 205L86 272L74 222Z")}${region("adductors","M102 199L91 205L94 272L106 222Z")}
+    ${region("quads","M62 198Q75 193 87 204L83 273Q73 283 64 270L57 220Z")}${region("quads","M118 198Q105 193 93 204L97 273Q107 283 116 270L123 220Z")}
+    ${region("calves","M65 283Q75 278 82 292L78 348Q72 358 68 345Z")}${region("calves","M115 283Q105 278 98 292L102 348Q108 358 112 345Z")}
+   </svg><span>Front</span></div>
+   <div class="hm-figure"><svg viewBox="0 0 180 400" aria-label="Back muscle activation"><g class="hm-base"><ellipse cx="90" cy="30" rx="17" ry="24"/><path d="M78 53Q72 65 76 72Q57 75 45 89Q37 100 34 122L19 180Q17 190 9 197L14 205Q27 201 30 189L46 145L51 202Q53 225 59 252L65 292L69 365Q72 377 82 368L87 294L90 233L93 294L98 368Q108 377 111 365L115 292L121 252Q127 225 129 202L134 145L150 189Q153 201 166 205L171 197Q163 190 161 180L146 122Q143 100 135 89Q123 75 104 72Q108 65 102 53Z"/></g>
+    ${region("traps","M83 57L90 68L97 57L107 83L90 102L73 83Z")}
+    ${region("delts","M76 74Q58 76 47 91L48 107Q60 99 73 103L82 88Z")}${region("delts","M104 74Q122 76 133 91L132 107Q120 99 107 103L98 88Z")}
+    ${region("triceps","M48 107Q39 116 39 136L45 153Q54 145 59 127L60 109Z")}${region("triceps","M132 107Q141 116 141 136L135 153Q126 145 121 127L120 109Z")}
+    ${region("lats","M62 95L84 104L87 156L71 180L57 150Z")}${region("lats","M118 95L96 104L93 156L109 180L123 150Z")}
+    ${region("lowerBack","M73 157L90 168L107 157L113 189L90 200L67 189Z")}
+    ${region("glutes","M61 191Q75 182 89 200L86 229Q74 238 62 225Z")}${region("glutes","M119 191Q105 182 91 200L94 229Q106 238 118 225Z")}
+    ${region("hamstrings","M62 230Q74 224 86 233L82 285Q72 293 65 278Z")}${region("hamstrings","M118 230Q106 224 94 233L98 285Q108 293 115 278Z")}
+    ${region("adductors","M85 231L90 237L88 280L80 249Z")}${region("adductors","M95 231L90 237L92 280L100 249Z")}
+    ${region("calves","M65 288Q75 280 82 294L78 348Q72 358 68 344Z")}${region("calves","M115 288Q105 280 98 294L102 348Q108 358 112 344Z")}
+   </svg><span>Back</span></div>
   </div>
-  <div class="heat-legend"><span><i class="heat-dot primary"></i>Primary</span><span><i class="heat-dot secondary"></i>Secondary</span></div>
+  <div class="hm-legend"><span><i class="hm-dot primary"></i>Primary</span><span><i class="hm-dot secondary"></i>Secondary</span></div>
+  <div class="hm-chips">${chips}</div>
+  <div class="hm-detail" aria-live="polite">${active.length?`<strong>${label(active[0])}</strong><span>${Math.round((h[active[0]]||0)*100)}% activation today</span>`:""}</div>
  </div>`;
 }
-
 const REPDB_STOPWORDS=new Set(["standing","seated","lying","alternating","alternate","single","one","two","arm","leg","with","and","the","bodyweight"]);
 function repdbTokens(value){
  return repdbKey(value).split(" ").filter(t=>t && !REPDB_STOPWORDS.has(t));
@@ -952,6 +947,19 @@ function route(name){
  ({today:renderToday,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings}[name]||renderToday)();
 }
 document.addEventListener("click",(e)=>{
+ const muscle=e.target.closest("[data-muscle],[data-muscle-chip]");
+ if(muscle){
+   const root=muscle.closest(".premium-heatmap");
+   if(root){
+     const key=muscle.dataset.muscle||muscle.dataset.muscleChip;
+     let scores={}; try{scores=JSON.parse(root.dataset.heatScores||"{}")}catch{}
+     const name=muscleLabels[key]||String(key).replace(/([A-Z])/g," $1").replace(/^./,x=>x.toUpperCase());
+     const detail=root.querySelector(".hm-detail");
+     if(detail)detail.innerHTML=`<strong>${name}</strong><span>${Math.round((scores[key]||0)*100)}% activation today</span>`;
+     root.querySelectorAll("[data-muscle],[data-muscle-chip]").forEach(x=>x.classList.toggle("hm-selected",(x.dataset.muscle||x.dataset.muscleChip)===key));
+     return;
+   }
+ }
  const nav=e.target.closest(".nav-item[data-route]");
  if(!nav)return;
  e.preventDefault();

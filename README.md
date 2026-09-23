@@ -694,3 +694,10 @@ The app shell and workout experience were redesigned around the approved charcoa
 - Muscle activation remains dynamic based on the actual exercises scheduled for the day.
 - Larger heat map remains at the top of Today.
 - All previous Library, Exercise Guide, History, Warm-Up/Cool-Down, timers, tracking, swapping and workout-style functionality is retained.
+
+## v94 – Polished Functional Heat Map
+- Rebuilt the heat map for the dark app UI with cleaner front/back anatomy and less visual clutter.
+- Existing weighted workout-to-muscle scoring remains the source of activation.
+- Red shows primary activation and gold shows secondary activation.
+- Muscle regions and muscle chips are interactive; tapping one displays its calculated activation percentage for today's workout.
+- All previous functionality and existing exercise images are retained.
