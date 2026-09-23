@@ -648,3 +648,6 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 - Exercises expand inline for set completion, actual reps, weight or resistance entry.
 - Exercise instructions can be opened while the workout timer continues.
 - Existing background-safe timing, finishers, swapping, carry-forward, workout-type overrides, History and image systems are retained.
+
+## v85.1 – Today Tab Refresh
+Built from stable v85. Today is compact, Sequential defaults on fresh installs, Workout Style is Settings-only, circuit grouping excludes unsuitable cardio/timed work, rest is above Pre-Workout, pre-start exercises are collapsed with thumbnails and guide access, active Sequential uses Set/Previous/Weight/Reps/check columns, active Circuit uses round cards with thumbnails/reps/checks, and Cool-Down is expanded.
