@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v94-functional-heatmap";
+const CACHE="home-workout-v95-library-performance-fix";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=94",
-  "./app.js?v=94",
+  "./styles.css?v=95",
+  "./app.js?v=95",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

@@ -701,3 +701,11 @@ The app shell and workout experience were redesigned around the approved charcoa
 - Red shows primary activation and gold shows secondary activation.
 - Muscle regions and muscle chips are interactive; tapping one displays its calculated activation percentage for today's workout.
 - All previous functionality and existing exercise images are retained.
+
+## v95 – Exercise Library Performance Fix
+- Rebuilt the Exercise Library renderer so the app no longer tries to create hundreds of image-heavy exercise cards at once.
+- Library opens with 24 exercises and loads additional groups of 24 with Show More.
+- Added exercise search plus the existing body-area and equipment filters.
+- Library exercise cards open the existing Exercise Guide with image, instructions and form reminders.
+- Added a route-level Library recovery screen instead of leaving the previous tab visible if a Library rendering error occurs.
+- All v94 heat-map and existing workout functionality is retained.

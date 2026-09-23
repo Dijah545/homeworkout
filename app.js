@@ -943,8 +943,17 @@ function themeApply(){
 themeApply();
 
 function route(name){
- document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.route===name));
- ({today:renderToday,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings}[name]||renderToday)();
+ const routes={today:renderToday,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings};
+ const target=routes[name]?name:"today";
+ document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.route===target));
+ try{ routes[target](); }
+ catch(err){
+   console.error(`Route ${target} failed`,err);
+   if(target==="library"){
+     view.innerHTML=`<div class="library-header"><div><div class="eyebrow">Exercise Reference</div><h1>Exercise Library</h1></div></div><div class="card"><strong>Library could not finish loading.</strong><p>Tap Retry to reload the exercise list.</p><button type="button" class="primary" id="retryLibrary">Retry</button></div>`;
+     document.getElementById("retryLibrary")?.addEventListener("click",renderLibrary);
+   }else throw err;
+ }
 }
 document.addEventListener("click",(e)=>{
  const muscle=e.target.closest("[data-muscle],[data-muscle-chip]");
@@ -1985,28 +1994,53 @@ function renderLibrary(){
  const categories=["All","Upper Body","Lower Body","Core","Cardio","Full Body","Mobility","Warm-Up"];
  const equipmentFilters=["All Equipment","Adjustable Dumbbells","Barbell","Kettlebell","Resistance Loop Bands","Resistance/Toning Tubes","Exercise Mat","Disc Sliders","Mini Stepper","Skipping Rope","Stationary Bike","Treadmill","Bodyweight / Exercise Mat"];
  const selected=state.libraryCategory||"All", selectedEquipment=state.libraryEquipment||"All Equipment";
- const allItems=[...exercises.filter(x=>x.id!=="bike"),treadmillExercise()];
- const shown=allItems.filter(ex=>{
+ const allItems=[...exercises.filter(x=>x&&x.id!=="bike"),treadmillExercise()];
+ const query=String(librarySearch||"").trim().toLowerCase();
+ const filtered=allItems.filter(ex=>{
    const area=String(ex?.area||"");
-   const c=selected==="All"|| (selected==="Upper Body"&&area.includes("Upper Body")) || (selected==="Lower Body"&&area.includes("Lower Body")) || (selected==="Core"&&area.includes("Core")) || (selected==="Cardio"&&(area.includes("Cardio")||ex.isFinisher)) || (selected==="Full Body"&&area.includes("Full Body")) || (selected==="Mobility"&&area.includes("Mobility")) || (selected==="Warm-Up"&&area.includes("Warm-Up"));
-   return c && (selectedEquipment==="All Equipment"||ex.equipment===selectedEquipment);
+   const equipment=String(ex?.equipment||"");
+   const name=String(ex?.name||"");
+   const categoryOK=selected==="All"||
+     (selected==="Upper Body"&&area.includes("Upper Body"))||
+     (selected==="Lower Body"&&area.includes("Lower Body"))||
+     (selected==="Core"&&area.includes("Core"))||
+     (selected==="Cardio"&&(area.includes("Cardio")||ex.isFinisher))||
+     (selected==="Full Body"&&area.includes("Full Body"))||
+     (selected==="Mobility"&&area.includes("Mobility"))||
+     (selected==="Warm-Up"&&area.includes("Warm-Up"));
+   const equipmentOK=selectedEquipment==="All Equipment"||equipment===selectedEquipment;
+   const searchOK=!query||`${name} ${area} ${equipment}`.toLowerCase().includes(query);
+   return categoryOK&&equipmentOK&&searchOK;
  });
- view.innerHTML=`<div class="library-header"><div><div class="eyebrow">Exercise Reference</div><h1>Workout Library</h1></div></div>
- <div class="library-filter-label">Body Area</div><div class="library-filters">${categories.map(c=>`<button class="library-filter ${c===selected?"active":""}" data-cat="${c}">${c}</button>`).join("")}</div>
- <div class="library-filter-label">Equipment</div><div class="library-filters">${equipmentFilters.map(e=>`<button class="library-filter ${e===selectedEquipment?"active":""}" data-equipment-filter="${e}">${e}</button>`).join("")}</div>
- ${selectedEquipment==="Adjustable Dumbbells"?`<section class="library-summary"><strong>Adjustable Dumbbells</strong><span>${shown.length} exercises</span></section>`:selectedEquipment==="Barbell"?`<section class="library-summary"><strong>Barbell Configuration</strong><span>${shown.length} exercises</span></section>`:selectedEquipment==="Kettlebell"?`<section class="library-summary"><strong>Kettlebell Configuration</strong><span>${shown.length} exercises</span></section>`:""}
- <div class="library-grid">${shown.map(ex=>`<button class="library-card" data-ex="${ex.id}">
-   <div class="library-single-image">${exerciseImageMarkup(ex)}</div><div class="library-card-body"><strong>${ex.name}</strong><span>${ex.area}</span><small>${ex.equipment}</small><em>${ex.sets}</em></div>
+ const shown=filtered.slice(0,libraryVisibleCount);
+ view.innerHTML=`<div class="library-header">
+   <div><div class="eyebrow">Exercise Reference</div><h1>Exercise Library</h1><p>${filtered.length} exercises</p></div>
+ </div>
+ <div class="library-search-wrap"><span>⌕</span><input id="librarySearch" type="search" inputmode="search" autocomplete="off" placeholder="Search exercises" value="${String(librarySearch||"").replace(/"/g,"&quot;")}"></div>
+ <div class="library-filter-label">Body Area</div>
+ <div class="library-filters">${categories.map(c=>`<button type="button" class="library-filter ${c===selected?"active":""}" data-cat="${c}">${c}</button>`).join("")}</div>
+ <div class="library-filter-label">Equipment</div>
+ <div class="library-filters">${equipmentFilters.map(e=>`<button type="button" class="library-filter ${e===selectedEquipment?"active":""}" data-equipment-filter="${e}">${e}</button>`).join("")}</div>
+ <div class="library-grid">${shown.map(ex=>`<button type="button" class="library-card" data-library-ex="${ex.id}">
+   <div class="library-single-image">${exerciseImageMarkup(ex)}</div>
+   <div class="library-card-body"><strong>${ex.name||"Exercise"}</strong><span>${ex.area||""}</span><small>${ex.equipment||""}</small><em>${ex.sets||""}</em></div>
  </button>`).join("")}</div>
- <div class="image-credit">Exercise imagery: Free Exercise DB (public domain) and RepDB free exercise dataset where available.</div>`;
- document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{state.libraryCategory=b.dataset.cat;save();renderLibrary()});
- document.querySelectorAll("[data-equipment-filter]").forEach(b=>b.onclick=()=>{state.libraryEquipment=b.dataset.equipmentFilter;save();renderLibrary()});
- document.querySelectorAll(".library-card[data-ex]").forEach(card=>{
-   card.onclick=(e)=>{e.preventDefault();e.stopPropagation();preview(card.dataset.ex);};
- });
- bindExerciseRows();bindExerciseImages();
-}
+ ${!shown.length?`<div class="empty library-empty">No exercises match these filters.</div>`:""}
+ ${filtered.length>shown.length?`<button type="button" class="secondary library-show-more" id="libraryShowMore">Show More <span>${shown.length} of ${filtered.length}</span></button>`:""}
+ <div class="image-credit">Exercise imagery: existing app images, Free Exercise DB and RepDB where available.</div>`;
 
+ const search=document.getElementById("librarySearch");
+ if(search){
+   search.oninput=()=>{librarySearch=search.value;libraryVisibleCount=24;clearTimeout(search._t);search._t=setTimeout(renderLibrary,120);};
+   requestAnimationFrame(()=>{try{search.setSelectionRange(search.value.length,search.value.length)}catch{}});
+ }
+ document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{state.libraryCategory=b.dataset.cat;libraryVisibleCount=24;save();renderLibrary()});
+ document.querySelectorAll("[data-equipment-filter]").forEach(b=>b.onclick=()=>{state.libraryEquipment=b.dataset.equipmentFilter;libraryVisibleCount=24;save();renderLibrary()});
+ document.querySelectorAll("[data-library-ex]").forEach(card=>card.onclick=(e)=>{e.preventDefault();e.stopPropagation();preview(card.dataset.libraryEx)});
+ const more=document.getElementById("libraryShowMore");
+ if(more)more.onclick=()=>{libraryVisibleCount+=24;renderLibrary()};
+ bindExerciseImages();
+}
 
 function localDateFromISO(dateStr){
  const [y,m,d]=dateStr.split("-").map(Number);
@@ -2229,6 +2263,8 @@ function renderBodyTracker(){
 
 let historyMonthOffset=0;
 let historyShowAll=false;
+let libraryVisibleCount=24;
+let librarySearch="";
 
 function renderHistory(){
  const weekStart=startOfCalendarWeek(new Date());
