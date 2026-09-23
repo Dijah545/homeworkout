@@ -674,3 +674,9 @@ The app shell and workout experience were redesigned around the approved charcoa
 - Repaired Library exercise-card interaction and added a delegated fallback so tapping exercise cards opens the Exercise Guide.
 - Exercise Guide retains the exercise image, instructions and form reminders.
 - v89 Warm-Up/Cool-Down, resistance-band image mappings, carry-forward, rest-day override, swapping, finishers, heat map, timers, History and Body functionality are retained.
+
+## v91 – Library Route Hotfix
+- Replaced the bottom-navigation one-time click binding with delegated routing so Library reliably changes the active screen.
+- Hardened Library filtering against incomplete exercise metadata.
+- Prevented exercise-card click delegation from interfering with bottom navigation.
+- v90 guide, Sequential default, Settings-only workout style, semantic navigation icons, five-item Recent Workouts display, Warm-Up/Cool-Down and all existing workout functionality are retained.

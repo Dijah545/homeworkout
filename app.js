@@ -945,10 +945,15 @@ function route(name){
  document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.route===name));
  ({today:renderToday,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings}[name]||renderToday)();
 }
-document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>{
- if(b.dataset.route==="week") state.selectedDay=new Date().getDay();
- route(b.dataset.route);
-}));
+document.addEventListener("click",(e)=>{
+ const nav=e.target.closest(".nav-item[data-route]");
+ if(!nav)return;
+ e.preventDefault();
+ e.stopPropagation();
+ const target=nav.dataset.route;
+ if(target==="week") state.selectedDay=new Date().getDay();
+ route(target);
+});
 const themeQuick=document.getElementById("themeQuick");if(themeQuick)themeQuick.onclick=()=>{state.theme=(document.documentElement.dataset.theme==="dark"?"light":"dark");save();themeApply();route(document.querySelector(".nav-item.active")?.dataset.route||"today")};
 
 function todayLabel(day){return DAY_NAMES[day]}
@@ -1965,7 +1970,8 @@ function renderLibrary(){
  const selected=state.libraryCategory||"All", selectedEquipment=state.libraryEquipment||"All Equipment";
  const allItems=[...exercises.filter(x=>x.id!=="bike"),treadmillExercise()];
  const shown=allItems.filter(ex=>{
-   const c=selected==="All"|| (selected==="Upper Body"&&ex.area.includes("Upper Body")) || (selected==="Lower Body"&&ex.area.includes("Lower Body")) || (selected==="Core"&&ex.area.includes("Core")) || (selected==="Cardio"&&(ex.area.includes("Cardio")||ex.isFinisher)) || (selected==="Full Body"&&ex.area.includes("Full Body")) || (selected==="Mobility"&&ex.area.includes("Mobility")) || (selected==="Warm-Up"&&ex.area.includes("Warm-Up"));
+   const area=String(ex?.area||"");
+   const c=selected==="All"|| (selected==="Upper Body"&&area.includes("Upper Body")) || (selected==="Lower Body"&&area.includes("Lower Body")) || (selected==="Core"&&area.includes("Core")) || (selected==="Cardio"&&(area.includes("Cardio")||ex.isFinisher)) || (selected==="Full Body"&&area.includes("Full Body")) || (selected==="Mobility"&&area.includes("Mobility")) || (selected==="Warm-Up"&&area.includes("Warm-Up"));
    return c && (selectedEquipment==="All Equipment"||ex.equipment===selectedEquipment);
  });
  view.innerHTML=`<div class="library-header"><div><div class="eyebrow">Exercise Reference</div><h1>Workout Library</h1></div></div>
@@ -2793,7 +2799,7 @@ function completeWorkout(plan,totalRest,restSessions){
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
 document.addEventListener("click",(e)=>{
  const exerciseTarget=e.target.closest("[data-ex]");
- if(exerciseTarget && !e.target.closest("[data-set-ex]") && !e.target.closest("[data-swap]")){
+ if(exerciseTarget && !e.target.closest(".bottom-nav") && !e.target.closest("[data-set-ex]") && !e.target.closest("[data-swap]")){
    e.preventDefault();
    e.stopPropagation();
    preview(exerciseTarget.dataset.ex);

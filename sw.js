@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v90-library-guide-history";
+const CACHE="home-workout-v91-library-route-hotfix";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=90",
-  "./app.js?v=90",
+  "./styles.css?v=91",
+  "./app.js?v=91",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
