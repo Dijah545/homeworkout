@@ -327,216 +327,81 @@ let state=Object.assign({},defaults,JSON.parse(localStorage.getItem("homefit-sta
 const view=document.getElementById("view"),modal=document.getElementById("modal"),toast=document.getElementById("toast");
 
 
-const muscleGroups=["shoulders","chest","upperBack","biceps","triceps","core","glutes","quads","hamstrings","calves","cardio"];
-function musclesFor(ex){
- const s=(ex.name+" "+ex.area).toLowerCase(), m=new Set();
- if(/shoulder|overhead|lateral raise|front raise|arnold|upright row/.test(s)) m.add("shoulders");
- if(/chest|press|push-up|push up|fly|pullover/.test(s)) m.add("chest");
- if(/row|pulldown|face pull|reverse fly|superman/.test(s)) m.add("upperBack");
- if(/bicep|curl|hammer/.test(s)) m.add("biceps");
- if(/tricep|skull|close-grip/.test(s)) m.add("triceps");
- if(/core|plank|crunch|dead bug|bird dog|mountain|russian|v-up|leg raise|flutter|scissor|hollow|bear|pallof|wood chop|rotation/.test(s)) m.add("core");
- if(/glute|hip thrust|bridge|donkey|kickback|fire hydrant|clamshell/.test(s)) m.add("glutes");
- if(/squat|lunge|step-up|step up|thruster|wall sit/.test(s)) m.add("quads");
- if(/deadlift|rdl|romanian|good morning|hamstring/.test(s)) m.add("hamstrings");
- if(/calf/.test(s)) m.add("calves");
- if(/cardio|treadmill|bike|cycling|stepper|skipping|jump|burpee|high knees|fast feet|shadow boxing/.test(s)) m.add("cardio");
- if(!m.size){
-   if(ex.area.includes("Upper Body"))["shoulders","chest","upperBack","biceps","triceps"].forEach(x=>m.add(x));
-   if(ex.area.includes("Lower Body"))["glutes","quads","hamstrings","calves"].forEach(x=>m.add(x));
-   if(ex.area.includes("Core"))m.add("core");
+const muscleGroups=["delts","chest","traps","lats","biceps","triceps","forearms","abs","obliques","lowerBack","glutes","quads","hamstrings","adductors","calves"];
+const muscleLabels={delts:"Shoulders",chest:"Chest",traps:"Traps",lats:"Lats / Upper Back",biceps:"Biceps",triceps:"Triceps",forearms:"Forearms",abs:"Abs",obliques:"Obliques",lowerBack:"Lower Back",glutes:"Glutes",quads:"Quadriceps",hamstrings:"Hamstrings",adductors:"Inner Thighs",calves:"Calves"};
+function muscleLoadFor(ex){
+ const s=((ex.name||"")+" "+(ex.area||"")).toLowerCase(), m={};
+ const add=(k,v=1)=>m[k]=Math.max(m[k]||0,v);
+ if(/shoulder|overhead|lateral raise|front raise|arnold|upright row|thruster|clean and press|push press/.test(s)) add("delts",1);
+ if(/bench press|chest press|push-up|push up|chest fly|floor press|pullover/.test(s)){add("chest",1);add("triceps",.55);add("delts",.45)}
+ if(/row|pulldown|pull-down|face pull|reverse fly|superman/.test(s)){add("lats",1);add("traps",.55);add("biceps",.5)}
+ if(/shrug/.test(s)) add("traps",1);
+ if(/bicep|curl|hammer/.test(s)){add("biceps",1);add("forearms",.4)}
+ if(/tricep|skull|close-grip/.test(s)) add("triceps",1);
+ if(/farmer|carry|wrist|grip/.test(s)) add("forearms",1);
+ if(/crunch|dead bug|hollow|v-up|leg raise|flutter|scissor/.test(s)) add("abs",1);
+ if(/russian|wood chop|rotation|side plank|pallof/.test(s)){add("obliques",1);add("abs",.55)}
+ if(/plank|mountain climber|bear crawl|bird dog/.test(s)){add("abs",.85);add("obliques",.6);add("delts",.35)}
+ if(/deadlift|rdl|romanian|good morning/.test(s)){add("hamstrings",1);add("glutes",.85);add("lowerBack",.55)}
+ if(/hip thrust|glute bridge|bridge|donkey|kickback|fire hydrant|clamshell|hip extension/.test(s)) add("glutes",1);
+ if(/squat|wall sit/.test(s)){add("quads",1);add("glutes",.75);add("adductors",.35)}
+ if(/sumo/.test(s)){add("adductors",.8);add("glutes",.85)}
+ if(/lunge|split squat|step-up|step up/.test(s)){add("quads",1);add("glutes",.8);add("hamstrings",.35)}
+ if(/lateral lunge|side lunge/.test(s)) add("adductors",.85);
+ if(/hamstring/.test(s)) add("hamstrings",1);
+ if(/calf/.test(s)) add("calves",1);
+ if(/jump rope|skipping|stepper|high knees|jumping jack|burpee|treadmill|running|run|walking|walk/.test(s)){add("calves",.55);add("quads",.45);add("glutes",.3)}
+ if(/bike|cycling/.test(s)){add("quads",.65);add("glutes",.35);add("calves",.25)}
+ if(!Object.keys(m).length){
+   if((ex.area||"").includes("Upper Body")){add("delts",.6);add("chest",.5);add("lats",.5);add("biceps",.4);add("triceps",.4)}
+   if((ex.area||"").includes("Lower Body")){add("glutes",.7);add("quads",.7);add("hamstrings",.6);add("calves",.35)}
+   if((ex.area||"").includes("Core")){add("abs",.8);add("obliques",.55)}
  }
- return [...m];
+ return m;
 }
+function musclesFor(ex){return Object.keys(muscleLoadFor(ex));}
 function heatScores(plan){
  const scores={};muscleGroups.forEach(m=>scores[m]=0);
- plan.forEach(ex=>musclesFor(ex).forEach(m=>scores[m]+=1));
- const max=Math.max(1,...Object.values(scores));
- Object.keys(scores).forEach(k=>scores[k]=scores[k]/max);
- return scores;
+ plan.filter(ex=>!String(ex.area||"").includes("Warm-Up")&&!String(ex.area||"").includes("Cool-Down")).forEach(ex=>{
+   const load=muscleLoadFor(ex);Object.entries(load).forEach(([m,v])=>scores[m]=(scores[m]||0)+v);
+ });
+ const max=Math.max(1,...Object.values(scores));Object.keys(scores).forEach(k=>scores[k]=scores[k]/max);return scores;
 }
-function heatColor(v){
- if(v<=0)return "var(--surface3)";
- const alpha=.2+.8*v;
- return `color-mix(in srgb, #ff3b67 ${Math.round(alpha*100)}%, var(--surface3))`;
-}
-
-
 function femaleHeatmap(plan){
- const h=heatScores(plan);
- const level=v=>v<=0?"none":v<0.34?"light":v<0.67?"moderate":v<0.9?"high":"primary";
- const fill=(m)=>`heat-${level(h[m]||0)}`;
- const title=(m,label)=>`${label}: ${Math.round((h[m]||0)*100)}% relative focus`;
-
- return `<div class="dynamic-heatmap-wrap">
-   <div class="heatmap-title">
-     <strong>Today's Muscle Heat Map</strong>
-     <small>Calculated from the exercises scheduled for today.</small>
-   </div>
-
-   <svg class="female-muscle-map" viewBox="0 0 620 610" role="img" aria-label="Dynamic front and back female body muscle heat map">
-     <defs>
-       <filter id="heatGlow" x="-40%" y="-40%" width="180%" height="180%">
-         <feGaussianBlur stdDeviation="4" result="blur"/>
-         <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-       </filter>
-     </defs>
-
-     <!-- FRONT FEMALE BODY -->
-     <g class="body-figure front-body" transform="translate(48 20)">
-       <text x="120" y="575" text-anchor="middle" class="body-view-label">FRONT</text>
-
-       <!-- head / neck -->
-       <ellipse class="body-neutral" cx="120" cy="44" rx="30" ry="37"/>
-       <path class="body-neutral" d="M103 75 L137 75 L143 104 L97 104 Z"/>
-
-       <!-- torso silhouette -->
-       <path class="body-outline" d="M76 105
-         C61 111 49 128 45 151
-         L55 243
-         C59 271 69 293 82 309
-         L76 356
-         L88 501
-         C90 526 99 548 108 559
-         L120 559
-         L120 342
-         L120 559
-         L132 559
-         C141 548 150 526 152 501
-         L164 356
-         L158 309
-         C171 293 181 271 185 243
-         L195 151
-         C191 128 179 111 164 105
-         C147 97 138 94 120 94
-         C102 94 93 97 76 105 Z"/>
-
-       <!-- shoulders -->
-       <path class="muscle ${fill("shoulders")}" title="${title("shoulders","Shoulders")}" d="M75 105 C55 111 45 126 44 148 C57 143 70 140 83 143 C90 128 95 113 98 102 Z"/>
-       <path class="muscle ${fill("shoulders")}" title="${title("shoulders","Shoulders")}" d="M165 105 C185 111 195 126 196 148 C183 143 170 140 157 143 C150 128 145 113 142 102 Z"/>
-
-       <!-- chest -->
-       <path class="muscle ${fill("chest")}" title="${title("chest","Chest")}" d="M87 119 C97 108 108 106 119 114 L118 162 C103 162 91 156 82 147 Z"/>
-       <path class="muscle ${fill("chest")}" title="${title("chest","Chest")}" d="M153 119 C143 108 132 106 121 114 L122 162 C137 162 149 156 158 147 Z"/>
-
-       <!-- biceps -->
-       <path class="muscle ${fill("biceps")}" title="${title("biceps","Biceps")}" d="M49 150 C36 160 31 181 33 207 C35 227 41 245 49 254 C58 243 61 225 60 204 L62 166 Z"/>
-       <path class="muscle ${fill("biceps")}" title="${title("biceps","Biceps")}" d="M191 150 C204 160 209 181 207 207 C205 227 199 245 191 254 C182 243 179 225 180 204 L178 166 Z"/>
-
-       <!-- triceps/forearm side emphasis -->
-       <path class="muscle ${fill("triceps")}" title="${title("triceps","Triceps")}" d="M34 210 C28 232 27 258 33 280 C38 294 44 305 51 312 C58 292 59 270 53 249 Z"/>
-       <path class="muscle ${fill("triceps")}" title="${title("triceps","Triceps")}" d="M206 210 C212 232 213 258 207 280 C202 294 196 305 189 312 C182 292 181 270 187 249 Z"/>
-
-       <!-- abs/core -->
-       <path class="muscle ${fill("core")}" title="${title("core","Core")}" d="M89 160 C101 165 109 166 118 166 L118 279 C105 277 94 274 84 267 C78 233 79 195 89 160 Z"/>
-       <path class="muscle ${fill("core")}" title="${title("core","Core")}" d="M151 160 C139 165 131 166 122 166 L122 279 C135 277 146 274 156 267 C162 233 161 195 151 160 Z"/>
-
-       <!-- quads -->
-       <path class="muscle ${fill("quads")}" title="${title("quads","Quadriceps")}" d="M81 300 C95 290 106 292 116 304 L113 401 C105 426 94 444 83 453 C75 428 73 398 76 365 Z"/>
-       <path class="muscle ${fill("quads")}" title="${title("quads","Quadriceps")}" d="M159 300 C145 290 134 292 124 304 L127 401 C135 426 146 444 157 453 C165 428 167 398 164 365 Z"/>
-
-       <!-- calves -->
-       <path class="muscle ${fill("calves")}" title="${title("calves","Calves")}" d="M83 420 C94 430 103 438 111 450 L108 526 C101 542 94 549 88 551 C80 528 78 501 80 471 Z"/>
-       <path class="muscle ${fill("calves")}" title="${title("calves","Calves")}" d="M157 420 C146 430 137 438 129 450 L132 526 C139 542 146 549 152 551 C160 528 162 501 160 471 Z"/>
-     </g>
-
-     <!-- BACK FEMALE BODY -->
-     <g class="body-figure back-body" transform="translate(353 20)">
-       <text x="120" y="575" text-anchor="middle" class="body-view-label">BACK</text>
-
-       <ellipse class="body-neutral" cx="120" cy="44" rx="30" ry="37"/>
-       <path class="body-neutral" d="M103 75 L137 75 L143 104 L97 104 Z"/>
-       <path class="body-outline" d="M76 105
-         C61 111 49 128 45 151
-         L55 243
-         C59 271 69 293 82 309
-         L76 356
-         L88 501
-         C90 526 99 548 108 559
-         L120 559
-         L132 559
-         C141 548 150 526 152 501
-         L164 356
-         L158 309
-         C171 293 181 271 185 243
-         L195 151
-         C191 128 179 111 164 105
-         C147 97 138 94 120 94
-         C102 94 93 97 76 105 Z"/>
-
-       <!-- rear shoulders -->
-       <path class="muscle ${fill("shoulders")}" title="${title("shoulders","Rear shoulders")}" d="M75 105 C55 111 45 126 44 148 C57 143 70 140 83 143 C90 128 95 113 98 102 Z"/>
-       <path class="muscle ${fill("shoulders")}" title="${title("shoulders","Rear shoulders")}" d="M165 105 C185 111 195 126 196 148 C183 143 170 140 157 143 C150 128 145 113 142 102 Z"/>
-
-       <!-- upper back / lats -->
-       <path class="muscle ${fill("upperBack")}" title="${title("upperBack","Upper Back")}" d="M84 116 C98 106 110 105 118 113 L118 210 C102 207 90 198 80 182 C75 157 76 134 84 116 Z"/>
-       <path class="muscle ${fill("upperBack")}" title="${title("upperBack","Upper Back")}" d="M156 116 C142 106 130 105 122 113 L122 210 C138 207 150 198 160 182 C165 157 164 134 156 116 Z"/>
-
-       <!-- triceps -->
-       <path class="muscle ${fill("triceps")}" title="${title("triceps","Triceps")}" d="M49 150 C36 160 31 181 33 207 C35 227 41 245 49 254 C58 243 61 225 60 204 L62 166 Z"/>
-       <path class="muscle ${fill("triceps")}" title="${title("triceps","Triceps")}" d="M191 150 C204 160 209 181 207 207 C205 227 199 245 191 254 C182 243 179 225 180 204 L178 166 Z"/>
-
-       <!-- lower back/core -->
-       <path class="muscle ${fill("core")}" title="${title("core","Core / Lower Back")}" d="M91 207 C101 212 109 214 118 214 L118 282 C104 280 92 274 83 265 Z"/>
-       <path class="muscle ${fill("core")}" title="${title("core","Core / Lower Back")}" d="M149 207 C139 212 131 214 122 214 L122 282 C136 280 148 274 157 265 Z"/>
-
-       <!-- glutes -->
-       <path class="muscle ${fill("glutes")}" title="${title("glutes","Glutes")}" d="M82 273 C96 264 108 266 118 278 L117 337 C102 345 88 340 78 326 C73 306 75 287 82 273 Z"/>
-       <path class="muscle ${fill("glutes")}" title="${title("glutes","Glutes")}" d="M158 273 C144 264 132 266 122 278 L123 337 C138 345 152 340 162 326 C167 306 165 287 158 273 Z"/>
-
-       <!-- hamstrings -->
-       <path class="muscle ${fill("hamstrings")}" title="${title("hamstrings","Hamstrings")}" d="M80 337 C95 343 106 345 114 353 L112 429 C103 443 93 452 83 456 C76 428 74 397 77 367 Z"/>
-       <path class="muscle ${fill("hamstrings")}" title="${title("hamstrings","Hamstrings")}" d="M160 337 C145 343 134 345 126 353 L128 429 C137 443 147 452 157 456 C164 428 166 397 163 367 Z"/>
-
-       <!-- calves -->
-       <path class="muscle ${fill("calves")}" title="${title("calves","Calves")}" d="M83 420 C94 430 103 438 111 450 L108 526 C101 542 94 549 88 551 C80 528 78 501 80 471 Z"/>
-       <path class="muscle ${fill("calves")}" title="${title("calves","Calves")}" d="M157 420 C146 430 137 438 129 450 L132 526 C139 542 146 549 152 551 C160 528 162 501 160 471 Z"/>
-     </g>
-   </svg>
-
-   <div class="dynamic-heat-legend">
-     <span><i class="heat-none"></i>Not targeted</span>
-     <span><i class="heat-light"></i>Light</span>
-     <span><i class="heat-moderate"></i>Moderate</span>
-     <span><i class="heat-high"></i>High</span>
-     <span><i class="heat-primary"></i>Primary</span>
-   </div>
-
-   <div class="muscle-focus-list">
-     ${muscleGroups
-       .filter(m=>(h[m]||0)>0)
-       .sort((a,b)=>h[b]-h[a])
-       .map(m=>`<div><span>${m.replace(/([A-Z])/g," $1")}</span><b>${Math.round(h[m]*100)}%</b></div>`)
-       .join("")}
-   </div>
+ const h=heatScores(plan), level=v=>v<=0?"none":v<.28?"light":v<.55?"moderate":v<.82?"high":"primary";
+ const c=m=>`heat-${level(h[m]||0)}`, tt=m=>`${muscleLabels[m]}: ${Math.round((h[m]||0)*100)}%`;
+ const P=(m,d)=>`<path class="muscle ${c(m)}" title="${tt(m)}" d="${d}"/>`;
+ return `<div class="dynamic-heatmap-wrap"><div class="heatmap-title"><strong>Muscle Focus</strong></div>
+ <svg class="female-muscle-map anatomical-map" viewBox="0 0 680 650" role="img" aria-label="Front and back anatomical muscle heat map for today's workout">
+ <defs><filter id="heatGlow" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+ <g transform="translate(35 12)"><text x="145" y="620" text-anchor="middle" class="body-view-label">FRONT</text>
+ <ellipse class="body-neutral" cx="145" cy="45" rx="28" ry="36"/><path class="body-neutral" d="M128 77 Q145 86 162 77 L166 105 Q145 115 124 105Z"/>
+ <path class="body-outline anatomical-outline" d="M100 106 Q76 112 64 139 L48 211 Q42 246 50 282 L62 330 Q69 347 81 337 L92 287 L91 221 L105 171 Q110 204 105 246 Q101 279 112 310 L100 363 L105 465 L112 566 Q116 592 132 606 L145 606 L145 360 L145 606 L158 606 Q174 592 178 566 L185 465 L190 363 L178 310 Q189 279 185 246 Q180 204 185 171 L199 221 L198 287 L209 337 Q221 347 228 330 L240 282 Q248 246 242 211 L226 139 Q214 112 190 106 Q167 96 145 96 Q123 96 100 106Z"/>
+ ${P('delts','M98 108 Q72 113 65 139 Q78 137 96 148 Q105 131 111 108Z')}${P('delts','M192 108 Q218 113 225 139 Q212 137 194 148 Q185 131 179 108Z')}
+ ${P('chest','M109 119 Q126 106 143 116 L142 171 Q122 170 104 155Z')}${P('chest','M181 119 Q164 106 147 116 L148 171 Q168 170 186 155Z')}
+ ${P('biceps','M72 145 Q58 164 58 202 Q60 226 70 243 Q82 226 81 199 L84 157Z')}${P('biceps','M218 145 Q232 164 232 202 Q230 226 220 243 Q208 226 209 199 L206 157Z')}
+ ${P('forearms','M58 213 Q47 246 54 285 L66 326 Q73 337 80 326 L75 281 L70 242Z')}${P('forearms','M232 213 Q243 246 236 285 L224 326 Q217 337 210 326 L215 281 L220 242Z')}
+ ${P('abs','M118 169 Q131 174 142 174 L142 292 Q126 290 114 280 Q108 225 118 169Z')}${P('abs','M172 169 Q159 174 148 174 L148 292 Q164 290 176 280 Q182 225 172 169Z')}
+ ${P('obliques','M104 164 Q113 176 114 207 L111 278 Q100 269 94 246 L98 190Z')}${P('obliques','M186 164 Q177 176 176 207 L179 278 Q190 269 196 246 L192 190Z')}
+ ${P('adductors','M133 318 Q142 314 144 329 L141 431 Q131 420 126 392 L126 343Z')}${P('adductors','M157 318 Q148 314 146 329 L149 431 Q159 420 164 392 L164 343Z')}
+ ${P('quads','M106 315 Q122 305 136 318 L132 430 Q121 459 108 469 Q99 431 101 384Z')}${P('quads','M184 315 Q168 305 154 318 L158 430 Q169 459 182 469 Q191 431 189 384Z')}
+ ${P('calves','M111 451 Q124 464 132 482 L129 561 Q122 583 114 588 Q104 555 105 514Z')}${P('calves','M179 451 Q166 464 158 482 L161 561 Q168 583 176 588 Q186 555 185 514Z')}
+ </g>
+ <g transform="translate(355 12)"><text x="145" y="620" text-anchor="middle" class="body-view-label">BACK</text>
+ <ellipse class="body-neutral" cx="145" cy="45" rx="28" ry="36"/><path class="body-neutral" d="M128 77 Q145 86 162 77 L166 105 Q145 115 124 105Z"/>
+ <path class="body-outline anatomical-outline" d="M100 106 Q76 112 64 139 L48 211 Q42 246 50 282 L62 330 Q69 347 81 337 L92 287 L91 221 L105 171 Q110 204 105 246 Q101 279 112 310 L100 363 L105 465 L112 566 Q116 592 132 606 L145 606 L158 606 Q174 592 178 566 L185 465 L190 363 L178 310 Q189 279 185 246 Q180 204 185 171 L199 221 L198 287 L209 337 Q221 347 228 330 L240 282 Q248 246 242 211 L226 139 Q214 112 190 106 Q167 96 145 96 Q123 96 100 106Z"/>
+ ${P('traps','M116 105 Q145 94 174 105 L163 153 Q145 168 127 153Z')}
+ ${P('delts','M98 108 Q72 113 65 139 Q79 138 96 149 Q105 132 111 108Z')}${P('delts','M192 108 Q218 113 225 139 Q211 138 194 149 Q185 132 179 108Z')}
+ ${P('lats','M107 140 Q124 151 140 158 L140 246 Q119 239 103 216 Q95 181 107 140Z')}${P('lats','M183 140 Q166 151 150 158 L150 246 Q171 239 187 216 Q195 181 183 140Z')}
+ ${P('triceps','M72 145 Q58 164 58 202 Q60 226 70 243 Q82 226 81 199 L84 157Z')}${P('triceps','M218 145 Q232 164 232 202 Q230 226 220 243 Q208 226 209 199 L206 157Z')}
+ ${P('forearms','M58 213 Q47 246 54 285 L66 326 Q73 337 80 326 L75 281 L70 242Z')}${P('forearms','M232 213 Q243 246 236 285 L224 326 Q217 337 210 326 L215 281 L220 242Z')}
+ ${P('lowerBack','M117 225 Q131 237 141 240 L141 294 Q125 291 111 278Z')}${P('lowerBack','M173 225 Q159 237 149 240 L149 294 Q165 291 179 278Z')}
+ ${P('glutes','M105 286 Q125 274 141 292 L140 356 Q120 369 101 351 Q94 316 105 286Z')}${P('glutes','M185 286 Q165 274 149 292 L150 356 Q170 369 189 351 Q196 316 185 286Z')}
+ ${P('hamstrings','M103 353 Q120 361 137 367 L132 459 Q120 475 108 480 Q98 437 99 395Z')}${P('hamstrings','M187 353 Q170 361 153 367 L158 459 Q170 475 182 480 Q192 437 191 395Z')}
+ ${P('calves','M111 451 Q124 464 132 482 L129 561 Q122 583 114 588 Q104 555 105 514Z')}${P('calves','M179 451 Q166 464 158 482 L161 561 Q168 583 176 588 Q186 555 185 514Z')}
+ </g></svg>
+ <div class="dynamic-heat-legend"><span><i class="heat-none"></i>None</span><span><i class="heat-light"></i>Light</span><span><i class="heat-moderate"></i>Moderate</span><span><i class="heat-high"></i>High</span><span><i class="heat-primary"></i>Primary</span></div>
  </div>`;
-}
-
-
-
-
-const REPDB_DATA_URL="https://raw.githubusercontent.com/RepDB/exercise-dataset/main/exercises.json";
-const REPDB_MEDIA_BASE="https://exercise-dataset.com/";
-const repdbImageIndex=new Map();
-const repdbRecords=[];
-const repdbMatchCache=new Map();
-let repdbIndexLoaded=false;
-
-function repdbKey(value){
- return String(value||"").toLowerCase()
-   .replace(/['’]/g,"")
-   .replace(/&/g," and ")
-   .replace(/\bpushups?\b/g,"push up")
-   .replace(/\bpullups?\b/g,"pull up")
-   .replace(/\bdb\b/g,"dumbbell")
-   .replace(/\bkb\b/g,"kettlebell")
-   .replace(/\brdl\b/g,"romanian deadlift")
-   .replace(/\bconfiguration\b/g,"")
-   .replace(/\bfinisher\b/g,"")
-   .replace(/\s+/g," ")
-   .replace(/[^a-z0-9 ]+/g," ")
-   .replace(/\s+/g," ")
-   .trim();
 }
 
 const REPDB_STOPWORDS=new Set(["standing","seated","lying","alternating","alternate","single","one","two","arm","leg","with","and","the","bodyweight"]);
@@ -1169,7 +1034,7 @@ function renderRestTracker(){
      <span><b>${formatRestClock(totalLoggedRest())}</b> total rest</span>
    </div>
    ${entries.length?`<div class="rest-captures">${entries.slice(-4).reverse().map((r,i)=>`<span>Rest ${entries.length-i}: <b>${formatRestClock(r.seconds)}</b></span>`).join("")}</div>`:
-   `<div class="rest-empty">Start and stop whenever you rest. Each stop saves that rest and resets the timer for the next one.</div>`}
+   ``}
  `;
  const btn=document.getElementById("restToggle");
  if(btn) btn.onclick=()=>{
@@ -1582,7 +1447,7 @@ function postWorkoutCooldown(day){
 }
 function recoverySectionMarkup(title,subtitle,items,kind){
  return `<details class="recovery-section ${kind}">
-   <summary><div><strong>${title}</strong><small>${subtitle}</small></div><span>⌄</span></summary>
+   <summary><div><strong>${title}</strong></div><span>⌄</span></summary>
    <div class="recovery-body">
      ${items.map(ex=>`<button type="button" class="recovery-row" data-recovery-ex="${ex.id}">
        <div><b>${ex.name}</b><small>${ex.sets||"30–45 sec"}</small></div><span>Instructions ›</span>
@@ -1619,7 +1484,7 @@ function renderToday(){
    <div class="hero-content">
      <div class="eyebrow">${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</div>
      <h1>${focus}</h1>
-     <p>${resting?"Recovery is part of the program.":"Your equipment-based workout is ready."}</p>
+     
      <div class="stats">
        <div class="stat"><b>${resting?"—":state.duration}</b><span>Total Min</span></div>
        <div class="stat"><b>${plan.length}</b><span>Exercises</span></div>
@@ -1630,10 +1495,10 @@ function renderToday(){
 
  ${resting?"":`
    <section class="card workout-type-control-card">
-     <div class="section-title"><div><h2>Workout Type</h2><small>Change today's training focus without changing your weekly rest-day settings.</small></div></div>
+     <div class="section-title"><h2>Workout Type</h2></div>
      <select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select>
      <div class="workout-style-control">
-       <label for="todayWorkoutStyle"><strong>Workout Style</strong><small>Sequential completes one exercise at a time. Circuit rotates through one set of each exercise in groups of 3.</small></label>
+       <label for="todayWorkoutStyle"><strong>Workout Style</strong></label>
        <select id="todayWorkoutStyle">
          <option value="circuit" ${state.workoutStyle==="circuit"?"selected":""}>Circuit · 3 exercises at a time</option>
          <option value="sequential" ${state.workoutStyle==="sequential"?"selected":""}>Sequential · finish one exercise first</option>
@@ -1644,7 +1509,7 @@ function renderToday(){
    <section class="card heatmap-card">
    ${femaleHeatmap(plan)}</section>
    <section class="card">${durationControl()}
-     <div class="duration-note">Changing the time automatically adds or removes strength exercises. Your selected finisher remains last.</div>
+     
    </section>
    ${warmupMarkup(warmup)}
    <section class="card rest-tracker-card"><div id="todayRestTracker"></div></section>
@@ -1662,10 +1527,7 @@ function renderToday(){
   ${resting?
     `<div class="empty rest-day-choice"><p>Today is scheduled as a rest day. Keep it as recovery, or work out today without changing your regular rest-day schedule.</p><button type="button" class="primary" id="workoutOnRestDay">Workout Today</button></div>`:
     `<div class="today-order-toolbar">
-       <div>
-         <strong>Arrange your workout</strong>
-         <small>Drag exercises or use Move Up/Down so your equipment setup works for you.</small>
-       </div>
+       <strong>Arrange Workout</strong>
        <div class="today-order-buttons"><button type="button" class="secondary compact" id="autoArrangeToday">Auto Arrange</button><button type="button" class="secondary compact" id="resetTodayOrder">Reset order</button></div>
      </div>
 
@@ -1677,7 +1539,7 @@ function renderToday(){
 
      <div style="height:12px"></div>
      ${workoutCompletedOn()?
-       `<div class="workout-complete-banner"><span>✓</span><div><strong>Workout Completed</strong><small>Saved in History for today.</small></div></div>`:
+       `<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
        `<div class="workout-actions today-fixed-actions">
           ${hasActiveWorkoutToday()
             ?`<button class="primary resume-workout-btn" id="resumeWorkout">▶ Resume Workout</button>
@@ -2128,12 +1990,12 @@ function renderLibrary(){
    const c=selected==="All"|| (selected==="Upper Body"&&ex.area.includes("Upper Body")) || (selected==="Lower Body"&&ex.area.includes("Lower Body")) || (selected==="Core"&&ex.area.includes("Core")) || (selected==="Cardio"&&(ex.area.includes("Cardio")||ex.isFinisher)) || (selected==="Full Body"&&ex.area.includes("Full Body")) || (selected==="Mobility"&&ex.area.includes("Mobility")) || (selected==="Warm-Up"&&ex.area.includes("Warm-Up"));
    return c && (selectedEquipment==="All Equipment"||ex.equipment===selectedEquipment);
  });
- view.innerHTML=`<div class="library-header"><div><div class="eyebrow">Exercise Reference</div><h1>Workout Library</h1><p>Browse by body area or equipment. Tap any exercise for instructions.</p></div></div>
+ view.innerHTML=`<div class="library-header"><div><div class="eyebrow">Exercise Reference</div><h1>Workout Library</h1></div></div>
  <div class="library-filter-label">Body Area</div><div class="library-filters">${categories.map(c=>`<button class="library-filter ${c===selected?"active":""}" data-cat="${c}">${c}</button>`).join("")}</div>
  <div class="library-filter-label">Equipment</div><div class="library-filters">${equipmentFilters.map(e=>`<button class="library-filter ${e===selectedEquipment?"active":""}" data-equipment-filter="${e}">${e}</button>`).join("")}</div>
- ${selectedEquipment==="Adjustable Dumbbells"?`<section class="library-summary"><strong>Adjustable Dumbbells</strong><span>${shown.length} exercises</span><p>Lower-body, upper-body and full-body dumbbell movements are included in the automatic workout generator.</p></section>`:selectedEquipment==="Barbell"?`<section class="library-summary"><strong>Barbell Configuration</strong><span>${shown.length} exercises</span><p>Lower-body, upper-body and full-body barbell movements are available in the workout generator.</p></section>`:selectedEquipment==="Kettlebell"?`<section class="library-summary"><strong>Kettlebell Configuration</strong><span>${shown.length} exercises</span><p>Lower-body and full-body/cardio kettlebell movements are included in the automatic workout generator.</p></section>`:""}
+ ${selectedEquipment==="Adjustable Dumbbells"?`<section class="library-summary"><strong>Adjustable Dumbbells</strong><span>${shown.length} exercises</span></section>`:selectedEquipment==="Barbell"?`<section class="library-summary"><strong>Barbell Configuration</strong><span>${shown.length} exercises</span></section>`:selectedEquipment==="Kettlebell"?`<section class="library-summary"><strong>Kettlebell Configuration</strong><span>${shown.length} exercises</span></section>`:""}
  <div class="library-grid">${shown.map(ex=>`<button class="library-card" data-ex="${ex.id}">
-   <div class="library-single-image">${exerciseImageMarkup(ex)}</div><div class="library-card-body"><strong>${ex.name}</strong><span>${ex.area}</span><small>${ex.equipment}</small><em>${ex.sets}</em><span class="instruction-available">Tap for instructions</span></div>
+   <div class="library-single-image">${exerciseImageMarkup(ex)}</div><div class="library-card-body"><strong>${ex.name}</strong><span>${ex.area}</span><small>${ex.equipment}</small><em>${ex.sets}</em></div>
  </button>`).join("")}</div>
  <div class="image-credit">Exercise imagery: Free Exercise DB (public domain) and RepDB free exercise dataset where available.</div>`;
  document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{state.libraryCategory=b.dataset.cat;save();renderLibrary()});
@@ -2387,7 +2249,7 @@ function renderHistory(){
        <div><b>${completedDays}/${requiredDays}</b><small>Workout Days</small></div>
      </div>
    </div>
-   <p class="streak-note">${streak===0?"Complete at least one workout this week to start your streak.":`You have completed at least one workout for ${streak} consecutive week${streak===1?"":"s"}.`}</p>
+   
  </section>
 
  <section class="card">
@@ -2471,28 +2333,28 @@ function renderSettings(){
  const equipment=defaults.equipment;
  view.innerHTML=`<div class="eyebrow">Preferences</div><h1>Settings</h1>
  <section class="card"><div class="section-title"><h2>Appearance</h2></div>
- <div class="setting-row"><div><label>Theme</label><small>Dark, light, or system</small></div><select id="themeSel"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></div></section>
+ <div class="setting-row"><div><label>Theme</label></div><select id="themeSel"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></div></section>
  <section class="card"><div class="section-title"><h2>Workout Preferences</h2></div>
- <div class="setting-row"><div><label>Workout days per week</label><small>Minimum 4</small></div><input id="days" type="number" min="4" max="7" value="${state.workoutDays}"></div>
- <div class="setting-row"><div><label>Default workout duration</label><small>20–90 minutes in 5-minute steps</small></div><input id="durationSetting" type="number" min="20" max="90" step="5" value="${state.duration}"></div>
- <div class="setting-row"><div><label>Difficulty</label><small>Controls pacing guidance</small></div><select id="difficulty">${["Beginner","Moderate","Advanced"].map(x=>`<option ${x===state.difficulty?"selected":""}>${x}</option>`).join("")}</select></div>
- <div class="setting-row"><div><label>Default rest between sets</label><small>Actual rest time is recorded during workouts</small></div><select id="restSec">${[30,45,60,90].map(n=>`<option value="${n}" ${n===state.restSeconds?"selected":""}>${n} sec</option>`).join("")}</select></div></section>
- <section class="card"><div class="section-title"><h2>Finisher</h2><small>Choose what ends each workout</small></div>
- <div class="setting-row"><div><label>Finisher type</label><small>Choose one yourself or select Cardio/Core and let the app choose the exercise</small></div><select id="finisherMode"><option value="auto" ${state.finisherMode==="auto"?"selected":""}>Automatic / Surprise Me</option><option value="treadmill" ${state.finisherMode==="treadmill"?"selected":""}>Treadmill</option><option value="cardio" ${state.finisherMode==="cardio"?"selected":""}>Cardio</option><option value="core" ${state.finisherMode==="core"?"selected":""}>Core</option><option value="none" ${state.finisherMode==="none"?"selected":""}>No finisher</option></select></div>
+ <div class="setting-row"><div><label>Workout days per week</label></div><input id="days" type="number" min="4" max="7" value="${state.workoutDays}"></div>
+ <div class="setting-row"><div><label>Default workout duration</label></div><input id="durationSetting" type="number" min="20" max="90" step="5" value="${state.duration}"></div>
+ <div class="setting-row"><div><label>Difficulty</label></div><select id="difficulty">${["Beginner","Moderate","Advanced"].map(x=>`<option ${x===state.difficulty?"selected":""}>${x}</option>`).join("")}</select></div>
+ <div class="setting-row"><div><label>Default rest between sets</label></div><select id="restSec">${[30,45,60,90].map(n=>`<option value="${n}" ${n===state.restSeconds?"selected":""}>${n} sec</option>`).join("")}</select></div></section>
+ <section class="card"><div class="section-title"><h2>Finisher</h2></div>
+ <div class="setting-row"><div><label>Finisher type</label></div><select id="finisherMode"><option value="auto" ${state.finisherMode==="auto"?"selected":""}>Automatic / Surprise Me</option><option value="treadmill" ${state.finisherMode==="treadmill"?"selected":""}>Treadmill</option><option value="cardio" ${state.finisherMode==="cardio"?"selected":""}>Cardio</option><option value="core" ${state.finisherMode==="core"?"selected":""}>Core</option><option value="none" ${state.finisherMode==="none"?"selected":""}>No finisher</option></select></div>
  ${state.finisherMode==="auto"?(()=>{const pick=generatedFinisherSelection(state.selectedDay??new Date().getDay());return `<div class="setting-row"><div><label>Generate from</label><small>Choose the finisher category</small></div><select id="autoFinisherCategory"><option value="cardio" ${state.autoFinisherCategory==="cardio"?"selected":""}>Cardio</option><option value="core" ${state.autoFinisherCategory==="core"?"selected":""}>Core</option></select></div><div class="setting-row"><div><label>Generated finisher</label><small>${pick?`${pick.exercise.name} · ${pick.mode==="core"?"Core":"Cardio"} · ${pick.minutes} min`:"No compatible cardio/core exercises available"}</small></div><button type="button" class="secondary" id="regenerateFinisher">Generate another</button></div><p class="finisher-auto-note">The app keeps this generated choice for the day so it does not change every time you open the workout.</p>`})():""}
  ${state.finisherMode==="treadmill"?`<div class="setting-row"><div><label>Treadmill finisher</label><small>${state.equipment.includes("Treadmill")?"Dynamic 10–15 minute finish based on the workout":"Treadmill is not selected under Your Equipment"}</small></div><strong>${state.equipment.includes("Treadmill")?treadmillMinutes()+" min":"Off"}</strong></div>`:""}
  ${(state.finisherMode==="cardio"||state.finisherMode==="core")?(()=>{const choices=finisherChoices(state.finisherMode);const selected=choices.find(x=>String(x.id)===String(state.finisherExerciseId))||choices[0];return `<div class="setting-row finisher-choice-row"><div><label>${state.finisherMode==="core"?"Core":"Cardio"} exercise</label><small>Only exercises compatible with your selected equipment are shown</small></div><select id="finisherExercise">${choices.length?choices.map(x=>`<option value="${x.id}" ${selected&&String(x.id)===String(selected.id)?"selected":""}>${x.name} · ${x.equipment}</option>`).join(""):`<option value="">No compatible exercises available</option>`}</select></div><div class="setting-row"><div><label>Finisher duration</label><small>Included in your total workout time</small></div><select id="finisherMinutes">${[5,10,15,20].map(n=>`<option value="${n}" ${Number(state.finisherMinutes||10)===n?"selected":""}>${n} min</option>`).join("")}</select></div>`})():""}
  </section>
- <section class="card"><div class="section-title"><h2>Choose Rest Days</h2><small>${state.restDays.length} selected</small></div><div class="rest-days">${DAYS.map((d,i)=>`<button class="rest-day ${isRest(i)?"selected":""}" data-rest="${i}">${d}</button>`).join("")}</div><p style="font-size:11px;color:var(--muted);margin:12px 0 0">The app will keep at least 4 workout days per week.</p></section>
+ <section class="card"><div class="section-title"><h2>Choose Rest Days</h2><small>${state.restDays.length} selected</small></div><div class="rest-days">${DAYS.map((d,i)=>`<button class="rest-day ${isRest(i)?"selected":""}" data-rest="${i}">${d}</button>`).join("")}</div></section>
  <section class="card"><div class="section-title"><h2>Body Tracker Units</h2></div>
- <div class="setting-row"><div><label>Weight unit</label><small>Used in Body Tracker</small></div><select id="bodyWeightUnit"><option value="lb" ${state.bodyMetricUnit==="lb"?"selected":""}>lb</option><option value="kg" ${state.bodyMetricUnit==="kg"?"selected":""}>kg</option></select></div>
- <div class="setting-row"><div><label>Measurement unit</label><small>Used for waist, hips, chest, thigh and arm</small></div><select id="bodyMeasurementUnit"><option value="in" ${state.measurementUnit==="in"?"selected":""}>inches</option><option value="cm" ${state.measurementUnit==="cm"?"selected":""}>cm</option></select></div>
+ <div class="setting-row"><div><label>Weight unit</label></div><select id="bodyWeightUnit"><option value="lb" ${state.bodyMetricUnit==="lb"?"selected":""}>lb</option><option value="kg" ${state.bodyMetricUnit==="kg"?"selected":""}>kg</option></select></div>
+ <div class="setting-row"><div><label>Measurement unit</label></div><select id="bodyMeasurementUnit"><option value="in" ${state.measurementUnit==="in"?"selected":""}>inches</option><option value="cm" ${state.measurementUnit==="cm"?"selected":""}>cm</option></select></div>
  </section>
  <section class="card"><div class="section-title"><h2>Your Equipment</h2></div><div class="equipment-grid">${equipment.map(e=>`<label class="equip"><input type="checkbox" data-equip="${e}" ${state.equipment.includes(e)?"checked":""}>${e}</label>`).join("")}</div></section>
  <section class="card"><div class="section-title"><h2>Exercise Media Credits</h2></div>
  <p style="font-size:12px;color:var(--muted);line-height:1.5;margin:0">Missing exercise illustrations are matched against RepDB's free exercise dataset when an exact user-selected image is not available. <a href="https://repdb.co" target="_blank" rel="noopener noreferrer">Exercise data by RepDB (repdb.co)</a>.</p>
  </section>
- <section class="card"><div class="section-title"><h2>Data & Backup</h2><small>v67</small></div>
+ <section class="card"><div class="section-title"><h2>Data & Backup</h2></div>
  <button class="secondary" id="backup" style="width:100%">Export Full Backup</button><div style="height:8px"></div>
  <label class="secondary import-label" style="width:100%;box-sizing:border-box;text-align:center">Import Backup<input id="importBackup" type="file" accept="application/json" hidden></label><div style="height:8px"></div>
  <button class="secondary" id="exportCsv" style="width:100%">Export History CSV</button><div style="height:8px"></div>
@@ -2843,7 +2705,7 @@ function startWorkout(plan,resumeState=null){
    const open=expanded.has(String(ex.id));
    return `<article class="active-exercise-card ${open?"expanded":""}" data-active-card="${ex.id}">
      <button type="button" class="active-exercise-head" data-expand-active="${ex.id}">
-       <span class="active-exercise-number">${number}</span>
+       <span class="active-exercise-thumb"><img data-exercise-img="${ex.id}" alt=""></span>
        <span class="active-exercise-name"><strong>${ex.name}</strong><small>${ex.sets} · ${ex.equipment}</small></span>
        <span class="active-exercise-progress">${done}/${total}</span>
        <span class="active-chevron">${open?"⌃":"⌄"}</span>
@@ -2863,8 +2725,8 @@ function startWorkout(plan,resumeState=null){
    const groups=[];
    if(warm.length)groups.push({title:"Warm-Up",items:warm,kind:"warmup"});
    if(state.workoutStyle==="circuit"){
-     for(let i=0;i<main.length;i+=3)groups.push({title:`Circuit ${Math.floor(i/3)+1}`,subtitle:`${Math.min(3,main.length-i)} exercises · Complete 1 set of each, then repeat the circuit`,items:main.slice(i,i+3),kind:"circuit"});
-   }else if(main.length)groups.push({title:"Main Workout",subtitle:"Complete all sets of an exercise before moving to the next.",items:main,kind:"sequential"});
+     for(let i=0;i<main.length;i+=3)groups.push({title:`Circuit ${Math.floor(i/3)+1}`,subtitle:`${Math.min(3,main.length-i)} exercises · 3 rounds`,items:main.slice(i,i+3),kind:"circuit"});
+   }else if(main.length)groups.push({title:"Main Workout",subtitle:`${main.length} exercises`,items:main,kind:"sequential"});
    if(fin.length)groups.push({title:"Finisher",items:fin,kind:"finisher"});
    return groups;
  }
@@ -2894,9 +2756,13 @@ function startWorkout(plan,resumeState=null){
      </div>
      <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
    </div>
-   <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
+   <div class="active-mode-bar">
+     <button type="button" class="${state.workoutStyle==="sequential"?"selected":""}" data-live-style="sequential">Sequential</button>
+     <button type="button" class="${state.workoutStyle==="circuit"?"selected":""}" data-live-style="circuit">Circuit</button>
+   </div>
    ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join("")}</section>`).join("")}`;
 
+   panel.querySelectorAll("[data-live-style]").forEach(btn=>btn.onclick=()=>{state.workoutStyle=btn.dataset.liveStyle;save();renderActive();});
    panel.querySelector("#activePause").onclick=togglePause;
    panel.querySelector("#activeRest").onclick=toggleRest;
    const add=panel.querySelector("#activeAddRest");if(add)add.onclick=()=>addRest(30);

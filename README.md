@@ -648,3 +648,9 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 - Exercises expand inline for set completion, actual reps, weight or resistance entry.
 - Exercise instructions can be opened while the workout timer continues.
 - Existing background-safe timing, finishers, swapping, carry-forward, workout-type overrides, History and image systems are retained.
+
+## v86 – Sleek UI & Anatomical Heat Map
+- Removed nonessential descriptive/helper copy across the main app screens while retaining labels, values, exercise instructions and form guidance.
+- Rebuilt the Today muscle heat map with a more anatomically proportioned front/back body and separate muscle regions.
+- Heat intensity now uses weighted primary/secondary muscle involvement per scheduled exercise rather than simple exercise counts.
+- Added distinct shoulders, chest, traps, lats, biceps, triceps, forearms, abs, obliques, lower back, glutes, quadriceps, hamstrings, adductors and calves.
