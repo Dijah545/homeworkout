@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v85-3-stable-today";
+const CACHE="home-workout-v85-5-reset-and-active-panel-fix";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=85.3",
-  "./app.js?v=85.3",
+  "./styles.css?v=85.5",
+  "./app.js?v=85.5",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

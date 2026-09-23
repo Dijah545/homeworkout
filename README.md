@@ -651,3 +651,17 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 
 ## v85.3 – Stable Today Rebuild
 Rebuilt directly from v85 after discarding the broken v85.1/v85.2 Today implementation. Today uses compact cards, full-width Workout Type, Rest above Pre-Workout, thumbnails and Instructions & Form buttons, Settings-only Workout Style with Sequential default, non-mutating per-exercise Circuit configuration, logical circuit grouping that excludes continuous cardio, and an expanded Cool-Down. The original v85 active-workout engine is retained to minimize regressions.
+
+## v85.4 – Today Repairs
+- Restored the existing dynamic v85 muscle heat map to Today.
+- Fixed Resume Workout: the v85 resume engine requires the current workout plan; v85.3 called it without one.
+- Resume now prefers the saved active-workout plan snapshot so the exact workout that was started is restored after leaving/reloading.
+- Fixed Restart Workout to rebuild the current configured circuit plan before starting over.
+- Existing images and the v85.3 Today design are retained.
+
+## v85.5 – Reset Workout + Active Workout Mount Fix
+- Added Reset Workout on Today whenever a workout is in progress.
+- Added Reset inside the active workout controls.
+- Reset cancels an accidentally started workout, clears its in-progress sets/reps/timer, and returns to the pre-start Today screen.
+- Fixed a structural issue introduced by the Today redesign: the original v85 active-workout engine was still looking for `.today-workout-card`, while the rebuilt Today tab uses `.today-main-card`. Start/Resume can now mount the active workout correctly.
+- Existing heat map and exercise images are retained.

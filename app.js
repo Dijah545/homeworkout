@@ -1674,6 +1674,8 @@ function renderToday(){
 
  view.innerHTML=`
  <section class="today-clean-head"><div><span>${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</span><h1>${focus}</h1></div></section>
+ ${resting?"":`<section class="card today-heat-card"><div class="today-section-head heat-head"><div><span>MUSCLE FOCUS</span><h2>Today's Heat Map</h2></div></div>${femaleHeatmap(plan)}</section>
+ `} 
  ${resting?"":`
  <section class="card today-select-card"><select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select></section>
  <section class="card today-duration-card">${durationControl()}</section>
@@ -1683,7 +1685,7 @@ function renderToday(){
  ${resting?`<button type="button" class="primary" id="workoutOnRestDay">Workout Today</button>`:
    `${state.workoutStyle==="circuit"?`<div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map(todayGuideCard).join("")}</div>`}
     ${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
-      `<div class="today-action-row">${hasActiveWorkoutToday()?`<button class="primary" id="resumeWorkout">Resume Workout</button><button class="secondary" id="restartWorkout">Restart</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">Mark Complete</button></div>`}`}
+      `<div class="today-action-row">${hasActiveWorkoutToday()?`<button class="primary" id="resumeWorkout">Resume Workout</button><button class="secondary reset-workout-btn" id="restartWorkout">Reset Workout</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">Mark Complete</button></div>`}`}
  </section>
  ${resting?"":todayCooldownExpanded(cooldown)}`;
 
@@ -1696,8 +1698,8 @@ function renderToday(){
  if(!resting&&!workoutCompletedOn()){
   const start=document.getElementById("startWorkout"),resume=document.getElementById("resumeWorkout"),restart=document.getElementById("restartWorkout"),complete=document.getElementById("markWorkoutComplete");
   if(start)start.onclick=()=>{const prepared=sessionPlan.map(ex=>{const c=(state.circuitConfig||{})[String(ex.id)];if(state.workoutStyle!=="circuit"||!c||!safeCircuitEligible(ex))return {...ex};const original=String(ex.sets||"");const suffix=original.replace(/^\s*\d+\s*(?:sets?|x)?\s*/i,"").trim();return {...ex,sets:`${c.sets} sets${suffix?` · ${suffix}`:""}`};});startWorkout(prepared)};
-  if(resume)resume.onclick=resumeActiveWorkout;
-  if(restart)restart.onclick=()=>{if(confirm("Restart today's workout?")){clearActiveWorkout();startWorkout(sessionPlan)}};
+  if(resume)resume.onclick=()=>resumeActiveWorkout(sessionPlan);
+  if(restart)restart.onclick=()=>{if(confirm("Reset this workout? This will clear the current in-progress workout and return it to the beginning."))resetWorkoutToPreStart(sessionPlan)};
   if(complete)complete.onclick=()=>saveCompletedWorkout(sessionPlan);
  }
 }
@@ -2532,6 +2534,19 @@ function clearActiveWorkout(){
  state.activeWorkout=null;
  save();
 }
+function resetWorkoutToPreStart(plan){
+ const date=isoDate();
+ (plan||[]).forEach(ex=>{
+   if(!ex||!ex.id)return;
+   if(state.setProgress) delete state.setProgress[progressKey(ex,date)];
+   if(state.exercisePerformance) delete state.exercisePerformance[performanceKey(ex,date)];
+ });
+ state.activeWorkout=null;
+ save();
+ route("today");
+ showToast("Workout reset");
+}
+
 function saveActiveWorkoutSession(session){
  state.activeWorkout={
    date:isoDate(),
@@ -2549,12 +2564,11 @@ function saveActiveWorkoutSession(session){
  };
  save();
 }
-function resumeActiveWorkout(){
- if(!hasActiveWorkoutToday()){
-   showToast("No paused workout to resume");
-   return;
- }
- startWorkout(state.activeWorkout.plan,state.activeWorkout);
+function resumeActiveWorkout(plan){
+ const saved=state.activeWorkout;
+ if(!saved)return startWorkout(plan);
+ const source=Array.isArray(saved.plan)&&saved.plan.length?saved.plan:plan;
+ startWorkout(source,saved);
 }
 
 
@@ -2858,7 +2872,7 @@ function startWorkout(plan,resumeState=null){
    syncBackground();
    let panel=document.getElementById("activeWorkoutPanel");
    if(!panel){
-     const card=document.querySelector(".today-workout-card");
+     const card=document.querySelector(".today-main-card, .today-workout-card");
      if(!card)return;
      panel=document.createElement("section");panel.id="activeWorkoutPanel";panel.className="active-workout-panel";
      card.parentNode.insertBefore(panel,card);
@@ -2866,7 +2880,7 @@ function startWorkout(plan,resumeState=null){
    const groups=workoutGroups();
    panel.innerHTML=`<div class="active-workout-sticky">
      <div class="active-workout-topline"><div><span data-active-phase>${phase==="rest"?"REST":"WORKOUT"}</span><strong data-active-time>${phase==="rest"?format(effectiveRestRemaining()):format(effectiveElapsed())}</strong></div>
-       <div class="active-top-actions"><button type="button" class="secondary compact" id="activePause">${running?"Pause":"Resume"}</button><button type="button" class="primary compact" id="activeFinish">Finish</button></div>
+       <div class="active-top-actions"><button type="button" class="secondary compact" id="activePause">${running?"Pause":"Resume"}</button><button type="button" class="secondary compact active-reset-btn" id="activeReset">Reset</button><button type="button" class="primary compact" id="activeFinish">Finish</button></div>
      </div>
      <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
    </div>
@@ -2874,6 +2888,7 @@ function startWorkout(plan,resumeState=null){
    ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join("")}</section>`).join("")}`;
 
    panel.querySelector("#activePause").onclick=togglePause;
+   panel.querySelector("#activeReset").onclick=()=>{if(confirm("Reset this workout? This will clear all in-progress sets, reps and the workout timer, then return to the pre-start screen.")){cleanup();resetWorkoutToPreStart(plan)}};
    panel.querySelector("#activeRest").onclick=toggleRest;
    const add=panel.querySelector("#activeAddRest");if(add)add.onclick=()=>addRest(30);
    panel.querySelector("#activeFinish").onclick=()=>{

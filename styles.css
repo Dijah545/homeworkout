@@ -905,3 +905,14 @@ body:has(.today-fixed-actions) main{
 .circuit-plan-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:8px;background:rgba(0,0,0,.12)}.circuit-plan-fields label{font-size:9px;color:var(--muted)}.circuit-plan-fields input,.circuit-plan-fields select{width:100%;box-sizing:border-box;margin-top:3px;padding:8px 5px!important}.cfg-guide{grid-column:1/-1;justify-self:start}
 .today-cooldown[open] .recovery-body{display:block}.today-cooldown .recovery-row{display:grid!important;grid-template-columns:52px minmax(0,1fr) auto!important;align-items:center!important;gap:8px!important}.today-cooldown .recovery-row>div{text-align:left}.today-cooldown summary strong{color:var(--accent)}
 @media(max-width:390px){.today-lite-row{grid-template-columns:48px minmax(0,1fr)}.today-lite-thumb,.circuit-plan-thumb{width:48px;height:46px}.today-guide-btn{grid-column:2;justify-self:start}.circuit-plan-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.cfg-guide{grid-column:1/-1}}
+
+/* v85.4 — Today heat map + resume/restart repair */
+.today-heat-card{padding:12px!important;border:1px solid var(--accent)!important;border-radius:16px!important;margin-bottom:10px!important;overflow:hidden}
+.today-heat-card .heat-head{margin:-12px -12px 7px!important}
+.today-heat-card .muscle-map,.today-heat-card .heatmap,.today-heat-card .body-heatmap{margin:0 auto!important}
+.today-heat-card svg{max-width:100%;height:auto}
+
+/* v85.5 — reset workout + active panel mount repair */
+.reset-workout-btn,.active-reset-btn{border-color:#526b78!important}
+.active-top-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.active-reset-btn{white-space:nowrap}
