@@ -683,3 +683,8 @@ Rebuilt directly from v85 after discarding the broken v85.1/v85.2 Today implemen
 
 ## v85.8
 Warm-Up and Cool-Down are listed open during active workouts with checkboxes. Sequential main exercises retain expanded set tracking; Circuit rounds retain per-exercise checkboxes. Duplicate Cool-Down is hidden while active. Pause is larger. Circuits are hard-capped at three eligible main exercises and continue excluding treadmill/timed cardio. Main exercises can be reordered before Start using Up/Down controls; order is saved for the date and used by the active workout. Exercise names remain tappable for instructions.
+
+## v85.9
+- Reorder controls are now on MAIN workout exercises only; Warm-Up is not rearrangeable.
+- Circuit grouping uses main-workout exercises and excludes only treadmill and timed/continuous cardio; circuits remain capped at 3 exercises.
+- Restored explicit treadmill-finisher timing guidance with minute allocation based on the day's workout focus and selected finisher duration.

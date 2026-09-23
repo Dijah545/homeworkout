@@ -966,3 +966,8 @@ body:has(.today-fixed-actions) main{
 .active-simple-check{width:36px;height:36px;border-radius:10px;border:2px solid #91a6b4;background:transparent;font-weight:900}.active-simple-check.done{background:var(--accent);border-color:var(--accent)}
 #activePause{min-width:92px!important;min-height:48px!important;padding:11px 17px!important;font-size:14px!important;font-weight:900!important;border:2px solid #8299a6!important;border-radius:12px!important}
 .today-name-button{border:0;background:transparent;color:var(--text);text-align:left;padding:0}.today-row-actions{display:flex;gap:5px}.order-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--accent);font-size:16px;font-weight:900}.order-btn:disabled{opacity:.25}.today-lite-row{grid-template-columns:52px minmax(0,1fr) auto!important}
+
+/* v85.9 */
+.treadmill-finisher-row{grid-template-columns:50px minmax(0,1fr) 42px!important}.treadmill-finisher-row .treadmill-finisher-guide{grid-column:1/-1}
+.treadmill-finisher-guide{margin:8px;padding:11px 12px;border:1px solid rgba(18,217,232,.4);border-radius:12px;background:rgba(18,217,232,.07)}
+.treadmill-finisher-guide>strong{display:block;color:var(--accent);font-size:12px;margin-bottom:5px}.treadmill-finisher-guide p{font-size:10px;line-height:1.45;color:var(--muted);margin:0 0 7px}.treadmill-finisher-guide ol{margin:0;padding-left:19px;display:grid;gap:4px}.treadmill-finisher-guide li{font-size:10px;line-height:1.4}.treadmill-finisher-guide li span{color:var(--muted)}

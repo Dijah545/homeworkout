@@ -1264,7 +1264,11 @@ function saveTodayOrder(plan,date=isoDate()){
  state.todayOrder=state.todayOrder||{};
  state.todayOrder[todayOrderKey(date)]=plan.filter(ex=>!ex.isFinisher).map(ex=>String(ex.id));
  save();
+} 
+function todayMainOrderCard(ex,index,total){
+ return `<article class="today-lite-ex main-order-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="order-btn" data-move-main="${ex.id}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-move-main="${ex.id}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
 }
+
 function moveTodayExercise(plan,index,direction,date=isoDate()){
  const ordered=orderedTodayPlan(plan,date);
  const work=ordered.filter(ex=>!ex.isFinisher);
@@ -1599,8 +1603,8 @@ function bindRecoveryInstructions(){
 }
 
 
-function todayGuideCard(ex,index=0,total=1){
- return `<article class="today-lite-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="order-btn" data-move-ex="${ex.id}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-move-ex="${ex.id}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
+function todayGuideCard(ex){
+ return `<article class="today-lite-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button></div></article>`;
 }
 function circuitConfigFor(ex){
  state.circuitConfig=state.circuitConfig||{};
@@ -1614,12 +1618,10 @@ function circuitConfigFor(ex){
  };
 }
 function safeCircuitEligible(ex){
- if(!ex||ex.isFinisher||ex.isWarmup||ex.isCooldown)return false;
- const area=String(ex.area||"").toLowerCase(),eq=String(ex.equipment||"").toLowerCase(),name=String(ex.name||"").toLowerCase(),sets=String(ex.sets||"").toLowerCase();
- if(parseSetPlan(ex).count<3)return false;
- if(area.includes("cardio")||area.includes("mobility")||area.includes("warm-up")||area.includes("cool"))return false;
- if(["treadmill","stationary bike","mini stepper","skipping rope"].some(x=>eq.includes(x)||name.includes(x)))return false;
- if(/minute|\bmin\b|interval|walk|run|ride|steady/i.test(sets))return false;
+ if(!ex)return false;
+ const eq=String(ex.equipment||"").toLowerCase(),name=String(ex.name||"").toLowerCase(),sets=String(ex.sets||"").toLowerCase();
+ if(eq.includes("treadmill")||name.includes("treadmill"))return false;
+ if(/minute|\bmin\b|interval|walk|run|ride|steady|continuous|timed/i.test(sets))return false;
  return true;
 }
 function safeCircuitGroups(plan){
@@ -1687,7 +1689,7 @@ function renderToday(){
  <section class="card today-phase-card"><div class="today-section-head"><div><span>PRE-WORKOUT</span><h2>Warm-Up & Mobility</h2></div><b>${warmup.length} moves</b></div><div class="today-lite-list">${warmup.map((ex,i)=>todayGuideCard(ex,i,warmup.length)).join("")}</div></section>`}
  <section class="card today-main-card"><div class="today-section-head"><div><span>TODAY'S WORKOUT</span><h2>${resting?"Active Recovery":focus}</h2></div>${resting?"":`<b>${done}/${total} sets</b>`}</div>
  ${resting?`<button type="button" class="primary" id="workoutOnRestDay">Workout Today</button>`:
-   `${state.workoutStyle==="circuit"?`<div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map((ex,i)=>todayGuideCard(ex,i,plan.length)).join("")}</div>`}
+   `${state.workoutStyle==="circuit"?`<div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map((ex,i)=>todayMainOrderCard(ex,i,plan.length)).join("")}</div>`}
     ${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
       `<div class="today-action-row">${hasActiveWorkoutToday()?`<button class="primary" id="resumeWorkout">Resume Workout</button><button class="secondary reset-workout-btn" id="restartWorkout">Reset Workout</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">Mark Complete</button></div>`}`}
  </section>
@@ -1697,7 +1699,7 @@ function renderToday(){
  const type=document.getElementById("todayWorkoutType");if(type)type.onchange=e=>{setWorkoutTypeForDate(date,e.target.value);renderToday()};
  bindDurationControls(renderToday);
  document.querySelectorAll("[data-today-guide]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();preview(btn.dataset.todayGuide)});
- document.querySelectorAll("[data-move-ex]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();moveTodayExercise(btn.dataset.moveEx,btn.dataset.moveDir,date)});
+ document.querySelectorAll("[data-move-main]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();moveTodayExercise(btn.dataset.moveMain,btn.dataset.moveDir,date)});
  bindTodayCircuitConfig(); bindExerciseImages(); bindRecoveryInstructions();
  if(!resting)renderRestTracker();
  if(!resting&&!workoutCompletedOn()){
@@ -2854,7 +2856,8 @@ function startWorkout(plan,resumeState=null){
  }
  function activeSimpleRow(ex){
  const done=setDone(ex,0,isoDate());
- return `<div class="active-simple-row"><span class="active-simple-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="active-simple-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${parseSetPlan(ex).label||ex.sets||""}</small></button><button type="button" class="active-simple-check ${done?"done":""}" data-simple-check="${ex.id}">${done?"✓":""}</button></div>`;
+ const treadmill=/treadmill/i.test(String(ex.name||"")+" "+String(ex.equipment||""));
+ return `<div class="active-simple-row ${treadmill?"treadmill-finisher-row":""}"><span class="active-simple-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="active-simple-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${parseSetPlan(ex).label||ex.sets||""}</small></button><button type="button" class="active-simple-check ${done?"done":""}" data-simple-check="${ex.id}">${done?"✓":""}</button>${treadmill?treadmillFinisherInstructions(ex):""}</div>`;
  }
  function activeSimpleList(items){return `<div class="active-simple-list">${items.map(activeSimpleRow).join("")}</div>`;}
  function activeCircuitRow(ex,round){
@@ -2869,6 +2872,18 @@ function startWorkout(plan,resumeState=null){
  function activeCircuitGroup(g){
    const rounds=Math.max(...g.items.map(ex=>parseSetPlan(ex).count));
    return `<div class="active-circuit-rounds">${Array.from({length:rounds},(_,r)=>{const items=g.items.filter(ex=>parseSetPlan(ex).count>r);return `<section class="active-circuit-round"><div class="active-circuit-round-head"><strong>Round ${r+1} of ${rounds}</strong><small>${items.filter(ex=>setDone(ex,r,isoDate())).length}/${items.length} complete</small></div>${items.map(ex=>activeCircuitRow(ex,r)).join("")}</section>`}).join("")}</div>`;
+ }
+ function treadmillFinisherInstructions(ex){
+ const total=Math.max(5,Number((String(ex.sets||"").match(/\d+/)||[10])[0]));
+ const focus=String(workoutTypeForDate(isoDate(),new Date().getDay())||"Full Body");
+ let phases;
+ if(/lower/i.test(focus))phases=[["Easy recovery walk",.30,"light"],["Brisk incline walk",.40,"moderate"],["Strong finish",.30,"high"]];
+ else if(/upper/i.test(focus))phases=[["Brisk walk / easy jog",.25,"light"],["Run or power walk",.50,"moderate"],["Fast finish",.25,"high"]];
+ else if(/core.*cardio/i.test(focus))phases=[["Easy walk",.20,"light"],["Alternating brisk/fast intervals",.60,"moderate-high"],["Recovery walk",.20,"light"]];
+ else phases=[["Easy walk / jog",.25,"light"],["Steady moderate pace",.50,"moderate"],["Fast finish",.25,"high"]];
+ let used=0;
+ const rows=phases.map((p,i)=>{const mins=i===phases.length-1?Math.max(1,total-used):Math.max(1,Math.round(total*p[1]));used+=mins;return `<li><strong>${mins} min</strong> — ${p[0]} <span>(${p[2]})</span></li>`}).join("");
+ return `<div class="treadmill-finisher-guide"><strong>${total}-Minute Treadmill Finisher · ${focus}</strong><p>Adjust speed in 0.2 increments as needed. Use the effort level that fits how you feel after today's workout.</p><ol>${rows}</ol></div>`;
  }
  function workoutGroups(){
    const warm=plan.filter(ex=>ex.isWarmup||(ex.area||"").includes("Warm-Up"));

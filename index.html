@@ -9,7 +9,7 @@
   <title>Home Workout</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=85.8">
+  <link rel="stylesheet" href="styles.css?v=85.9">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <!-- Home Workout build v85 Flexible finishers CSS -->
 </head>
@@ -40,12 +40,12 @@
 
 <div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
 <div id="toast" class="toast hidden"></div>
-<script src="app.js?v=85.8"></script>
+<script src="app.js?v=85.9"></script>
 
 <script>
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("sw.js?v=85.8",{updateViaCache:"none"})
+    navigator.serviceWorker.register("sw.js?v=85.9",{updateViaCache:"none"})
       .then(reg=>reg.update())
       .catch(()=>{});
   });
