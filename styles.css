@@ -932,3 +932,16 @@ html,body{background:#061015!important}body{margin:0;color:var(--text);font-fami
 .reference-phase-list{display:grid;gap:6px}.reference-phase-list button{display:flex;justify-content:space-between;align-items:center;width:100%;border:1px solid #273640;background:#101b22;color:#f5f7f8;border-radius:12px;padding:9px 10px;text-align:left}.reference-phase-list button small{color:#93a2af}
 .active-group.warmup .active-group-title strong{color:#18d3d7!important}.active-group.cooldown .active-group-title{border-color:#554276!important}.active-group.cooldown .active-group-title strong{color:#9b72ff!important}
 @media(max-width:390px){.bottom-nav{padding-left:3px;padding-right:3px}.nav-item{padding:3px 1px!important}.nav-item span{font-size:19px!important}.nav-item small{font-size:8px!important}}
+
+/* v90 navigation, settings-only workout style, history and guide repairs */
+.nav-icon{width:22px;height:22px;display:grid;place-items:center}
+.nav-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.reference-mode-summary,.active-style-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0d181e;border:1px solid #273640;border-radius:16px;padding:10px 13px}
+.reference-mode-summary span,.active-style-summary span{color:#18d3d7;font-weight:800}
+.reference-mode-summary strong,.active-style-summary small{color:#9eacb9;font-size:11px;font-weight:500}
+.history-show-more{display:block;margin:12px auto 0;min-width:130px}
+.library-card{cursor:pointer;position:relative;z-index:1}
+.library-card *{pointer-events:none}
+.exercise-detail{max-height:88dvh;overflow:auto}
+.exercise-detail .detail-single-image{min-height:190px;background:#e9edef;border-radius:14px;overflow:hidden}
+.exercise-detail .detail-single-image img{width:100%;max-height:280px;object-fit:contain;display:block}

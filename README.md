@@ -665,3 +665,12 @@ The app shell and workout experience were redesigned around the approved charcoa
 - Circuit/Sequential behavior remains applied to the main workout; warm-up, finisher and cool-down remain distinct phases.
 - Added reviewed RepDB mappings for more resistance-band movements while retaining all existing user-supplied images.
 - Carry-forward, workout-type override, rest-day workout, swapping, finishers, History, Body tracking and background-safe timers remain intact.
+
+## v90 – Library/Guide Repair + Navigation & History
+- Sequential is now the default workout style for new installs.
+- Sequential/Circuit selection is available only in Settings; Today and active workout show the selected style without changing it there.
+- Bottom navigation uses dedicated SVG icons for Today, Week, Library, History, Body and Settings.
+- Recent Workouts initially shows the latest 5 records with Show More / Show Less.
+- Repaired Library exercise-card interaction and added a delegated fallback so tapping exercise cards opens the Exercise Guide.
+- Exercise Guide retains the exercise image, instructions and form reminders.
+- v89 Warm-Up/Cool-Down, resistance-band image mappings, carry-forward, rest-day override, swapping, finishers, heat map, timers, History and Body functionality are retained.
