@@ -1619,9 +1619,52 @@ function activeSequentialTable(ex){
  const sets=parseSetPlan(ex),range=repRangeFor(ex),perf=performanceFor(ex),profile=profileFor(ex),load=perf.load??profile.load??"",unit=perf.unit||profile.unit||defaultLoadUnit(ex),reps=perf.reps||[];
  return `<div class="seq-table"><div class="seq-head"><span>Set</span><span>Previous</span><span>Weight</span><span>Reps</span><span>✓</span></div>${Array.from({length:sets.count},(_,i)=>`<div class="seq-row"><span>${i+1}</span><span class="previous-cell">${previousSetText(ex,i)}</span><span>${isStrengthExercise(ex)?(unit==="level"?`<select data-load-ex="${ex.id}" data-load-unit="level">${["","Light","Medium","Heavy","Extra Heavy"].map(v=>`<option value="${v}" ${String(load)===v?"selected":""}>${v||"—"}</option>`).join("")}</select>`:`<input type="number" min="0" step="0.5" inputmode="decimal" data-load-ex="${ex.id}" data-load-unit="lb" value="${load??""}" placeholder="lb">`):`<em>—</em>`}</span><span>${range?`<input type="number" min="0" max="100" inputmode="numeric" data-reps-ex="${ex.id}" data-reps-set="${i}" value="${reps[i]??""}" placeholder="${range.max}">`:`<small>${sets.label}</small>`}</span><span><button type="button" class="seq-check ${setDone(ex,i)?"done":""}" data-set-ex="${ex.id}" data-set-index="${i}" data-set-date="${isoDate()}">${setDone(ex,i)?"✓":""}</button></span></div>`).join("")}</div>`;
 }
+function circuitExerciseEditor(ex){
+ const parsed=parseSetPlan(ex), range=repRangeFor(ex), perf=performanceFor(ex), profile=profileFor(ex);
+ const load=perf.load??profile.load??"", unit=perf.unit||profile.unit||defaultLoadUnit(ex);
+ const reps=(perf.reps&&perf.reps[0])??(range?range.max:"");
+ return `<details class="circuit-plan-exercise">
+   <summary>
+    <span class="circuit-plan-thumb">${exerciseImageMarkup(ex)}</span>
+    <span class="circuit-plan-name"><strong>${ex.name}</strong><small>${parsed.count} sets${range?` · ${range.min}${range.max!==range.min?`–${range.max}`:""} reps`:` · ${parsed.label}`}</small></span>
+    <span class="circuit-plan-chevron">⌄</span>
+   </summary>
+   <div class="circuit-plan-editor">
+    <label>Sets<input type="number" min="1" max="8" step="1" value="${parsed.count}" data-circuit-sets="${ex.id}"></label>
+    ${isStrengthExercise(ex)?`<label>${unit==="level"?"Resistance":"Weight"}${unit==="level"?`<select data-circuit-load="${ex.id}" data-circuit-unit="level">${["","Light","Medium","Heavy","Extra Heavy"].map(v=>`<option value="${v}" ${String(load)===v?"selected":""}>${v||"—"}</option>`).join("")}</select>`:`<input type="number" min="0" step="0.5" inputmode="decimal" value="${load}" data-circuit-load="${ex.id}" data-circuit-unit="lb">`}</label>`:""}
+    ${range?`<label>Reps<input type="number" min="1" max="100" step="1" inputmode="numeric" value="${reps}" data-circuit-reps="${ex.id}"></label>`:""}
+    <button type="button" class="instruction-link circuit-plan-guide" data-preview-guide="${ex.id}">Instructions & Form</button>
+   </div>
+  </details>`;
+}
 function activeCircuitExercise(ex,round){
- const idx=Math.min(round,parseSetPlan(ex).count-1),range=repRangeFor(ex);
- return `<div class="circuit-exercise-row"><span class="circuit-thumb">${exerciseImageMarkup(ex)}</span><div><strong>${ex.name}</strong><small>${range?`${range.min}${range.max!==range.min?`–${range.max}`:""} reps`:parseSetPlan(ex).label}</small></div><button type="button" class="instruction-link circuit-guide" data-active-instructions="${ex.id}">Form</button><button type="button" class="seq-check ${setDone(ex,idx)?"done":""}" data-set-ex="${ex.id}" data-set-index="${idx}" data-set-date="${isoDate()}">${setDone(ex,idx)?"✓":""}</button></div>`;
+ const idx=Math.min(round,parseSetPlan(ex).count-1),range=repRangeFor(ex),perf=performanceFor(ex),profile=profileFor(ex);
+ const load=perf.load??profile.load??"",unit=perf.unit||profile.unit||defaultLoadUnit(ex),reps=(perf.reps&&perf.reps[idx])??(range?range.max:"");
+ return `<div class="circuit-exercise-row"><span class="circuit-thumb">${exerciseImageMarkup(ex)}</span><div class="circuit-active-copy"><strong>${ex.name}</strong><small>${isStrengthExercise(ex)&&load?`${load}${unit==="level"?"":` lb`} · `:""}${range?`${reps||range.max} reps`:parseSetPlan(ex).label}</small></div><button type="button" class="instruction-link circuit-guide" data-active-instructions="${ex.id}">Form</button><button type="button" class="seq-check ${setDone(ex,idx)?"done":""}" data-set-ex="${ex.id}" data-set-index="${idx}" data-set-date="${isoDate()}">${setDone(ex,idx)?"✓":""}</button></div>`;
+}
+
+function todayCircuitPreview(plan){
+ const organized=logicalCircuitGroups(plan), blocks=[];
+ organized.circuits.forEach((items,i)=>blocks.push(`<section class="today-circuit-card"><div class="today-circuit-title"><div><span class="circuit-icon">↻</span><strong>Circuit ${i+1}</strong><small>${items.length} exercises</small></div><span>${Math.max(...items.map(x=>parseSetPlan(x).count))} rounds</span></div><div class="circuit-plan-list">${items.map(circuitExerciseEditor).join("")}</div></section>`));
+ if(organized.standalone.length)blocks.push(`<section class="today-circuit-card standalone"><div class="today-circuit-title"><div><strong>Standalone</strong><small>Complete separately</small></div></div><div class="circuit-plan-list">${organized.standalone.map(circuitExerciseEditor).join("")}</div></section>`);
+ return blocks.join("");
+}
+function bindCircuitPlanEditors(renderAgain){
+ document.querySelectorAll("[data-circuit-sets]").forEach(input=>input.onchange=()=>{
+   const ex=exercises.find(x=>String(x.id)===String(input.dataset.circuitSets)); if(!ex)return;
+   const n=Math.max(1,Math.min(8,Number(input.value)||1));
+   ex.sets=String(ex.sets||"").replace(/^\d+/,String(n)); if(!/^\d+/.test(String(ex.sets||"")))ex.sets=`${n} sets`;
+   save(); renderAgain();
+ });
+ document.querySelectorAll("[data-circuit-load]").forEach(input=>input.onchange=()=>{
+   const ex=exercises.find(x=>String(x.id)===String(input.dataset.circuitLoad)); if(!ex)return;
+   const perf=performanceFor(ex); perf.load=input.value===""?null:(input.dataset.circuitUnit==="lb"?Number(input.value):input.value); perf.unit=input.dataset.circuitUnit; save();
+ });
+ document.querySelectorAll("[data-circuit-reps]").forEach(input=>input.onchange=()=>{
+   const ex=exercises.find(x=>String(x.id)===String(input.dataset.circuitReps)); if(!ex)return;
+   const perf=performanceFor(ex), n=Math.max(1,Math.min(100,Number(input.value)||1)), count=parseSetPlan(ex).count;
+   perf.reps=Array.from({length:count},()=>n); save();
+ });
 }
 
 function renderToday(){
@@ -1631,12 +1674,12 @@ function renderToday(){
  view.innerHTML=`<section class="hero today-dashboard-hero compact-today-hero"><div class="hero-content"><div class="eyebrow">${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</div><h1>${focus}</h1><div class="stats"><div class="stat"><b>${resting?"—":state.duration}</b><span>Min</span></div><div class="stat"><b>${plan.length}</b><span>Exercises</span></div><div class="stat"><b>${state.difficulty}</b><span>Intensity</span></div></div></div></section>
  ${resting?"":`<section class="card workout-type-control-card compact-control"><div class="section-title compact-title"><h2>Workout Type</h2></div><select id="todayWorkoutType" class="full-workout-type">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select>${(()=>{const m=missedPreviousWorkout(todayDate);return m&&m.focus!==focus?`<div class="carry-forward-box"><strong>Missed yesterday: ${m.focus}</strong><button type="button" class="secondary" id="carryForwardWorkout">Carry Forward</button></div>`:""})()}</section><section class="card compact-duration">${durationControl()}</section><section class="card rest-tracker-card relocated-rest"><div id="todayRestTracker"></div></section>${warmupMarkup(warmup)}`}
  <section class="card today-workout-card"><div class="section-title compact-title"><div><h2>${resting?"Active Recovery":"Today's Workout"}</h2>${!resting?`<small class="set-progress-text">${doneSets}/${totalSets} sets completed</small>`:""}</div><small>${plan.length} exercises</small></div>
- ${resting?`<div class="empty rest-day-choice"><button type="button" class="primary" id="workoutOnRestDay">Workout Today</button></div>`:`<div class="collapsed-workout-list">${plan.map(todayExercisePreview).join("")}</div>${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><div><strong>Workout Completed</strong></div></div>`:`<div class="workout-actions today-fixed-actions">${hasActiveWorkoutToday()?`<button class="primary resume-workout-btn" id="resumeWorkout">▶ Resume Workout</button><button class="secondary" id="restartWorkout">Restart Workout</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">✓ Mark Workout Complete</button></div>`}`}</section>
+ ${resting?`<div class="empty rest-day-choice"><button type="button" class="primary" id="workoutOnRestDay">Workout Today</button></div>`:`<div class="${state.workoutStyle==="circuit"?"today-circuit-preview":"collapsed-workout-list"}">${state.workoutStyle==="circuit"?todayCircuitPreview(plan):plan.map(todayExercisePreview).join("")}</div>${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><div><strong>Workout Completed</strong></div></div>`:`<div class="workout-actions today-fixed-actions">${hasActiveWorkoutToday()?`<button class="primary resume-workout-btn" id="resumeWorkout">▶ Resume Workout</button><button class="secondary" id="restartWorkout">Restart Workout</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">✓ Mark Workout Complete</button></div>`}`}</section>
  ${resting?"":recoverySectionMarkup("Cool-Down","",cooldown.items,"cooldown")}`;
  const restBtn=document.getElementById("workoutOnRestDay");if(restBtn)restBtn.onclick=()=>{enableRestDayWorkout(todayDate);renderToday()};
  const type=document.getElementById("todayWorkoutType");if(type)type.onchange=e=>{setWorkoutTypeForDate(todayDate,e.target.value);state.todayOrder=state.todayOrder||{};delete state.todayOrder[todayDate];renderToday()};
  const carry=document.getElementById("carryForwardWorkout");if(carry)carry.onclick=()=>{const m=missedPreviousWorkout(todayDate);if(m){setWorkoutTypeForDate(todayDate,m.focus);renderToday()}};
- bindDurationControls(renderToday);document.querySelectorAll("[data-preview-guide]").forEach(b=>b.onclick=e=>{e.stopPropagation();preview(b.dataset.previewGuide)});bindExerciseImages();bindRecoveryInstructions();
+ bindDurationControls(renderToday);document.querySelectorAll("[data-preview-guide]").forEach(b=>b.onclick=e=>{e.stopPropagation();preview(b.dataset.previewGuide)});if(state.workoutStyle==="circuit")bindCircuitPlanEditors(renderToday);bindExerciseImages();bindRecoveryInstructions();
  if(!resting)renderRestTracker();
  if(!resting&&!workoutCompletedOn()){const start=document.getElementById("startWorkout"),resume=document.getElementById("resumeWorkout"),restart=document.getElementById("restartWorkout"),complete=document.getElementById("markWorkoutComplete");if(start)start.onclick=()=>startWorkout(sessionPlan);if(resume)resume.onclick=resumeActiveWorkout;if(restart)restart.onclick=()=>{if(confirm("Restart today's workout?")){clearActiveWorkout();startWorkout(sessionPlan)}};if(complete)complete.onclick=()=>saveCompletedWorkout(sessionPlan)}
 }
@@ -2761,7 +2804,7 @@ function startWorkout(plan,resumeState=null){
    else if(main.length)groups.push({title:"Main Workout",items:main,kind:"sequential"});
    if(fin.length)groups.push({title:"Finisher",items:fin,kind:"finisher"});if(cool.length)groups.push({title:"Cool-Down",items:cool,kind:"cooldown"});return groups;
  }
- function circuitMarkup(g){const rounds=Math.max(...g.items.map(x=>parseSetPlan(x).count));return `<div class="circuit-rounds">${Array.from({length:rounds},(_,r)=>`<details class="circuit-round" ${r===0?"open":""}><summary>Round ${r+1}<span>${g.items.length} exercises</span></summary><div>${g.items.map(ex=>activeCircuitExercise(ex,r)).join("")}</div></details>`).join("")}</div>`;}
+ function circuitMarkup(g){const rounds=Math.max(...g.items.map(x=>parseSetPlan(x).count));return `<div class="circuit-rounds">${Array.from({length:rounds},(_,r)=>{const roundItems=g.items.filter(ex=>parseSetPlan(ex).count>r);return `<details class="circuit-round" ${r===0?"open":""}><summary><span>Round ${r+1} of ${rounds}</span><small>${roundItems.filter(ex=>setDone(ex,r)).length}/${roundItems.length} completed</small></summary><div>${roundItems.map(ex=>activeCircuitExercise(ex,r)).join("")}</div></details>`}).join("")}</div>`;}
  function updateClock(){
    syncBackground();
    const panel=document.getElementById("activeWorkoutPanel");if(!panel)return;

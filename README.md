@@ -651,3 +651,14 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 
 ## v85.1 – Today Tab Refresh
 Built from stable v85. Today is compact, Sequential defaults on fresh installs, Workout Style is Settings-only, circuit grouping excludes unsuitable cardio/timed work, rest is above Pre-Workout, pre-start exercises are collapsed with thumbnails and guide access, active Sequential uses Set/Previous/Weight/Reps/check columns, active Circuit uses round cards with thumbnails/reps/checks, and Cool-Down is expanded.
+
+## v85.2 – Approved Today UI: Sequential + Circuit
+- Styled Today to closely follow the approved dark/cyan mockups.
+- Sequential pre-start remains compact; Start Workout expands Set / Previous / Weight / Reps / completion tracking.
+- Circuit pre-start shows clearly separated logical circuits with exercise thumbnails.
+- Each circuit exercise can be expanded before starting to edit its own Sets, Weight/Resistance and Reps.
+- During Circuit workouts, rounds only include exercises that still have a planned set remaining; exercises with fewer sets automatically drop out of later rounds.
+- Timed/continuous cardio equipment remains outside circuits.
+- Workout Style remains Settings-only and Sequential remains the fresh-install default.
+- Pre-Workout, rest tracker and expanded Cool-Down are retained.
+- Existing exercise images are preserved.
