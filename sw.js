@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v85-2-approved-today-ui";
+const CACHE="home-workout-v85-3-stable-today";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=85.2",
-  "./app.js?v=85.2",
+  "./styles.css?v=85.3",
+  "./app.js?v=85.3",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
