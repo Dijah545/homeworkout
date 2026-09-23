@@ -971,3 +971,43 @@ body:has(.today-fixed-actions) main{
 .treadmill-finisher-row{grid-template-columns:50px minmax(0,1fr) 42px!important}.treadmill-finisher-row .treadmill-finisher-guide{grid-column:1/-1}
 .treadmill-finisher-guide{margin:8px;padding:11px 12px;border:1px solid rgba(18,217,232,.4);border-radius:12px;background:rgba(18,217,232,.07)}
 .treadmill-finisher-guide>strong{display:block;color:var(--accent);font-size:12px;margin-bottom:5px}.treadmill-finisher-guide p{font-size:10px;line-height:1.45;color:var(--muted);margin:0 0 7px}.treadmill-finisher-guide ol{margin:0;padding-left:19px;display:grid;gap:4px}.treadmill-finisher-guide li{font-size:10px;line-height:1.4}.treadmill-finisher-guide li span{color:var(--muted)}
+
+/* v86.0 — rep visibility + precise treadmill speeds */
+.rep-count{font-weight:900!important;color:var(--text)!important}
+.active-exercise-card .rep-cell,
+.active-exercise-card [data-reps],
+.active-exercise-card input[aria-label*="rep" i],
+.active-exercise-card input[placeholder*="rep" i]{font-weight:900!important}
+.treadmill-finisher-guide li strong{font-weight:900!important;color:var(--text)!important}
+
+/* v86.1 — active workout exercise guide close control */
+.exercise-guide-active .modal-card,
+.exercise-guide-active .modal-content,
+.exercise-guide-active .sheet,
+.exercise-guide-active .dialog{position:relative!important}
+.exercise-guide-close{
+ position:sticky!important;
+ top:8px!important;
+ margin-left:auto!important;
+ z-index:220!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:44px!important;
+ height:44px!important;
+ min-width:44px!important;
+ padding:0!important;
+ border-radius:50%!important;
+ border:2px solid var(--accent)!important;
+ background:rgba(7,16,22,.96)!important;
+ color:var(--accent)!important;
+ font-size:29px!important;
+ font-weight:800!important;
+ line-height:1!important;
+ box-shadow:0 5px 18px rgba(0,0,0,.42)!important;
+ cursor:pointer!important;
+}
+.exercise-guide-close:active{transform:scale(.96)}
+
+/* v86.2 — full-session timing */
+.active-workout-topline span{font-size:9px!important;letter-spacing:.04em}

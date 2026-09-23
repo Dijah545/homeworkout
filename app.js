@@ -1983,6 +1983,25 @@ function preview(id){
  try{bindExerciseImages();}catch(err){}
  modal.querySelector(".close").onclick=closeModal;
  modal.querySelector(".close2").onclick=closeModal;
+
+ const guideModal=document.querySelector(".modal.show, .modal.open, .modal:not(.hidden)");
+ if(guideModal){
+   guideModal.classList.add("exercise-guide-active");
+   const guideBox=guideModal.querySelector(".modal-card,.modal-content,.sheet,.dialog")||guideModal.firstElementChild;
+   if(guideBox&&!guideBox.querySelector(".exercise-guide-close")){
+     const closeBtn=document.createElement("button");
+     closeBtn.type="button";
+     closeBtn.className="exercise-guide-close";
+     closeBtn.setAttribute("aria-label","Close exercise guide");
+     closeBtn.innerHTML="×";
+     closeBtn.onclick=(e)=>{e.preventDefault();e.stopPropagation();closeModal();};
+     guideBox.prepend(closeBtn);
+   }
+   guideModal.onclick=(e)=>{if(e.target===guideModal)closeModal();};
+   const escClose=(e)=>{if(e.key==="Escape"){document.removeEventListener("keydown",escClose);closeModal();}};
+   document.addEventListener("keydown",escClose);
+ }
+
 }
 function closeModal(){modal.classList.add("hidden");modal.innerHTML=""}
 
@@ -2857,7 +2876,7 @@ function startWorkout(plan,resumeState=null){
  function activeSimpleRow(ex){
  const done=setDone(ex,0,isoDate());
  const treadmill=/treadmill/i.test(String(ex.name||"")+" "+String(ex.equipment||""));
- return `<div class="active-simple-row ${treadmill?"treadmill-finisher-row":""}"><span class="active-simple-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="active-simple-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${parseSetPlan(ex).label||ex.sets||""}</small></button><button type="button" class="active-simple-check ${done?"done":""}" data-simple-check="${ex.id}">${done?"✓":""}</button>${treadmill?treadmillFinisherInstructions(ex):""}</div>`;
+ return `<div class="active-simple-row ${treadmill?"treadmill-finisher-row":""}"><span class="active-simple-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="active-simple-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small><b class="rep-count">${parseSetPlan(ex).label||ex.sets||""}</b></small></button><button type="button" class="active-simple-check ${done?"done":""}" data-simple-check="${ex.id}">${done?"✓":""}</button>${treadmill?treadmillFinisherInstructions(ex):""}</div>`;
  }
  function activeSimpleList(items){return `<div class="active-simple-list">${items.map(activeSimpleRow).join("")}</div>`;}
  function activeCircuitRow(ex,round){
@@ -2865,7 +2884,7 @@ function startWorkout(plan,resumeState=null){
    const load=perf.load??profile.load??"", unit=perf.unit||profile.unit||defaultLoadUnit(ex), reps=(perf.reps&&perf.reps[round])??(range?range.max:"");
    return `<div class="active-circuit-row">
      <span class="active-circuit-thumb">${exerciseImageMarkup(ex)}</span>
-     <button type="button" class="active-circuit-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${isStrengthExercise(ex)&&load?`${load}${unit==="level"?"":` lb`} · `:""}${range?`${reps||range.max} reps`:parseSetPlan(ex).label}</small></button>
+     <button type="button" class="active-circuit-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${isStrengthExercise(ex)&&load?`${load}${unit==="level"?"":` lb`} · `:""}${range?`<b class="rep-count">${reps||range.max} reps</b>`:`<b class="rep-count">${parseSetPlan(ex).label}</b>`}</small></button>
      <button type="button" class="active-circuit-check ${done?"done":""}" data-circuit-check="${ex.id}" data-circuit-round="${round}" aria-label="Complete ${ex.name}">${done?"✓":""}</button>
    </div>`;
  }
@@ -2877,13 +2896,33 @@ function startWorkout(plan,resumeState=null){
  const total=Math.max(5,Number((String(ex.sets||"").match(/\d+/)||[10])[0]));
  const focus=String(workoutTypeForDate(isoDate(),new Date().getDay())||"Full Body");
  let phases;
- if(/lower/i.test(focus))phases=[["Easy recovery walk",.30,"light"],["Brisk incline walk",.40,"moderate"],["Strong finish",.30,"high"]];
- else if(/upper/i.test(focus))phases=[["Brisk walk / easy jog",.25,"light"],["Run or power walk",.50,"moderate"],["Fast finish",.25,"high"]];
- else if(/core.*cardio/i.test(focus))phases=[["Easy walk",.20,"light"],["Alternating brisk/fast intervals",.60,"moderate-high"],["Recovery walk",.20,"light"]];
- else phases=[["Easy walk / jog",.25,"light"],["Steady moderate pace",.50,"moderate"],["Fast finish",.25,"high"]];
+ if(/lower/i.test(focus)) phases=[
+   ["Recovery walk",.30,"2.6 mph"],
+   ["Brisk walk",.40,"3.4 mph"],
+   ["Fast walk / light jog",.30,"4.2 mph"]
+ ];
+ else if(/upper/i.test(focus)) phases=[
+   ["Brisk walk",.25,"3.0 mph"],
+   ["Light run",.50,"4.6 mph"],
+   ["Strong run",.25,"5.4 mph"]
+ ];
+ else if(/core.*cardio/i.test(focus)) phases=[
+   ["Brisk walk",.20,"3.2 mph"],
+   ["Cardio interval pace",.60,"4.8 mph"],
+   ["Recovery walk",.20,"2.8 mph"]
+ ];
+ else phases=[
+   ["Brisk walk",.25,"3.0 mph"],
+   ["Steady jog",.50,"4.4 mph"],
+   ["Fast finish",.25,"5.2 mph"]
+ ];
  let used=0;
- const rows=phases.map((p,i)=>{const mins=i===phases.length-1?Math.max(1,total-used):Math.max(1,Math.round(total*p[1]));used+=mins;return `<li><strong>${mins} min</strong> — ${p[0]} <span>(${p[2]})</span></li>`}).join("");
- return `<div class="treadmill-finisher-guide"><strong>${total}-Minute Treadmill Finisher · ${focus}</strong><p>Adjust speed in 0.2 increments as needed. Use the effort level that fits how you feel after today's workout.</p><ol>${rows}</ol></div>`;
+ const rows=phases.map((p,i)=>{
+   const mins=i===phases.length-1?Math.max(1,total-used):Math.max(1,Math.round(total*p[1]));
+   used+=mins;
+   return `<li><strong>${mins} min @ ${p[2]}</strong> — ${p[0]}</li>`;
+ }).join("");
+ return `<div class="treadmill-finisher-guide"><strong>${total}-Minute Treadmill Finisher · ${focus}</strong><p>Follow the listed treadmill speeds for each segment.</p><ol>${rows}</ol></div>`;
  }
  function workoutGroups(){
    const warm=plan.filter(ex=>ex.isWarmup||(ex.area||"").includes("Warm-Up"));
@@ -2914,6 +2953,7 @@ function startWorkout(plan,resumeState=null){
    if(rest)rest.textContent=formatShort(effectiveTotalRest());
  }
  function renderActive(){
+   const fullSessionTiming=true; // includes Warm-Up in workout elapsed time
    syncBackground();
    let panel=document.getElementById("activeWorkoutPanel");
    if(!panel){

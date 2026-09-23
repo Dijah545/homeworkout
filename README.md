@@ -688,3 +688,21 @@ Warm-Up and Cool-Down are listed open during active workouts with checkboxes. Se
 - Reorder controls are now on MAIN workout exercises only; Warm-Up is not rearrangeable.
 - Circuit grouping uses main-workout exercises and excludes only treadmill and timed/continuous cardio; circuits remain capped at 3 exercises.
 - Restored explicit treadmill-finisher timing guidance with minute allocation based on the day's workout focus and selected finisher duration.
+
+## v86.0 – Rep Visibility + Precise Treadmill Speeds
+- Rep/set counts are bolded in active workout rows for faster scanning.
+- Treadmill finisher instructions now prescribe exact speeds for each timed segment rather than asking the user to choose/adjust pace.
+- Speed profiles vary by the day's workout focus and remain within the app's configured treadmill range.
+- Existing circuit grouping, Main Workout reordering, heat map, timers, Reset/Resume and images are retained.
+
+## v86.1 – Exercise Guide Close Control
+- Exercise instructions/images now get a large, high-visibility floating X close button.
+- The close control remains accessible at the top while scrolling through a long guide.
+- Tapping outside the guide also closes it, and Escape works on keyboards.
+- Closing the guide does not stop or reset the active workout timer/rest state.
+- Existing exercise images and guide content are unchanged.
+
+## v86.2 – Warm-Up Included in Workout Time
+- The active workout clock covers the full session from Start Workout, including Warm-Up.
+- Warm-Up remains a separate phase and is not included in Circuit grouping.
+- Main-workout circuit rules remain unchanged: maximum 3 exercises per circuit, with treadmill and timed/continuous cardio excluded.
