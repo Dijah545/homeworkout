@@ -640,3 +640,11 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 - If yesterday was a scheduled workout and has no completed History record, Today offers Carry Forward for yesterday's workout type.
 - Carry Forward changes today's focus only; it does not rewrite the recurring weekly pattern.
 - Rest-day Workout Today behavior remains compatible: after enabling a rest-day workout, its workout type can also be selected.
+
+## v85 – Circuit Mode & Inline Active Workout
+- Added Workout Style: Circuit or Sequential.
+- Circuit mode groups main exercises in groups of up to 3. Complete one set of each exercise, then repeat the group for the next round.
+- Start Workout stays on Today with a sticky active timer/rest control instead of opening the old workout window.
+- Exercises expand inline for set completion, actual reps, weight or resistance entry.
+- Exercise instructions can be opened while the workout timer continues.
+- Existing background-safe timing, finishers, swapping, carry-forward, workout-type overrides, History and image systems are retained.

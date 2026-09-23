@@ -317,7 +317,7 @@ const librarySourceImagesByName={"90/90 Hamstring":"https://raw.githubuserconten
 
 const exerciseImages={"pushup":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","dbsquat":null,"kbswing":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg","bandrow":null,"jumprope":null,"glutebridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","climbers":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","stepups":null,"sliders":null,"dbpress":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg","bentrow":null,"rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg","bike":null,"bandwalk":null,"deadbug":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg","sliderlunge":null,"bandpress":null,"db-goblet-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg","db-front-squat":null,"db-sumo-squat":null,"db-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg","db-stiff-leg-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Stiff_Leg_Deadlift/0.jpg","db-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-forward-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-walking-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg","db-lateral-lunge":null,"db-bulgarian-split-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Split_Squat/0.jpg","db-step-up":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Step_Ups/0.jpg","db-glute-bridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg","db-hip-thrust":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg","db-calf-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Calf_Raise/0.jpg","db-single-leg-rdl":null,"db-chest-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg","db-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg","db-chest-fly":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Flyes/0.jpg","db-shoulder-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg","db-arnold-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arnold_Dumbbell_Press/0.jpg","db-front-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Dumbbell_Raise/0.jpg","db-lateral-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg","db-bent-over-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Two-Dumbbell_Row/0.jpg","db-single-arm-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg","db-reverse-fly":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Flyes/0.jpg","db-pullover":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent-Arm_Dumbbell_Pullover/0.jpg","db-bicep-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bicep_Curl/0.jpg","db-hammer-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg","db-concentration-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Concentration_Curls/0.jpg","db-tricep-extension":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Triceps_Extension/0.jpg","db-tricep-kickback":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Tricep_Dumbbell_Kickback/0.jpg","db-skull-crusher":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_One-Arm_Triceps_Extension/0.jpg","db-thruster":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg","db-squat-to-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Squat_To_A_Shoulder_Press/0.jpg","db-clean-press":null,"db-deadlift-row":null,"db-renegade-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Renegade_Row/0.jpg","db-farmers-carry":null,"db-reverse-lunge-curl":null,"db-rdl-row":null,"bb-back-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Squat/0.jpg","bb-front-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Barbell_Squat/0.jpg","bb-sumo-squat":null,"bb-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift_With_Dumbbells/0.jpg","bb-conventional-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg","bb-good-morning":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Good_Morning/0.jpg","bb-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Lunge/0.jpg","bb-hip-thrust":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg","bb-glute-bridge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Glute_Bridge/0.jpg","bb-calf-raise":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Barbell_Calf_Raise/0.jpg","bb-bent-over-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg","bb-overhead-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Military_Press/0.jpg","bb-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Floor_Press/0.jpg","bb-bicep-curl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg","bb-upright-row":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Upright_Barbell_Row/0.jpg","bb-close-grip-floor-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Barbell_Bench_Press/0.jpg","bb-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg","bb-clean-press":null,"bb-thruster":null,"bb-squat-to-press":null,"kb-goblet-squat":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg","kb-sumo-squat":null,"kb-deadlift":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg","kb-rdl":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Deadlift/0.jpg","kb-reverse-lunge":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pass_Between_The_Legs/0.jpg","kb-lateral-lunge":null,"kb-single-leg-deadlift":null,"kb-swing":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Swings/0.jpg","kb-clean":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean/0.jpg","kb-clean-press":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Kettlebell_Clean_And_Jerk/0.jpg","kb-thruster":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Thruster/0.jpg","kb-high-pull":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kettlebell_Pirate_Ships/0.jpg","kb-deadlift-high-pull":null,"kb-squat-press":null,"kb-farmers-carry":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Farmers_Walk/0.jpg","kb-figure-eight":null,"loop-0":null,"loop-1":null,"loop-2":null,"loop-3":null,"loop-4":null,"loop-5":null,"loop-6":null,"loop-7":null,"loop-8":null,"loop-9":null,"loop-10":null,"loop-11":null,"loop-12":null,"loop-13":null,"loop-14":null,"loop-15":null,"loop-16":null,"loop-core-0":null,"loop-core-1":null,"loop-core-2":null,"loop-core-3":null,"tube-u-0":null,"tube-u-1":null,"tube-u-2":null,"tube-u-3":null,"tube-u-4":null,"tube-u-5":null,"tube-u-6":null,"tube-u-7":null,"tube-u-8":null,"tube-u-9":null,"tube-u-10":null,"tube-u-11":null,"tube-u-12":null,"tube-u-13":null,"tube-l-0":null,"tube-l-1":null,"tube-l-2":null,"tube-l-3":null,"tube-l-4":null,"tube-l-5":null,"tube-c-0":null,"tube-c-1":null,"tube-c-2":null,"tube-c-3":null,"slider-c-0":null,"slider-c-1":null,"slider-c-2":null,"slider-c-3":null,"slider-c-4":null,"slider-c-5":null,"slider-c-6":null,"slider-c-7":null,"slider-l-0":null,"slider-l-1":null,"slider-l-2":null,"slider-l-3":null,"slider-l-4":null,"slider-l-5":null,"slider-l-6":null,"slider-f-0":null,"slider-f-1":null,"slider-f-2":null,"rope-0":null,"rope-1":null,"rope-2":null,"rope-3":null,"rope-4":null,"rope-5":null,"rope-6":null,"rope-7":null,"rope-8":null,"rope-9":null,"rope-int-0":null,"rope-int-1":null,"rope-int-2":null,"rope-int-3":null,"rope-int-4":null,"tm-w-0":null,"tm-w-1":null,"tm-w-2":null,"tm-w-3":null,"tm-w-4":null,"tm-w-5":null,"tm-r-0":null,"tm-r-1":null,"tm-r-2":null,"tm-r-3":null,"tm-r-4":null,"stepper-regular":null,"stepper-fast":null,"stepper-slow-resistance":null,"stepper-interval":null,"stepper-deep":null,"stepper-half-squat":null,"stepper-bicep-curl":null,"stepper-hammer-curl":null,"stepper-shoulder-press":null,"stepper-front-raise":null,"stepper-lateral-raise":null,"stepper-upright-row":null,"stepper-tricep-extension":null,"stepper-row":null,"bike-easy":null,"bike-moderate":null,"bike-high-resistance":null,"bike-low-resistance-speed":null,"bike-hill-climb":null,"bike-sprint-intervals":null,"bike-resistance-intervals":null,"bike-recovery":null,"mat-l-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","mat-l-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","mat-l-2":null,"mat-l-3":null,"mat-l-4":null,"mat-l-5":null,"mat-l-6":null,"mat-l-7":null,"mat-l-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","mat-l-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Single_Leg_Glute_Bridge/0.jpg","mat-l-10":null,"mat-l-11":null,"mat-l-12":null,"mat-l-13":null,"mat-l-14":null,"mat-l-15":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg","mat-l-16":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wall_Squat/0.jpg","mat-u-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","mat-u-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg","mat-u-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Push-Up/0.jpg","mat-u-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Close-Grip_Push-Up/0.jpg","mat-u-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Push-Up/0.jpg","mat-u-5":null,"mat-u-6":null,"mat-u-7":null,"mat-u-8":null,"mat-u-9":null,"mat-cb-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Crunches/0.jpg","mat-cb-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Crunch/0.jpg","mat-cb-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg","mat-cb-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dead_Bug/0.jpg","mat-cb-4":null,"mat-cb-5":null,"mat-cb-6":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg","mat-cb-7":null,"mat-cb-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg","mat-cb-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg","mat-cb-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Bridge/0.jpg","mat-cb-11":null,"mat-ca-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Flat_Bench_Lying_Leg_Raise/0.jpg","mat-ca-1":null,"mat-ca-2":null,"mat-ca-3":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Russian_Twist/0.jpg","mat-ca-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/V-Ups/0.jpg","mat-ca-5":null,"mat-ca-6":null,"mat-ca-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","mat-ca-8":null,"mat-ca-9":null,"mat-ca-10":null,"mat-ca-11":null,"hiit-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Jumping_Jack/0.jpg","hiit-1":null,"hiit-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/High_Knees/0.jpg","hiit-3":null,"hiit-4":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Mountain_Climbers/0.jpg","hiit-5":null,"hiit-6":null,"hiit-7":null,"hiit-8":null,"hiit-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg","hiit-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Burpee/0.jpg","hiit-11":null,"hiit-12":null,"hiit-13":null,"hiit-14":null,"hiit-15":null,"warm-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arm_Circles/0.jpg","warm-1":null,"warm-2":null,"warm-3":null,"warm-4":null,"warm-5":null,"warm-6":null,"warm-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Worlds_Greatest_Stretch/0.jpg","warm-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg","warm-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bird_Dog/0.jpg","warm-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butt_Lift_Bridge/0.jpg","warm-11":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg","warm-12":null,"cool-0":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hamstring_And_Calf_Stretch/0.jpg","cool-1":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Quadriceps/0.jpg","cool-2":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Kneeling_Hip_Flexor/0.jpg","cool-3":null,"cool-4":null,"cool-5":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Childs_Pose/0.jpg","cool-6":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cobra/0.jpg","cool-7":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Doorway_Chest_Stretch/0.jpg","cool-8":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cross_Body_Shoulder_Stretch/0.jpg","cool-9":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Stretch/0.jpg","cool-10":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Stretch_Hands_Against_Wall/0.jpg","cool-11":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cat_Stretch/0.jpg","warm-90-90-hamstring":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/90_90_Hamstring/0.jpg","warm-standing-hip-circles":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hip_Circles/0.jpg","warm-standing-hip-flexors":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Hip_Flexors/0.jpg","warm-shoulder-stretch":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Shoulder_Stretch/0.jpg","warm-knee-across-body":"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Knee_Across_The_Body/0.jpg"};
 
-const defaults={bodyMetrics:[],bodyMetricUnit:"lb",measurementUnit:"in",swapChoices:{},exercisePerformance:{},exerciseProfiles:{},workoutRatings:{},activeWorkout:null,todayOrder:{},planSeed:0,
+const defaults={bodyMetrics:[],bodyMetricUnit:"lb",measurementUnit:"in",workoutStyle:"circuit",swapChoices:{},exercisePerformance:{},exerciseProfiles:{},workoutRatings:{},activeWorkout:null,todayOrder:{},planSeed:0,
  finisherMode:"treadmill",finisherExerciseId:"",finisherMinutes:10,autoFinisherCategory:"cardio",autoFinisherByDay:{},restDayWorkoutOverrides:{},workoutTypeOverrides:{},
  theme:"dark",workoutDays:4,duration:45,difficulty:"Moderate",restDays:[0,6],
  equipment:["Adjustable Dumbbells","Barbell","Kettlebell","Skipping Rope","Disc Sliders","Treadmill","Mini Stepper","Resistance Loop Bands","Resistance/Toning Tubes","Stationary Bike","Exercise Mat"],
@@ -1632,6 +1632,13 @@ function renderToday(){
    <section class="card workout-type-control-card">
      <div class="section-title"><div><h2>Workout Type</h2><small>Change today's training focus without changing your weekly rest-day settings.</small></div></div>
      <select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select>
+     <div class="workout-style-control">
+       <label for="todayWorkoutStyle"><strong>Workout Style</strong><small>Sequential completes one exercise at a time. Circuit rotates through one set of each exercise in groups of 3.</small></label>
+       <select id="todayWorkoutStyle">
+         <option value="circuit" ${state.workoutStyle==="circuit"?"selected":""}>Circuit · 3 exercises at a time</option>
+         <option value="sequential" ${state.workoutStyle==="sequential"?"selected":""}>Sequential · finish one exercise first</option>
+       </select>
+     </div>
      ${(()=>{const missed=missedPreviousWorkout(todayDate);return missed&&missed.focus!==focus?`<div class="carry-forward-box"><div><strong>Missed yesterday: ${missed.focus}</strong><small>Carry that workout type forward to today.</small></div><button type="button" class="secondary" id="carryForwardWorkout">Carry Forward</button></div>`:""})()}
    </section>
    <section class="card heatmap-card">
@@ -1687,6 +1694,8 @@ function renderToday(){
  if(workoutOnRestDay) workoutOnRestDay.onclick=()=>{enableRestDayWorkout(todayDate);showToast("Workout enabled for today");renderToday();};
  const todayWorkoutType=document.getElementById("todayWorkoutType");
  if(todayWorkoutType) todayWorkoutType.onchange=e=>{setWorkoutTypeForDate(todayDate,e.target.value);state.todayOrder=state.todayOrder||{};delete state.todayOrder[todayDate];showToast(`Today's workout changed to ${e.target.value}`);renderToday();};
+ const todayWorkoutStyle=document.getElementById("todayWorkoutStyle");
+ if(todayWorkoutStyle) todayWorkoutStyle.onchange=e=>{state.workoutStyle=e.target.value;save();showToast(state.workoutStyle==="circuit"?"Circuit style selected":"Sequential style selected");renderToday();};
  const carryForwardWorkout=document.getElementById("carryForwardWorkout");
  if(carryForwardWorkout) carryForwardWorkout.onclick=()=>{const missed=missedPreviousWorkout(todayDate);if(!missed)return;setWorkoutTypeForDate(todayDate,missed.focus);state.todayOrder=state.todayOrder||{};delete state.todayOrder[todayDate];showToast(`${missed.focus} carried forward to today`);renderToday();};
  bindDurationControls(renderToday);
@@ -2557,7 +2566,10 @@ function saveActiveWorkoutSession(session){
    restRemaining:session.restRemaining,
    running:false,
    totalRest:session.totalRest,
-   restSessions:session.restSessions
+   restSessions:session.restSessions,
+   workStartedAt:session.workStartedAt??null,
+   restStart:session.restStart??null,
+   savedAt:session.savedAt??Date.now()
  };
  save();
 }
@@ -2753,293 +2765,159 @@ function exportHistoryCSV(){
 }
 
 function startWorkout(plan,resumeState=null){
- let idx=resumeState?.idx??0;
  let elapsed=resumeState?.elapsed??0;
  let phase=resumeState?.phase??"work";
  let restRemaining=resumeState?.restRemaining??state.restSeconds;
  let running=resumeState?.running!==false;
- let tick;
- let workStartedAt=resumeState?.workStartedAt??(running && phase==="work"?Date.now():null);
- let restStart=resumeState?.restStart??(running && phase==="rest"?Date.now():null);
+ let workStartedAt=resumeState?.workStartedAt??(running&&phase==="work"?Date.now():null);
+ let restStart=resumeState?.restStart??(running&&phase==="rest"?Date.now():null);
  let totalRest=resumeState?.totalRest??0;
  let restSessions=resumeState?.restSessions??0;
- let closed=false;
+ let tick=null,closed=false;
+ const expanded=new Set();
 
- const effectiveElapsed=()=>{
-   if(running && phase==="work" && workStartedAt!==null){
-     return elapsed+Math.max(0,Math.floor((Date.now()-workStartedAt)/1000));
-   }
-   return elapsed;
- };
- const effectiveRestRemaining=()=>{
-   if(running && phase==="rest" && restStart!==null){
-     return Math.max(0,restRemaining-Math.max(0,Math.floor((Date.now()-restStart)/1000)));
-   }
-   return Math.max(0,restRemaining);
- };
- const effectiveTotalRest=()=>{
-   if(running && phase==="rest" && restStart!==null){
-     const spent=Math.max(0,Math.floor((Date.now()-restStart)/1000));
-     return totalRest+Math.min(restRemaining,spent);
-   }
-   return totalRest;
- };
+ const effectiveElapsed=()=>running&&phase==="work"&&workStartedAt!==null
+   ?elapsed+Math.max(0,Math.floor((Date.now()-workStartedAt)/1000)):elapsed;
+ const effectiveRestRemaining=()=>running&&phase==="rest"&&restStart!==null
+   ?Math.max(0,restRemaining-Math.max(0,Math.floor((Date.now()-restStart)/1000))):Math.max(0,restRemaining);
+ const effectiveTotalRest=()=>running&&phase==="rest"&&restStart!==null
+   ?totalRest+Math.min(restRemaining,Math.max(0,Math.floor((Date.now()-restStart)/1000))):totalRest;
 
- const session=()=>({
-   plan,idx,elapsed,phase,restRemaining,totalRest,restSessions,running,
-   workStartedAt,restStart,savedAt:Date.now()
- });
+ const session=()=>({plan,idx:0,elapsed,phase,restRemaining,totalRest,restSessions,running,workStartedAt,restStart,savedAt:Date.now()});
+ const saveSnapshot=()=>saveActiveWorkoutSession(session());
 
- function saveRunningSnapshot(){
-   saveActiveWorkoutSession(session());
- }
-
- function commitWorkTime(){
-   if(workStartedAt!==null){
-     elapsed=effectiveElapsed();
-     workStartedAt=null;
-   }
- }
-
- function commitRestTime(){
+ function commitWork(){if(workStartedAt!==null){elapsed=effectiveElapsed();workStartedAt=null;}}
+ function commitRest(){
    if(restStart!==null){
      const spent=Math.max(0,Math.floor((Date.now()-restStart)/1000));
-     const counted=Math.min(restRemaining,spent);
-     totalRest+=counted;
+     totalRest+=Math.min(restRemaining,spent);
      restRemaining=Math.max(0,restRemaining-spent);
      restStart=null;
    }
  }
-
- function persistPaused(){
-   if(phase==="work") commitWorkTime();
-   else commitRestTime();
-   running=false;
-   saveActiveWorkoutSession(session());
- }
-
- function syncBackgroundTime(){
-   if(!running || phase!=="rest" || restStart===null) return;
-   const endAt=restStart+(restRemaining*1000);
+ function syncBackground(){
+   if(!running||phase!=="rest"||restStart===null)return;
+   const endAt=restStart+restRemaining*1000;
    if(Date.now()>=endAt){
-     // Rest completed even if JavaScript was suspended while the screen/app was inactive.
-     totalRest+=restRemaining;
-     restRemaining=state.restSeconds;
-     restStart=null;
-     phase="work";
-     // Work begins at the actual instant the rest countdown ended, not when the app wakes up.
-     workStartedAt=endAt;
+     totalRest+=restRemaining;restRemaining=state.restSeconds;restStart=null;
+     phase="work";workStartedAt=endAt;
    }
  }
-
- function enterRest(){
-   if(phase==="work") commitWorkTime();
-   phase="rest";
-   restRemaining=state.restSeconds;
+ function togglePause(){
+   if(running){phase==="work"?commitWork():commitRest();running=false;}
+   else{running=true;if(phase==="work")workStartedAt=Date.now();else restStart=Date.now();}
+   saveSnapshot();renderActive();
+ }
+ function toggleRest(){
+   syncBackground();
+   if(phase==="rest"){
+     commitRest();phase="work";restRemaining=state.restSeconds;workStartedAt=running?Date.now():null;
+   }else{
+     commitWork();phase="rest";restRemaining=state.restSeconds;restStart=running?Date.now():null;workStartedAt=null;restSessions++;
+   }
+   saveSnapshot();renderActive();
+ }
+ function addRest(seconds){
+   if(phase!=="rest"){toggleRest();return;}
+   restRemaining=effectiveRestRemaining()+seconds;
    restStart=running?Date.now():null;
-   workStartedAt=null;
-   restSessions++;
-   saveRunningSnapshot();
+   saveSnapshot();renderActive();
  }
-
- function leaveRest(){
-   if(phase==="rest") commitRestTime();
-   phase="work";
-   restRemaining=state.restSeconds;
-   workStartedAt=running?Date.now():null;
-   saveRunningSnapshot();
- }
-
- function updateTimerDisplay(){
-   syncBackgroundTime();
-   const currentElapsed=effectiveElapsed();
-   const currentRestRemaining=effectiveRestRemaining();
-   const currentTotalRest=effectiveTotalRest();
-   const ring=modal.querySelector(".timer-ring");
-   const center=modal.querySelector(".timer-center");
-   const restSummary=modal.querySelector(".rest-summary");
-   if(ring){
-     const pct=phase==="rest"
-       ?Math.max(0,100-(currentRestRemaining/state.restSeconds*100))
-       :Math.min(100,(currentElapsed/60)*100);
-     ring.style.setProperty("--p",pct);
-   }
-   if(center){
-     const spans=center.querySelectorAll("span");
-     if(spans[0]) spans[0].textContent=phase==="rest"?"REST":"MOVE";
-     const timer=center.querySelector("b");
-     if(timer) timer.textContent=phase==="rest"?format(currentRestRemaining):format(currentElapsed);
-   }
-   if(restSummary){
-     const total=restSummary.querySelector("strong");
-     if(total) total.textContent=formatShort(currentTotalRest);
-     const spans=restSummary.querySelectorAll("span");
-     if(spans[1]) spans[1].textContent=`${restSessions} period${restSessions===1?"":"s"}`;
-   }
- }
-
- function cleanupLifecycleListeners(){
-   if(closed) return;
-   closed=true;
-   document.removeEventListener("visibilitychange",onVisibilityChange);
+ function cleanup(){
+   if(closed)return;closed=true;
+   if(tick)clearInterval(tick);
+   document.removeEventListener("visibilitychange",onVisibility);
    window.removeEventListener("pagehide",onPageHide);
  }
-
- function onVisibilityChange(){
-   if(document.visibilityState==="hidden"){
-     // Keep the running timestamps intact; only save them.
-     saveRunningSnapshot();
-   }else{
-     syncBackgroundTime();
-     saveRunningSnapshot();
-     updateTimerDisplay();
-   }
+ function onVisibility(){
+   if(document.visibilityState==="hidden") saveSnapshot();
+   else{syncBackground();saveSnapshot();updateClock();}
  }
-
- function onPageHide(){
-   // iOS may suspend the page immediately after this event.
-   // Persist the wall-clock anchors so elapsed time can be reconstructed on return/relaunch.
-   saveRunningSnapshot();
- }
-
- document.addEventListener("visibilitychange",onVisibilityChange);
+ function onPageHide(){saveSnapshot();}
+ document.addEventListener("visibilitychange",onVisibility);
  window.addEventListener("pagehide",onPageHide);
 
- function draw(){
-   syncBackgroundTime();
-   const ex=plan[idx];
-   if(!ex){
-     clearInterval(tick);
-     cleanupLifecycleListeners();
-     clearActiveWorkout();
-     closeModal();
-     return;
-   }
-   const currentElapsed=effectiveElapsed();
-   const currentRestRemaining=effectiveRestRemaining();
-   const currentTotalRest=effectiveTotalRest();
-
-   modal.innerHTML=`<div class="modal-card">
-     <div class="modal-head">
-       <div><div class="eyebrow">Workout in Progress</div><h2>${ex.name}</h2></div>
-       <button class="close" aria-label="Pause and close workout">×</button>
-     </div>
-
-     <div class="resume-note">The timer keeps running if your screen turns off or you switch apps. Closing this workout window manually pauses and saves it.</div>
-
-     <div class="modal-set-tracker">
-       <div class="set-tracker-title">SETS / REPS</div>
+ function activeExerciseCard(ex,number){
+   const done=Object.values((state.setProgress||{})[progressKey(ex,isoDate())]||{}).filter(Boolean).length;
+   const total=parseSetPlan(ex).count;
+   const open=expanded.has(String(ex.id));
+   return `<article class="active-exercise-card ${open?"expanded":""}" data-active-card="${ex.id}">
+     <button type="button" class="active-exercise-head" data-expand-active="${ex.id}">
+       <span class="active-exercise-number">${number}</span>
+       <span class="active-exercise-name"><strong>${ex.name}</strong><small>${ex.sets} · ${ex.equipment}</small></span>
+       <span class="active-exercise-progress">${done}/${total}</span>
+       <span class="active-chevron">${open?"⌃":"⌄"}</span>
+     </button>
+     ${open?`<div class="active-exercise-body">
+       <button type="button" class="instruction-link" data-active-instructions="${ex.id}">View instructions & form</button>
        ${loadControlMarkup(ex,isoDate())}
        ${setTracker(ex,isoDate())}
        ${repsEntryMarkup(ex,isoDate())}
-     </div>
-
-     <div class="timer-ring" style="--p:${phase==="rest"?Math.max(0,100-(currentRestRemaining/state.restSeconds*100)):Math.min(100,(currentElapsed/60)*100)}">
-       <div class="timer-center">
-         <span>${phase==="rest"?"REST":"MOVE"}</span>
-         <b>${phase==="rest"?format(currentRestRemaining):format(currentElapsed)}</b>
-         <span>${ex.sets}</span>
-       </div>
-     </div>
-
-     <div class="rest-summary">
-       <span>Recorded rest</span>
-       <strong>${formatShort(currentTotalRest)}</strong>
-       <span>${restSessions} period${restSessions===1?"":"s"}</span>
-     </div>
-
-     <div class="timer-controls">
-       <button id="prev">◀ Prev</button>
-       <button id="pause">${running?"Pause":"Resume"}</button>
-       <button id="next">${idx===plan.length-1?"Finish":"Next ▶"}</button>
-     </div>
-
-     <div style="height:12px"></div>
-     <button class="secondary" id="restBtn" style="width:100%">${phase==="rest"?"End Rest":"Start Rest ("+state.restSeconds+"s)"}</button>
-     <p style="text-align:center;color:var(--muted);font-size:11px;margin:12px 0 0">
-       Exercise ${idx+1} of ${plan.length}${ex.isFinisher?` · ${ex.finisherType||"Finisher"} finisher`:""}
-     </p>
-   </div>`;
-
-   modal.querySelector(".close").onclick=()=>{
-     clearInterval(tick);
-     persistPaused();
-     cleanupLifecycleListeners();
-     closeModal();
-     renderToday();
-     showToast("Workout paused and saved");
-   };
-
-   modal.querySelector("#pause").onclick=()=>{
-     if(running){
-       if(phase==="work") commitWorkTime();
-       else commitRestTime();
-       running=false;
-     }else{
-       running=true;
-       if(phase==="work") workStartedAt=Date.now();
-       else restStart=Date.now();
-     }
-     saveRunningSnapshot();
-     draw();
-   };
-
-   modal.querySelector("#prev").onclick=()=>{
-     if(phase==="rest") leaveRest();
-     else commitWorkTime();
-     idx=Math.max(0,idx-1);
-     elapsed=0;
-     workStartedAt=running?Date.now():null;
-     saveRunningSnapshot();
-     draw();
-   };
-
-   modal.querySelector("#next").onclick=()=>next();
-
-   modal.querySelector("#restBtn").onclick=()=>{
-     phase==="rest"?leaveRest():enterRest();
-     draw();
-   };
-
-   bindSetTrackers();bindPerformanceInputs();
+     </div>`:""}
+   </article>`;
  }
-
- function next(){
-   syncBackgroundTime();
-   if(phase==="rest") leaveRest();
-   else commitWorkTime();
-
-   if(idx<plan.length-1){
-     idx++;
-     elapsed=0;
-     phase="work";
-     restRemaining=state.restSeconds;
-     workStartedAt=running?Date.now():null;
-     saveRunningSnapshot();
-     draw();
-   }else{
-     clearInterval(tick);
-     totalRest=effectiveTotalRest();
-     cleanupLifecycleListeners();
-     clearActiveWorkout();
-     completeWorkout(plan,totalRest,restSessions);
+ function workoutGroups(){
+   const warm=plan.filter(ex=>(ex.area||"").includes("Warm-Up"));
+   const fin=plan.filter(ex=>ex.isFinisher);
+   const main=plan.filter(ex=>!warm.includes(ex)&&!ex.isFinisher);
+   const groups=[];
+   if(warm.length)groups.push({title:"Warm-Up",items:warm,kind:"warmup"});
+   if(state.workoutStyle==="circuit"){
+     for(let i=0;i<main.length;i+=3)groups.push({title:`Circuit ${Math.floor(i/3)+1}`,subtitle:`${Math.min(3,main.length-i)} exercises · Complete 1 set of each, then repeat the circuit`,items:main.slice(i,i+3),kind:"circuit"});
+   }else if(main.length)groups.push({title:"Main Workout",subtitle:"Complete all sets of an exercise before moving to the next.",items:main,kind:"sequential"});
+   if(fin.length)groups.push({title:"Finisher",items:fin,kind:"finisher"});
+   return groups;
+ }
+ function updateClock(){
+   syncBackground();
+   const panel=document.getElementById("activeWorkoutPanel");if(!panel)return;
+   const time=panel.querySelector("[data-active-time]");
+   if(time)time.textContent=phase==="rest"?format(effectiveRestRemaining()):format(effectiveElapsed());
+   const label=panel.querySelector("[data-active-phase]");
+   if(label)label.textContent=phase==="rest"?"REST":"WORKOUT";
+   const rest=panel.querySelector("[data-rest-total]");
+   if(rest)rest.textContent=formatShort(effectiveTotalRest());
+ }
+ function renderActive(){
+   syncBackground();
+   let panel=document.getElementById("activeWorkoutPanel");
+   if(!panel){
+     const card=document.querySelector(".today-workout-card");
+     if(!card)return;
+     panel=document.createElement("section");panel.id="activeWorkoutPanel";panel.className="active-workout-panel";
+     card.parentNode.insertBefore(panel,card);
    }
+   const groups=workoutGroups();
+   panel.innerHTML=`<div class="active-workout-sticky">
+     <div class="active-workout-topline"><div><span data-active-phase>${phase==="rest"?"REST":"WORKOUT"}</span><strong data-active-time>${phase==="rest"?format(effectiveRestRemaining()):format(effectiveElapsed())}</strong></div>
+       <div class="active-top-actions"><button type="button" class="secondary compact" id="activePause">${running?"Pause":"Resume"}</button><button type="button" class="primary compact" id="activeFinish">Finish</button></div>
+     </div>
+     <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
+   </div>
+   <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
+   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join("")}</section>`).join("")}`;
+
+   panel.querySelector("#activePause").onclick=togglePause;
+   panel.querySelector("#activeRest").onclick=toggleRest;
+   const add=panel.querySelector("#activeAddRest");if(add)add.onclick=()=>addRest(30);
+   panel.querySelector("#activeFinish").onclick=()=>{
+     if(!confirm("Finish this workout and save it to History?"))return;
+     syncBackground();phase==="work"?commitWork():commitRest();
+     cleanup();clearActiveWorkout();completeWorkout(plan,totalRest+totalLoggedRest(),restSessions);
+   };
+   panel.querySelectorAll("[data-expand-active]").forEach(btn=>btn.onclick=()=>{
+     const id=String(btn.dataset.expandActive);expanded.has(id)?expanded.delete(id):expanded.add(id);renderActive();
+   });
+   panel.querySelectorAll("[data-active-instructions]").forEach(btn=>btn.onclick=(e)=>{
+     e.stopPropagation();preview(btn.dataset.activeInstructions);
+   });
+   bindSetTrackers();bindPerformanceInputs();bindExerciseImages();
+   panel.scrollIntoView({behavior:"smooth",block:"start"});
  }
-
- // Save timestamps immediately so background suspension/reloads can reconstruct elapsed time.
- saveRunningSnapshot();
-
- tick=setInterval(()=>{
-   if(!running) return;
-   syncBackgroundTime();
-   saveRunningSnapshot();
-   // The display is derived from Date.now(), so missing interval callbacks while backgrounded
-   // do not lose elapsed time.
-   updateTimerDisplay();
- },1000);
-
- modal.classList.remove("hidden");
- draw();
+ saveSnapshot();
+ renderActive();
+ if(tick)clearInterval(tick);
+ tick=setInterval(()=>{if(!running)return;syncBackground();saveSnapshot();updateClock();},1000);
 }
 function format(sec){const m=Math.floor(sec/60),s=sec%60;return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`}
 function formatShort(sec){const m=Math.floor(sec/60),s=sec%60;return m?`${m}m ${s}s`:`${s}s`}

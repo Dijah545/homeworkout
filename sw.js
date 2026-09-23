@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v84-workout-type-carry-forward";
+const CACHE="home-workout-v85-inline-circuit-workout";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=84",
-  "./app.js?v=84",
+  "./styles.css?v=85",
+  "./app.js?v=85",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
