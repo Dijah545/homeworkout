@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v95-library-performance-fix";
+const CACHE="home-workout-v85-inline-circuit-workout";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=95",
-  "./app.js?v=95",
+  "./styles.css?v=85",
+  "./app.js?v=85",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

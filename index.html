@@ -3,40 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#061015">
+  <meta name="theme-color" content="#061b30">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Home Workout</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=95">
+  <link rel="stylesheet" href="styles.css?v=85">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <!-- Home Workout build v86 Flexible finishers CSS -->
+  <!-- Home Workout build v85 Flexible finishers CSS -->
 </head>
 <body>
 <div id="app" class="app-shell">
-  
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/icon-192.png" alt="Home Workout logo">
+      <div>
+        <strong>Home Workout</strong>
+        <span>Your Fitness. Your Home. Your Power.</span>
+      </div>
+    </div>
+    <button class="icon-button" id="themeQuick" aria-label="Toggle theme">◐</button>
+  </header>
 
   <main id="view"></main>
 
   <nav class="bottom-nav" aria-label="Primary navigation">
-    <button data-route="today" class="nav-item active"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20H5V10.5"/><path d="M9 20v-6h6v6"/></svg></span><small>Today</small></button>
-    <button data-route="week" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2M11 14h2M15 14h2M7 17h2M11 17h2"/></svg></span><small>Week</small></button>
-    <button data-route="library" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v17H6.5A2.5 2.5 0 0 0 4 22V5.5ZM20 5.5A2.5 2.5 0 0 0 17.5 3H13v17h4.5A2.5 2.5 0 0 1 20 22V5.5Z"/></svg></span><small>Library</small></button>
-    <button data-route="history" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></span><small>History</small></button>
-    <button data-route="body" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"/><path d="M8.5 10c1-1.5 2-2 3.5-2s2.5.5 3.5 2l1.5 4-2 1-1-3v9h-4v-9l-1 3-2-1 1.5-4Z"/></svg></span><small>Body</small></button>
-    <button data-route="settings" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1a8 8 0 0 0-1.7-1L14.5 3h-5l-.4 3.1a8 8 0 0 0-1.7 1L5 6.1 3 9.5 5 11a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.4-1a8 8 0 0 0 1.7 1l.4 3.1h5l.4-3.1a8 8 0 0 0 1.7-1l2.4 1 2-3.4-2-1.5a7 7 0 0 0 .1-1Z"/></svg></span><small>Settings</small></button>
+    <button data-route="today" class="nav-item active"><span>⌂</span><small>Today</small></button>
+    <button data-route="week" class="nav-item"><span>▦</span><small>Week</small></button>
+    <button data-route="library" class="nav-item"><span>▤</span><small>Library</small></button>
+    <button data-route="history" class="nav-item"><span>◷</span><small>History</small></button>
+    <button data-route="body" class="nav-item"><span>⌁</span><small>Body</small></button>
+    <button data-route="settings" class="nav-item"><span>⚙</span><small>Settings</small></button>
   </nav>
 </div>
 
 <div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
 <div id="toast" class="toast hidden"></div>
-<script src="app.js?v=95"></script>
+<script src="app.js?v=85"></script>
 
 <script>
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("sw.js?v=95",{updateViaCache:"none"})
+    navigator.serviceWorker.register("sw.js?v=85",{updateViaCache:"none"})
       .then(reg=>reg.update())
       .catch(()=>{});
   });
