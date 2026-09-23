@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v85-5-reset-and-active-panel-fix";
+const CACHE="home-workout-v85-6-sequential-sticky-timer";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=85.5",
-  "./app.js?v=85.5",
+  "./styles.css?v=85.6",
+  "./app.js?v=85.6",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

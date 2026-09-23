@@ -2765,6 +2765,7 @@ function startWorkout(plan,resumeState=null){
  let restSessions=resumeState?.restSessions??0;
  let tick=null,closed=false;
  const expanded=new Set();
+ if(state.workoutStyle==="sequential")plan.forEach(ex=>expanded.add(String(ex.id)));
 
  const effectiveElapsed=()=>running&&phase==="work"&&workStartedAt!==null
    ?elapsed+Math.max(0,Math.floor((Date.now()-workStartedAt)/1000)):elapsed;

@@ -665,3 +665,11 @@ Rebuilt directly from v85 after discarding the broken v85.1/v85.2 Today implemen
 - Reset cancels an accidentally started workout, clears its in-progress sets/reps/timer, and returns to the pre-start Today screen.
 - Fixed a structural issue introduced by the Today redesign: the original v85 active-workout engine was still looking for `.today-workout-card`, while the rebuilt Today tab uses `.today-main-card`. Start/Resume can now mount the active workout correctly.
 - Existing heat map and exercise images are retained.
+
+## v85.6 – Sequential Active Workout Visibility
+- Sequential active workouts open all exercises automatically so set/reps/load/check controls are immediately visible.
+- Exercise cards remain manually collapsible.
+- Circuit mode is unchanged.
+- The existing live workout/rest timer panel is sticky while scrolling.
+- Rest button is larger and more visible.
+- Heat map, Reset Workout, Resume and existing exercise images are retained.
