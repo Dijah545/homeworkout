@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v91-library-route-hotfix";
+const CACHE="home-workout-v93-reference-heatmap";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=91",
-  "./app.js?v=91",
+  "./styles.css?v=93",
+  "./app.js?v=93",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

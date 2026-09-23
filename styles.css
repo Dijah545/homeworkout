@@ -945,3 +945,32 @@ html,body{background:#061015!important}body{margin:0;color:var(--text);font-fami
 .exercise-detail{max-height:88dvh;overflow:auto}
 .exercise-detail .detail-single-image{min-height:190px;background:#e9edef;border-radius:14px;overflow:hidden}
 .exercise-detail .detail-single-image img{width:100%;max-height:280px;object-fit:contain;display:block}
+
+/* v92 — larger heat map restored to top of Today */
+.reference-top-heatmap{padding:12px 14px 10px!important;margin:2px 0 3px}
+.reference-top-heatmap .reference-muscles-head{margin-bottom:4px}
+.reference-top-heatmap .reference-muscles-head strong{font-size:15px}
+.reference-top-heatmap .dynamic-heat-title,
+.reference-top-heatmap .dynamic-heat-legend{display:none!important}
+.reference-top-heatmap .dynamic-anatomy-svg,
+.reference-top-heatmap svg{width:100%!important;max-width:360px!important;max-height:300px!important;height:auto!important;margin:0 auto!important;display:block!important}
+.reference-top-heatmap .heatmap-wrap,
+.reference-top-heatmap .dynamic-anatomy-wrap{max-width:390px!important;margin:0 auto!important}
+
+/* v93 — heat map styled after supplied anatomical reference */
+.reference-anatomy{width:100%;max-width:430px;margin:0 auto}
+.reference-anatomy .anatomy-views{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+.reference-anatomy .anatomy-view{display:flex;flex-direction:column;align-items:center}
+.reference-anatomy .dynamic-anatomy-svg{width:100%!important;max-width:185px!important;height:auto!important;max-height:none!important;overflow:visible}
+.reference-anatomy .anatomy-view small{margin-top:-2px;color:#9eacb9;font-size:10px}
+.reference-anatomy .body-neutral{fill:#f7f7f5;stroke:#9ea3a6;stroke-width:1.4}
+.reference-anatomy .body-outline{fill:#f7f7f5;stroke:#9ea3a6;stroke-width:1.5;stroke-linejoin:round}
+.reference-anatomy .muscle{stroke:#fff;stroke-width:1.8;stroke-linejoin:round}
+.reference-anatomy .muscle.heat-none{fill:#f7f7f5}
+.reference-anatomy .muscle.heat-secondary{fill:#f4bf2a}
+.reference-anatomy .muscle.heat-primary{fill:#c91f25}
+.reference-anatomy .heat-legend{display:flex;justify-content:center;gap:22px;margin-top:7px;color:#aeb9c2;font-size:11px}
+.reference-anatomy .heat-legend span{display:flex;align-items:center;gap:6px}
+.reference-anatomy .heat-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.reference-anatomy .heat-dot.primary{background:#c91f25}
+.reference-anatomy .heat-dot.secondary{background:#f4bf2a}

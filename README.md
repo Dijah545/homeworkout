@@ -680,3 +680,17 @@ The app shell and workout experience were redesigned around the approved charcoa
 - Hardened Library filtering against incomplete exercise metadata.
 - Prevented exercise-card click delegation from interfering with bottom navigation.
 - v90 guide, Sequential default, Settings-only workout style, semantic navigation icons, five-item Recent Workouts display, Warm-Up/Cool-Down and all existing workout functionality are retained.
+
+## v92 – Top Heat Map
+- Restored the anatomical workout heat map near the top of Today.
+- Increased its display size for easier viewing while retaining the weighted muscle-target logic.
+- Removed the lower duplicate heat map to keep Today compact.
+- All v91 navigation, Library, Exercise Guide and workout functionality are retained.
+
+## v93 – Reference-Style Heat Map
+- Updated the dynamic front/back anatomical heat map to more closely resemble the supplied reference.
+- Clean light body silhouette with defined muscle sections.
+- Red = primary muscles; yellow = secondary muscles.
+- Muscle activation remains dynamic based on the actual exercises scheduled for the day.
+- Larger heat map remains at the top of Today.
+- All previous Library, Exercise Guide, History, Warm-Up/Cool-Down, timers, tracking, swapping and workout-style functionality is retained.
