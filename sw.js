@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v85-6-sequential-sticky-timer";
+const CACHE="home-workout-v85-7-circuit-active";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=85.6",
-  "./app.js?v=85.6",
+  "./styles.css?v=85.7",
+  "./app.js?v=85.7",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

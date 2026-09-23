@@ -946,3 +946,14 @@ body:has(.today-fixed-actions) main{
  .active-workout-topline strong{font-size:24px!important}
  #activeRest{min-width:102px!important;min-height:48px!important;padding:11px 15px!important}
 }
+
+/* v85.7 — circuit active layout */
+.today-main-card.active-session-host>.today-section-head,.today-main-card.active-session-host>.today-circuit-list,.today-main-card.active-session-host>.today-lite-list,.today-main-card.active-session-host>.today-action-row,.today-main-card.active-session-host>.workout-complete-banner{display:none!important}
+.today-main-card.active-session-host{padding:0!important;border:0!important;background:transparent!important}
+.active-circuit-rounds{display:grid;gap:9px;padding:8px}.active-circuit-round{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.active-circuit-round-head{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;background:linear-gradient(90deg,rgba(18,217,232,.12),transparent);border-bottom:1px solid var(--line)}
+.active-circuit-round-head strong{font-size:12px;color:var(--accent)}.active-circuit-round-head small{font-size:9px;color:var(--muted)}
+.active-circuit-row{display:grid;grid-template-columns:50px minmax(0,1fr) 42px;align-items:center;gap:9px;padding:7px 8px;border-bottom:1px solid var(--line)}.active-circuit-row:last-child{border-bottom:0}
+.active-circuit-thumb{width:50px;height:46px;border-radius:8px;overflow:hidden;background:#eef1f2}.active-circuit-thumb img{width:100%;height:100%;object-fit:cover}
+.active-circuit-name{border:0;background:transparent;color:var(--text);text-align:left;padding:4px 0;min-width:0;cursor:pointer}.active-circuit-name strong{display:block;font-size:12px}.active-circuit-name small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.active-circuit-check{width:36px;height:36px;border-radius:10px;border:2px solid #91a6b4;background:transparent;color:#041014;font-weight:900;font-size:18px}.active-circuit-check.done{background:var(--accent);border-color:var(--accent)}

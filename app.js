@@ -1620,10 +1620,11 @@ function circuitConfigFor(ex){
  };
 }
 function safeCircuitEligible(ex){
- if(!ex||ex.isFinisher)return false;
- const area=String(ex.area||"").toLowerCase(), eq=String(ex.equipment||"").toLowerCase(), sets=String(ex.sets||"").toLowerCase();
- if(area.includes("cardio")||area.includes("mobility"))return false;
- if(["treadmill","stationary bike","mini stepper","skipping rope"].some(x=>eq.includes(x)))return false;
+ if(!ex||ex.isFinisher||ex.isWarmup||ex.isCooldown)return false;
+ const area=String(ex.area||"").toLowerCase(),eq=String(ex.equipment||"").toLowerCase(),name=String(ex.name||"").toLowerCase(),sets=String(ex.sets||"").toLowerCase();
+ if(parseSetPlan(ex).count<3)return false;
+ if(area.includes("cardio")||area.includes("mobility")||area.includes("warm-up")||area.includes("cool"))return false;
+ if(["treadmill","stationary bike","mini stepper","skipping rope"].some(x=>eq.includes(x)||name.includes(x)))return false;
  if(/minute|\bmin\b|interval|walk|run|ride|steady/i.test(sets))return false;
  return true;
 }
@@ -2847,16 +2848,35 @@ function startWorkout(plan,resumeState=null){
      </div>`:""}
    </article>`;
  }
+ function activeCircuitRow(ex,round){
+   const done=setDone(ex,round,isoDate()), range=repRangeFor(ex), perf=performanceFor(ex), profile=profileFor(ex);
+   const load=perf.load??profile.load??"", unit=perf.unit||profile.unit||defaultLoadUnit(ex), reps=(perf.reps&&perf.reps[round])??(range?range.max:"");
+   return `<div class="active-circuit-row">
+     <span class="active-circuit-thumb">${exerciseImageMarkup(ex)}</span>
+     <button type="button" class="active-circuit-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${isStrengthExercise(ex)&&load?`${load}${unit==="level"?"":` lb`} · `:""}${range?`${reps||range.max} reps`:parseSetPlan(ex).label}</small></button>
+     <button type="button" class="active-circuit-check ${done?"done":""}" data-circuit-check="${ex.id}" data-circuit-round="${round}" aria-label="Complete ${ex.name}">${done?"✓":""}</button>
+   </div>`;
+ }
+ function activeCircuitGroup(g){
+   const rounds=Math.max(...g.items.map(ex=>parseSetPlan(ex).count));
+   return `<div class="active-circuit-rounds">${Array.from({length:rounds},(_,r)=>{const items=g.items.filter(ex=>parseSetPlan(ex).count>r);return `<section class="active-circuit-round"><div class="active-circuit-round-head"><strong>Round ${r+1} of ${rounds}</strong><small>${items.filter(ex=>setDone(ex,r,isoDate())).length}/${items.length} complete</small></div>${items.map(ex=>activeCircuitRow(ex,r)).join("")}</section>`}).join("")}</div>`;
+ }
  function workoutGroups(){
-   const warm=plan.filter(ex=>(ex.area||"").includes("Warm-Up"));
+   const warm=plan.filter(ex=>ex.isWarmup||(ex.area||"").includes("Warm-Up"));
+   const cool=plan.filter(ex=>ex.isCooldown||(ex.area||"").toLowerCase().includes("cool"));
    const fin=plan.filter(ex=>ex.isFinisher);
-   const main=plan.filter(ex=>!warm.includes(ex)&&!ex.isFinisher);
+   const main=plan.filter(ex=>!warm.includes(ex)&&!cool.includes(ex)&&!fin.includes(ex));
    const groups=[];
    if(warm.length)groups.push({title:"Warm-Up",items:warm,kind:"warmup"});
    if(state.workoutStyle==="circuit"){
-     for(let i=0;i<main.length;i+=3)groups.push({title:`Circuit ${Math.floor(i/3)+1}`,subtitle:`${Math.min(3,main.length-i)} exercises · Complete 1 set of each, then repeat the circuit`,items:main.slice(i,i+3),kind:"circuit"});
+     const eligible=main.filter(safeCircuitEligible),standalone=main.filter(ex=>!safeCircuitEligible(ex));
+     const logical=safeCircuitGroups(eligible);
+     logical.groups.forEach((items,i)=>groups.push({title:`Circuit ${i+1}`,subtitle:`${items.length} exercises · ${Math.max(...items.map(x=>parseSetPlan(x).count))} rounds`,items,kind:"circuit"}));
+     const leftovers=[...logical.standalone,...standalone];
+     if(leftovers.length)groups.push({title:"Standalone",subtitle:"Complete separately from the circuits.",items:leftovers,kind:"standalone"});
    }else if(main.length)groups.push({title:"Main Workout",subtitle:"Complete all sets of an exercise before moving to the next.",items:main,kind:"sequential"});
    if(fin.length)groups.push({title:"Finisher",items:fin,kind:"finisher"});
+   if(cool.length)groups.push({title:"Cool-Down",items:cool,kind:"cooldown"});
    return groups;
  }
  function updateClock(){
@@ -2875,6 +2895,7 @@ function startWorkout(plan,resumeState=null){
    if(!panel){
      const card=document.querySelector(".today-main-card, .today-workout-card");
      if(!card)return;
+     card.classList.add("active-session-host");
      panel=document.createElement("section");panel.id="activeWorkoutPanel";panel.className="active-workout-panel";
      card.parentNode.insertBefore(panel,card);
    }
@@ -2886,7 +2907,7 @@ function startWorkout(plan,resumeState=null){
      <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
    </div>
    <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
-   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join("")}</section>`).join("")}`;
+   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join("")}</section>`).join("")}`;
 
    panel.querySelector("#activePause").onclick=togglePause;
    panel.querySelector("#activeReset").onclick=()=>{if(confirm("Reset this workout? This will clear all in-progress sets, reps and the workout timer, then return to the pre-start screen.")){cleanup();resetWorkoutToPreStart(plan)}};
@@ -2902,6 +2923,10 @@ function startWorkout(plan,resumeState=null){
    });
    panel.querySelectorAll("[data-active-instructions]").forEach(btn=>btn.onclick=(e)=>{
      e.stopPropagation();preview(btn.dataset.activeInstructions);
+   });
+   panel.querySelectorAll("[data-circuit-check]").forEach(btn=>btn.onclick=(e)=>{
+     e.preventDefault();e.stopPropagation();
+     const ex=getExercise(btn.dataset.circuitCheck);toggleSet(ex,Number(btn.dataset.circuitRound),isoDate());renderActive();
    });
    bindSetTrackers();bindPerformanceInputs();bindExerciseImages();
    panel.scrollIntoView({behavior:"smooth",block:"start"});

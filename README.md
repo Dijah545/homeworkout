@@ -673,3 +673,10 @@ Rebuilt directly from v85 after discarding the broken v85.1/v85.2 Today implemen
 - The existing live workout/rest timer panel is sticky while scrolling.
 - Rest button is larger and more visible.
 - Heat map, Reset Workout, Resume and existing exercise images are retained.
+
+## v85.7 – Circuit Active Workout
+- Only main-workout exercises with 3+ sets can be grouped into circuits.
+- Warm-Up, Cool-Down, treadmill, timed cardio and finishers remain outside circuits.
+- Circuit rounds are always visible with one checkbox beside each exercise.
+- Exercise names remain tappable for instructions/form.
+- The pre-start Today's Workout list is hidden while an active workout is displayed, removing the duplicate list. It returns normally after completion/reset with saved completion state.
