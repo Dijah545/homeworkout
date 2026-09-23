@@ -1480,84 +1480,50 @@ function renderToday(){
  const movableCount=plan.filter(ex=>!ex.isFinisher).length;
 
  view.innerHTML=`
- <section class="hero today-dashboard-hero">
-   <div class="hero-content">
-     <div class="eyebrow">${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</div>
-     <h1>${focus}</h1>
-     
-     <div class="stats">
-       <div class="stat"><b>${resting?"—":state.duration}</b><span>Total Min</span></div>
-       <div class="stat"><b>${plan.length}</b><span>Exercises</span></div>
-       <div class="stat"><b>${state.difficulty}</b><span>Intensity</span></div>
-     </div>
+ <div class="reference-today prestart-ui">
+  <header class="reference-page-head">
+   <div><h1>Today</h1><span>${new Date().toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"})}</span></div>
+   <button class="reference-menu" type="button">•••</button>
+  </header>
+  ${resting?"":`
+  <section class="reference-session-bar">
+   <div class="reference-time-row"><strong>00:00</strong><div class="reference-progress"><i></i></div></div>
+   <div class="reference-quick-actions"><button class="secondary" id="preStartWorkout">▶ Start</button><button class="secondary" id="preRest">+ ${state.restSeconds}s</button></div>
+  </section>
+  <section class="reference-mode-card">
+   <div class="reference-mode-toggle">
+    <button type="button" data-pre-style="sequential" class="${state.workoutStyle==="sequential"?"selected":""}">Sequential</button>
+    <button type="button" data-pre-style="circuit" class="${state.workoutStyle==="circuit"?"selected":""}">Circuit</button>
    </div>
- </section>
-
- ${resting?"":`
-   <section class="card workout-type-control-card">
-     <div class="section-title"><h2>Workout Type</h2></div>
-     <select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select>
-     <div class="workout-style-control">
-       <label for="todayWorkoutStyle"><strong>Workout Style</strong></label>
-       <select id="todayWorkoutStyle">
-         <option value="circuit" ${state.workoutStyle==="circuit"?"selected":""}>Circuit · 3 exercises at a time</option>
-         <option value="sequential" ${state.workoutStyle==="sequential"?"selected":""}>Sequential · finish one exercise first</option>
-       </select>
-     </div>
-     ${(()=>{const missed=missedPreviousWorkout(todayDate);return missed&&missed.focus!==focus?`<div class="carry-forward-box"><div><strong>Missed yesterday: ${missed.focus}</strong><small>Carry that workout type forward to today.</small></div><button type="button" class="secondary" id="carryForwardWorkout">Carry Forward</button></div>`:""})()}
-   </section>
-   <section class="card heatmap-card">
-   ${femaleHeatmap(plan)}</section>
-   <section class="card">${durationControl()}
-     
-   </section>
-   ${warmupMarkup(warmup)}
-   <section class="card rest-tracker-card"><div id="todayRestTracker"></div></section>
- `}
+   <div class="reference-mode-meta"><strong>${state.workoutStyle==="circuit"?Math.ceil(plan.filter(x=>!x.isFinisher).length/3)+" Circuits":plan.filter(x=>!x.isFinisher).length+" Exercises"}</strong><span>${state.workoutStyle==="circuit"?"3 Rounds":"One at a time"}</span></div>
+  </section>
+  <section class="reference-controls">
+   <select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select>
+   <span class="reference-duration">${state.duration} min</span>
+  </section>
+  ${(()=>{const missed=missedPreviousWorkout(todayDate);return missed&&missed.focus!==focus?`<div class="reference-carry"><span>Missed: ${missed.focus}</span><button type="button" class="secondary compact" id="carryForwardWorkout">Carry Forward</button></div>`:""})()}
+  `}
+ </div>
 
  <section class="card today-workout-card">
-  <div class="section-title">
-    <div>
-      <h2>${resting?"Active Recovery":"Today's Workout"}</h2>
-      ${!resting?`<small class="set-progress-text">${doneSets}/${totalSets} sets completed</small>`:""}
-    </div>
-    <small>${plan.length} exercises</small>
-  </div>
-
+  <div class="reference-workout-heading"><div><h2>${resting?"Rest Day":focus}</h2>${!resting?`<small>${doneSets}/${totalSets} sets · ${plan.length} exercises</small>`:""}</div></div>
   ${resting?
-    `<div class="empty rest-day-choice"><p>Today is scheduled as a rest day. Keep it as recovery, or work out today without changing your regular rest-day schedule.</p><button type="button" class="primary" id="workoutOnRestDay">Workout Today</button></div>`:
-    `<div class="today-order-toolbar">
-       <strong>Arrange Workout</strong>
-       <div class="today-order-buttons"><button type="button" class="secondary compact" id="autoArrangeToday">Auto Arrange</button><button type="button" class="secondary compact" id="resetTodayOrder">Reset order</button></div>
-     </div>
-
-     <div class="reorder-workout-list">
-       ${plan.map((ex,i)=>todayReorderRow(ex,i,movableCount,isoDate())).join("")}
-     </div>
-
-     ${finisher?`<div class="today-finisher-details">${finisher.id==="treadmill-finisher"?treadmillPlanMarkup(finisher):`<div class="custom-finisher-plan"><div><span>${finisher.finisherType||"Custom"} finish</span><strong>${finisher.name}</strong></div><small>${finisher.minutes||state.finisherMinutes} min · Tap the exercise above for instructions.</small></div>`}</div>`:""}
-
-     <div style="height:12px"></div>
-     ${workoutCompletedOn()?
-       `<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
-       `<div class="workout-actions today-fixed-actions">
-          ${hasActiveWorkoutToday()
-            ?`<button class="primary resume-workout-btn" id="resumeWorkout">▶ Resume Workout</button>
-               <button class="secondary" id="restartWorkout">Restart Workout</button>`
-            :`<button class="primary" id="startWorkout">Start Workout</button>`}
-          <button class="complete-workout-btn" id="markWorkoutComplete">✓ Mark Workout Complete</button>
-        </div>`
-     }`
+   `<div class="empty rest-day-choice"><button type="button" class="primary" id="workoutOnRestDay">Workout Today</button></div>`:
+   `<div class="reference-list-actions"><button type="button" class="secondary compact" id="autoArrangeToday">↻ Arrange</button><button type="button" class="secondary compact" id="resetTodayOrder">Reset</button></div>
+    <div class="reorder-workout-list reference-exercise-list">${plan.map((ex,i)=>todayReorderRow(ex,i,movableCount,isoDate())).join("")}</div>
+    ${finisher?`<div class="today-finisher-details">${finisher.id==="treadmill-finisher"?treadmillPlanMarkup(finisher):`<div class="custom-finisher-plan"><strong>${finisher.name}</strong><small>${finisher.minutes||state.finisherMinutes} min</small></div>`}</div>`:""}
+    ${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
+      `<div class="workout-actions today-fixed-actions">${hasActiveWorkoutToday()?`<button class="primary resume-workout-btn" id="resumeWorkout">Resume Workout</button><button class="secondary" id="restartWorkout">Restart</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">✓ Mark Complete</button></div>`}`
   }
  </section>
- ${resting?"":recoverySectionMarkup("Cool-Down","5 min · Recovery stretches",cooldown.items,"cooldown")}`;
-
- const workoutOnRestDay=document.getElementById("workoutOnRestDay");
+ ${resting?"":`<section class="card reference-muscles-card"><div class="reference-muscles-head"><strong>Muscles Today</strong><span>${focus}</span></div>${femaleHeatmap(plan)}</section>
+ <div class="reference-hidden-support">${durationControl()}${warmupMarkup(warmup)}<div id="todayRestTracker"></div>${recoverySectionMarkup("Cool-Down","",cooldown.items,"cooldown")}</div>`}`; const workoutOnRestDay=document.getElementById("workoutOnRestDay");
  if(workoutOnRestDay) workoutOnRestDay.onclick=()=>{enableRestDayWorkout(todayDate);showToast("Workout enabled for today");renderToday();};
  const todayWorkoutType=document.getElementById("todayWorkoutType");
  if(todayWorkoutType) todayWorkoutType.onchange=e=>{setWorkoutTypeForDate(todayDate,e.target.value);state.todayOrder=state.todayOrder||{};delete state.todayOrder[todayDate];showToast(`Today's workout changed to ${e.target.value}`);renderToday();};
- const todayWorkoutStyle=document.getElementById("todayWorkoutStyle");
- if(todayWorkoutStyle) todayWorkoutStyle.onchange=e=>{state.workoutStyle=e.target.value;save();showToast(state.workoutStyle==="circuit"?"Circuit style selected":"Sequential style selected");renderToday();};
+ document.querySelectorAll("[data-pre-style]").forEach(btn=>btn.onclick=()=>{state.workoutStyle=btn.dataset.preStyle;save();renderToday();});
+ const preStartWorkout=document.getElementById("preStartWorkout");if(preStartWorkout)preStartWorkout.onclick=()=>startWorkout(sessionPlan);
+ const preRest=document.getElementById("preRest");if(preRest)preRest.onclick=()=>{const rt=document.getElementById("restStart");if(rt)rt.click();};
  const carryForwardWorkout=document.getElementById("carryForwardWorkout");
  if(carryForwardWorkout) carryForwardWorkout.onclick=()=>{const missed=missedPreviousWorkout(todayDate);if(!missed)return;setWorkoutTypeForDate(todayDate,missed.focus);state.todayOrder=state.todayOrder||{};delete state.todayOrder[todayDate];showToast(`${missed.focus} carried forward to today`);renderToday();};
  bindDurationControls(renderToday);
@@ -2334,7 +2300,8 @@ function renderSettings(){
  view.innerHTML=`<div class="eyebrow">Preferences</div><h1>Settings</h1>
  <section class="card"><div class="section-title"><h2>Appearance</h2></div>
  <div class="setting-row"><div><label>Theme</label></div><select id="themeSel"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></div></section>
- <section class="card"><div class="section-title"><h2>Workout Preferences</h2></div>
+ <section class="card reference-settings-card"><div class="section-title"><h2>Workout Preferences</h2></div>
+ <div class="setting-row"><div><label>Workout Style</label></div><div class="settings-segment"><button type="button" data-setting-style="sequential" class="${state.workoutStyle==="sequential"?"selected":""}">Sequential</button><button type="button" data-setting-style="circuit" class="${state.workoutStyle==="circuit"?"selected":""}">Circuit</button></div></div>
  <div class="setting-row"><div><label>Workout days per week</label></div><input id="days" type="number" min="4" max="7" value="${state.workoutDays}"></div>
  <div class="setting-row"><div><label>Default workout duration</label></div><input id="durationSetting" type="number" min="20" max="90" step="5" value="${state.duration}"></div>
  <div class="setting-row"><div><label>Difficulty</label></div><select id="difficulty">${["Beginner","Moderate","Advanced"].map(x=>`<option ${x===state.difficulty?"selected":""}>${x}</option>`).join("")}</select></div>
@@ -2354,6 +2321,7 @@ function renderSettings(){
  <section class="card"><div class="section-title"><h2>Exercise Media Credits</h2></div>
  <p style="font-size:12px;color:var(--muted);line-height:1.5;margin:0">Missing exercise illustrations are matched against RepDB's free exercise dataset when an exact user-selected image is not available. <a href="https://repdb.co" target="_blank" rel="noopener noreferrer">Exercise data by RepDB (repdb.co)</a>.</p>
  </section>
+ <section class="card reference-settings-card"><button type="button" class="settings-link-row" id="libraryShortcut"><span>Exercise Library</span><b>›</b></button></section>
  <section class="card"><div class="section-title"><h2>Data & Backup</h2></div>
  <button class="secondary" id="backup" style="width:100%">Export Full Backup</button><div style="height:8px"></div>
  <label class="secondary import-label" style="width:100%;box-sizing:border-box;text-align:center">Import Backup<input id="importBackup" type="file" accept="application/json" hidden></label><div style="height:8px"></div>
@@ -2361,6 +2329,8 @@ function renderSettings(){
  <button class="secondary" id="export" style="width:100%">Export History JSON</button><div style="height:8px"></div>
  <button class="secondary" id="reset" style="width:100%;color:var(--danger)">Reset App Data</button>
  </section>`;
+ document.querySelectorAll("[data-setting-style]").forEach(btn=>btn.onclick=()=>{state.workoutStyle=btn.dataset.settingStyle;save();renderSettings();});
+ const libraryShortcut=document.getElementById("libraryShortcut");if(libraryShortcut)libraryShortcut.onclick=()=>route("library");
  const themeSel=document.getElementById("themeSel");themeSel.value=state.theme;themeSel.onchange=e=>{state.theme=e.target.value;save();themeApply()};
  document.getElementById("days").onchange=e=>{state.workoutDays=Math.max(4,Math.min(7,Number(e.target.value)||4)); if(7-state.restDays.length<state.workoutDays) state.restDays=state.restDays.slice(0,7-state.workoutDays); save();renderSettings()};
  document.getElementById("durationSetting").onchange=e=>{state.duration=Math.max(20,Math.min(90,Math.round((Number(e.target.value)||45)/5)*5));save();showToast(`Workout duration: ${state.duration} min`);renderSettings()};
@@ -2742,6 +2712,7 @@ function startWorkout(plan,resumeState=null){
  }
  function renderActive(){
    syncBackground();
+   view.classList.add("active-session-view");
    let panel=document.getElementById("activeWorkoutPanel");
    if(!panel){
      const card=document.querySelector(".today-workout-card");
@@ -2750,11 +2721,10 @@ function startWorkout(plan,resumeState=null){
      card.parentNode.insertBefore(panel,card);
    }
    const groups=workoutGroups();
-   panel.innerHTML=`<div class="active-workout-sticky">
-     <div class="active-workout-topline"><div><span data-active-phase>${phase==="rest"?"REST":"WORKOUT"}</span><strong data-active-time>${phase==="rest"?format(effectiveRestRemaining()):format(effectiveElapsed())}</strong></div>
-       <div class="active-top-actions"><button type="button" class="secondary compact" id="activePause">${running?"Pause":"Resume"}</button><button type="button" class="primary compact" id="activeFinish">Finish</button></div>
-     </div>
-     <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
+   panel.innerHTML=`<header class="active-reference-head"><div><h1>Today</h1><span>${new Date().toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"})}</span></div><button type="button" class="primary compact" id="activeFinish">Finish</button></header>
+   <div class="active-workout-sticky">
+     <div class="active-time-progress"><strong data-active-time>${phase==="rest"?format(effectiveRestRemaining()):format(effectiveElapsed())}</strong><div class="reference-progress"><i></i></div></div>
+     <div class="active-rest-line"><button type="button" class="secondary compact" id="activePause">${running?"Ⅱ Pause":"▶ Resume"}</button><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`+ ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}<span>Rest <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span></div>
    </div>
    <div class="active-mode-bar">
      <button type="button" class="${state.workoutStyle==="sequential"?"selected":""}" data-live-style="sequential">Sequential</button>

@@ -654,3 +654,6 @@ Automatic generation now requires Cardio or Core selection. Generate Another rem
 - Rebuilt the Today muscle heat map with a more anatomically proportioned front/back body and separate muscle regions.
 - Heat intensity now uses weighted primary/secondary muscle involvement per scheduled exercise rather than simple exercise counts.
 - Added distinct shoulders, chest, traps, lats, biceps, triceps, forearms, abs, obliques, lower back, glutes, quadriceps, hamstrings, adductors and calves.
+
+## v88 – Full Reference Redesign
+The app shell and workout experience were redesigned around the approved charcoal, cyan/teal and purple reference. Today now uses the date/timer header, segmented Sequential/Circuit control, compact exercise cards, inline active workout, and anatomical muscle summary. The bottom navigation matches the five-tab reference; Exercise Library is retained through Settings. Existing carry-forward, rest-day workout override, swapping, finishers, history snapshots, body tracking, RepDB images and background-safe timers are retained.
