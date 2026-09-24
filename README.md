@@ -706,3 +706,10 @@ Warm-Up and Cool-Down are listed open during active workouts with checkboxes. Se
 - The active workout clock covers the full session from Start Workout, including Warm-Up.
 - Warm-Up remains a separate phase and is not included in Circuit grouping.
 - Main-workout circuit rules remain unchanged: maximum 3 exercises per circuit, with treadmill and timed/continuous cardio excluded.
+
+## v86.3
+- Body: first recorded weight vs most recent weight + total change.
+- Clearer bottom-tab icons.
+- Carry Forward option for yesterday's missed scheduled workout.
+- History Recent Workouts defaults to 5 with Show More / Show Less.
+- Main Workout reorder fixed by removing the duplicate function that was overriding it; controls are visible in Sequential and Circuit modes.

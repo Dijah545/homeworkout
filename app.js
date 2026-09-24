@@ -908,6 +908,9 @@ function missedPreviousWorkout(date=isoDate()){
  if((state.history||[]).some(h=>h.date===prev)) return null;
  return {date:prev,day,focus:workoutTypeForDate(prev,day)};
 }
+function carryForwardInfo(date=isoDate()){return state.carryForwardWorkouts?.[date]||null;}
+function carryForwardMissedWorkout(missed,date=isoDate()){if(!missed)return;state.carryForwardWorkouts=state.carryForwardWorkouts||{};state.carryForwardWorkouts[date]={fromDate:missed.date,focus:missed.focus,day:missed.day};state.restDayWorkoutOverrides=state.restDayWorkoutOverrides||{};state.restDayWorkoutOverrides[date]=true;save();renderToday();showToast("Missed workout carried forward");}
+function clearCarryForward(date=isoDate()){if(state.carryForwardWorkouts)delete state.carryForwardWorkouts[date];save();renderToday();}
 function roundSpeed(v){
  return Math.max(0.6,Math.min(6.2,Math.round(v/0.2)*0.2));
 }
@@ -1266,7 +1269,7 @@ function saveTodayOrder(plan,date=isoDate()){
  save();
 } 
 function todayMainOrderCard(ex,index,total){
- return `<article class="today-lite-ex main-order-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="order-btn" data-move-main="${ex.id}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-move-main="${ex.id}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
+ return `<article class="today-lite-ex main-order-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
 }
 
 function moveTodayExercise(plan,index,direction,date=isoDate()){
@@ -1653,14 +1656,6 @@ function circuitPreview(plan){
  if(o.standalone.length)blocks.push(`<section class="today-circuit-block"><div class="today-circuit-head"><div><b>Standalone</b><small>Completed separately</small></div></div>${o.standalone.map(circuitPlanCard).join("")}</section>`);
  return blocks.join("");
 }
-function moveTodayExercise(id,dir,date=isoDate()){
- const day=new Date().getDay(),focus=workoutTypeForDate(date,day),base=restDayWorkoutEnabled(date)?workoutPlanForRestOverride(day,focus):planForDay(day,focus);
- const current=orderedTodayPlan(base,date),idx=current.findIndex(ex=>String(ex.id)===String(id)),to=idx+Number(dir);
- if(idx<0||to<0||to>=current.length)return;
- [current[idx],current[to]]=[current[to],current[idx]];
- state.todayOrderByDate=state.todayOrderByDate||{};state.todayOrderByDate[date]=current.map(ex=>ex.id);save();renderToday();
-}
-
 function bindTodayCircuitConfig(){
  const setCfg=(id,patch)=>{state.circuitConfig=state.circuitConfig||{};state.circuitConfig[id]={...(state.circuitConfig[id]||{}),...patch};save();};
  document.querySelectorAll("[data-cfg-sets]").forEach(x=>x.onchange=()=>setCfg(x.dataset.cfgSets,{sets:Math.max(1,Math.min(8,Number(x.value)||1))}));
@@ -1673,13 +1668,14 @@ function todayCooldownExpanded(cooldown){
 
 function renderToday(){
  view.classList.remove("active-workout-view");
- const day=new Date().getDay(),date=isoDate(),scheduledRest=isRest(day),override=scheduledRest&&restDayWorkoutEnabled(date),resting=scheduledRest&&!override;
- const focus=workoutTypeForDate(date,day), base=override?workoutPlanForRestOverride(day,focus):planForDay(day,focus), plan=orderedTodayPlan(base,date);
- const warmup=preWorkoutWarmup(day), cooldown=postWorkoutCooldown(day), sessionPlan=[...warmup,...plan,...cooldown.items.map(ex=>({...ex,isCooldown:true}))];
+ const day=new Date().getDay(),date=isoDate(),scheduledRest=isRest(day),carry=carryForwardInfo(date),missed=missedPreviousWorkout(date),override=(scheduledRest&&restDayWorkoutEnabled(date))||!!carry,resting=scheduledRest&&!override;
+ const focus=carry?.focus||workoutTypeForDate(date,day),sourceDay=carry?.day??day;
+ const base=carry?planForDay(sourceDay,focus,true):(override?workoutPlanForRestOverride(day,focus):planForDay(day,focus)),plan=orderedTodayPlan(base,date);
+ const warmup=preWorkoutWarmup(sourceDay),cooldown=postWorkoutCooldown(sourceDay),sessionPlan=[...warmup,...plan,...cooldown.items.map(ex=>({...ex,isCooldown:true}))];
  const done=completedSetsForPlan(plan),total=plannedSetsForPlan(plan);
 
  view.innerHTML=`
- <section class="today-clean-head"><div><span>${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</span><h1>${focus}</h1></div></section>
+ <section class="today-clean-head"><div><span>${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</span><h1>${focus}</h1></div></section>${carry?`<section class="card carry-forward-card active"><div><span>CARRIED FORWARD</span><strong>${carry.focus}</strong><small>Missed ${new Date(carry.fromDate+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="secondary compact" id="clearCarryForward">Use Today's Plan</button></section>`:(missed?`<section class="card carry-forward-card"><div><span>MISSED WORKOUT</span><strong>${missed.focus}</strong><small>${new Date(missed.date+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="primary compact" id="carryForwardWorkout">Carry Forward</button></section>`:"")}
  ${resting?"":`<section class="card today-heat-card"><div class="today-section-head heat-head"><div><span>MUSCLE FOCUS</span><h2>Today's Heat Map</h2></div></div>${femaleHeatmap(plan)}</section>
  `} 
  ${resting?"":`
@@ -1689,17 +1685,19 @@ function renderToday(){
  <section class="card today-phase-card"><div class="today-section-head"><div><span>PRE-WORKOUT</span><h2>Warm-Up & Mobility</h2></div><b>${warmup.length} moves</b></div><div class="today-lite-list">${warmup.map((ex,i)=>todayGuideCard(ex,i,warmup.length)).join("")}</div></section>`}
  <section class="card today-main-card"><div class="today-section-head"><div><span>TODAY'S WORKOUT</span><h2>${resting?"Active Recovery":focus}</h2></div>${resting?"":`<b>${done}/${total} sets</b>`}</div>
  ${resting?`<button type="button" class="primary" id="workoutOnRestDay">Workout Today</button>`:
-   `${state.workoutStyle==="circuit"?`<div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map((ex,i)=>todayMainOrderCard(ex,i,plan.length)).join("")}</div>`}
+   `${state.workoutStyle==="circuit"?`<details class="main-order-panel" open><summary><strong>Arrange Main Workout</strong><small>Move exercises before starting</small></summary><div class="today-lite-list">${plan.map((ex,i)=>todayMainOrderCard(ex,i,plan.length)).join("")}</div></details><div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map((ex,i)=>todayMainOrderCard(ex,i,plan.length)).join("")}</div>`}
     ${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
       `<div class="today-action-row">${hasActiveWorkoutToday()?`<button class="primary" id="resumeWorkout">Resume Workout</button><button class="secondary reset-workout-btn" id="restartWorkout">Reset Workout</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">Mark Complete</button></div>`}`}
  </section>
  ${resting?"":todayCooldownExpanded(cooldown)}`;
 
+ const carryBtn=document.getElementById("carryForwardWorkout");if(carryBtn)carryBtn.onclick=()=>carryForwardMissedWorkout(missed,date);
+ const clearCarry=document.getElementById("clearCarryForward");if(clearCarry)clearCarry.onclick=()=>clearCarryForward(date);
  const restBtn=document.getElementById("workoutOnRestDay");if(restBtn)restBtn.onclick=()=>{enableRestDayWorkout(date);renderToday()};
  const type=document.getElementById("todayWorkoutType");if(type)type.onchange=e=>{setWorkoutTypeForDate(date,e.target.value);renderToday()};
  bindDurationControls(renderToday);
  document.querySelectorAll("[data-today-guide]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();preview(btn.dataset.todayGuide)});
- document.querySelectorAll("[data-move-main]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();moveTodayExercise(btn.dataset.moveMain,btn.dataset.moveDir,date)});
+ document.querySelectorAll("[data-main-index]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();moveTodayExercise(plan,Number(btn.dataset.mainIndex),Number(btn.dataset.moveDir),date)});
  bindTodayCircuitConfig(); bindExerciseImages(); bindRecoveryInstructions();
  if(!resting)renderRestTracker();
  if(!resting&&!workoutCompletedOn()){
@@ -2296,12 +2294,16 @@ function deleteBodyMetricsEntry(date){
 function renderBodyTracker(){
  const latest=bodyMetricLatest();
  const previous=bodyMetricPrevious();
+ const weightedEntries=bodyMetricRows().filter(r=>r.weight!=null).sort((a,b)=>a.date.localeCompare(b.date));
+ const initialWeight=weightedEntries[0]||null, latestWeight=weightedEntries.length?weightedEntries[weightedEntries.length-1]:null;
+ const totalWeightChange=initialWeight&&latestWeight?Number(latestWeight.weight)-Number(initialWeight.weight):null;
  const mUnit=state.measurementUnit||"in";
  const wUnit=state.bodyMetricUnit||"lb";
  view.innerHTML=`
  <div class="eyebrow">Progress</div>
  <div class="body-title-row"><h1>Body Tracker</h1><small>${(state.bodyMetrics||[]).length} entries</small></div>
 
+ ${initialWeight&&latestWeight?`<section class="card weight-journey-card"><div class="section-title"><h2>Weight Change</h2><small>Initial → Most Recent</small></div><div class="weight-journey-grid"><div><span>Initial Weight</span><b>${initialWeight.weight} ${wUnit}</b><small>${initialWeight.date}</small></div><div class="weight-change-arrow">→</div><div><span>Most Recent</span><b>${latestWeight.weight} ${wUnit}</b><small>${latestWeight.date}</small></div></div><div class="weight-total-change"><span>Total Change</span><strong>${totalWeightChange>0?"+":""}${Number(totalWeightChange).toFixed(1)} ${wUnit}</strong></div></section>`:""}
  ${latest?`<section class="card">
    <div class="section-title"><h2>Latest</h2><small>${latest.date}</small></div>
    <div class="body-summary-grid">
@@ -2364,6 +2366,7 @@ function renderBodyTracker(){
 }
 
 let historyMonthOffset=0;
+let historyShowAll=false;
 
 function renderHistory(){
  const weekStart=startOfCalendarWeek(new Date());
@@ -2440,7 +2443,7 @@ function renderHistory(){
  <section class="card">
    <div class="section-title"><h2>Recent Workouts</h2><small>${state.history.length} saved</small></div>
    ${state.history.length?
-     state.history.slice().reverse().map(h=>`
+     state.history.slice().reverse().slice(0,historyShowAll?state.history.length:5).map(h=>`
        <div class="history-row">
          <div class="history-check">✓</div>
          <div>
@@ -2450,7 +2453,9 @@ function renderHistory(){
          </div>
        </div>`).join(""):
      `<div class="empty">Complete a workout and it will appear here.</div>`}
+   ${state.history.length>5?`<button type="button" class="secondary history-toggle" id="historyToggle">${historyShowAll?"Show Less":"Show More"}</button>`:""}
  </section>`;
+ const historyToggle=document.getElementById("historyToggle");if(historyToggle)historyToggle.onclick=()=>{historyShowAll=!historyShowAll;renderHistory();};
  const pastBtn=document.getElementById("markPastWorkout");
  if(pastBtn) pastBtn.onclick=openPastCompletionPicker;
  const prevMonth=document.getElementById("historyPrevMonth");

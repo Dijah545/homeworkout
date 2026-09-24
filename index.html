@@ -9,7 +9,7 @@
   <title>Home Workout</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="styles.css?v=86.2">
+  <link rel="stylesheet" href="styles.css?v=86.3">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <!-- Home Workout build v85 Flexible finishers CSS -->
 </head>
@@ -29,23 +29,23 @@
   <main id="view"></main>
 
   <nav class="bottom-nav" aria-label="Primary navigation">
-    <button data-route="today" class="nav-item active"><span>⌂</span><small>Today</small></button>
-    <button data-route="week" class="nav-item"><span>▦</span><small>Week</small></button>
-    <button data-route="library" class="nav-item"><span>▤</span><small>Library</small></button>
-    <button data-route="history" class="nav-item"><span>◷</span><small>History</small></button>
-    <button data-route="body" class="nav-item"><span>⌁</span><small>Body</small></button>
-    <button data-route="settings" class="nav-item"><span>⚙</span><small>Settings</small></button>
+    <button data-route="today" class="nav-item active"><span aria-hidden="true">🏠</span><small>Today</small></button>
+    <button data-route="week" class="nav-item"><span aria-hidden="true">📅</span><small>Week</small></button>
+    <button data-route="library" class="nav-item"><span aria-hidden="true">🏋️</span><small>Library</small></button>
+    <button data-route="history" class="nav-item"><span aria-hidden="true">📈</span><small>History</small></button>
+    <button data-route="body" class="nav-item"><span aria-hidden="true">⚖️</span><small>Body</small></button>
+    <button data-route="settings" class="nav-item"><span aria-hidden="true">⚙️</span><small>Settings</small></button>
   </nav>
 </div>
 
 <div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
 <div id="toast" class="toast hidden"></div>
-<script src="app.js?v=86.2"></script>
+<script src="app.js?v=86.3"></script>
 
 <script>
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("sw.js?v=86.2",{updateViaCache:"none"})
+    navigator.serviceWorker.register("sw.js?v=86.3",{updateViaCache:"none"})
       .then(reg=>reg.update())
       .catch(()=>{});
   });
