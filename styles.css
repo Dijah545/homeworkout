@@ -1018,3 +1018,7 @@ body:has(.today-fixed-actions) main{
 .history-toggle{width:100%;margin-top:10px!important}
 .main-order-panel{margin-bottom:12px;border:1px solid rgba(18,217,232,.45);border-radius:13px;overflow:hidden}.main-order-panel>summary{display:flex;justify-content:space-between;align-items:center;padding:10px 11px;background:rgba(18,217,232,.08);cursor:pointer}.main-order-panel>summary small{font-size:9px;color:var(--muted)}.main-order-panel .today-lite-list{padding:6px}
 .nav-item>span{font-size:19px!important;line-height:1!important}
+
+/* v86.5 */
+.today-row-actions{display:flex!important;align-items:center!important;gap:5px!important}
+.swap-main-btn{min-width:48px!important;height:34px!important;padding:0 8px!important;border:1px solid rgba(18,217,232,.55)!important;border-radius:9px!important;background:rgba(18,217,232,.10)!important;color:var(--accent)!important;font-size:10px!important;font-weight:900!important}

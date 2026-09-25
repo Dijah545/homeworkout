@@ -1269,7 +1269,7 @@ function saveTodayOrder(plan,date=isoDate()){
  save();
 } 
 function todayMainOrderCard(ex,index,total){
- return `<article class="today-lite-ex main-order-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
+ return `<article class="today-lite-ex main-order-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="swap-main-btn" data-swap-main="${ex.id}">Swap</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
 }
 
 function moveTodayExercise(plan,index,direction,date=isoDate()){
@@ -1697,6 +1697,7 @@ function renderToday(){
  const type=document.getElementById("todayWorkoutType");if(type)type.onchange=e=>{setWorkoutTypeForDate(date,e.target.value);renderToday()};
  bindDurationControls(renderToday);
  document.querySelectorAll("[data-today-guide]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();preview(btn.dataset.todayGuide)});
+ document.querySelectorAll("[data-swap-main]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();openSwapModal(btn.dataset.swapMain,date);});
  document.querySelectorAll("[data-main-index]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();moveTodayExercise(plan,Number(btn.dataset.mainIndex),Number(btn.dataset.moveDir),date)});
  bindTodayCircuitConfig(); bindExerciseImages(); bindRecoveryInstructions();
  if(!resting)renderRestTracker();
@@ -2957,6 +2958,16 @@ function startWorkout(plan,resumeState=null){
    const rest=panel.querySelector("[data-rest-total]");
    if(rest)rest.textContent=formatShort(effectiveTotalRest());
  }
+ function rerenderActivePreserveScroll(anchorEl=null){
+   const y=window.scrollY;
+   const key=anchorEl?.closest?.(".active-circuit-row,.active-simple-row,.active-exercise-card")?.querySelector?.("[data-active-instructions]")?.dataset?.activeInstructions||null;
+   renderActive();
+   requestAnimationFrame(()=>{
+     const target=key?panel.querySelector(`[data-active-instructions="${key}"]`):null;
+     if(target){target.scrollIntoView({block:"center"});return;}
+     window.scrollTo(0,y);
+   });
+ }
  function renderActive(){
    const fullSessionTiming=true; // includes Warm-Up in workout elapsed time
    syncBackground();
@@ -2996,9 +3007,9 @@ function startWorkout(plan,resumeState=null){
    });
    panel.querySelectorAll("[data-circuit-check]").forEach(btn=>btn.onclick=(e)=>{
      e.preventDefault();e.stopPropagation();
-     const ex=getExercise(btn.dataset.circuitCheck);toggleSet(ex,Number(btn.dataset.circuitRound),isoDate());renderActive();
+     const ex=getExercise(btn.dataset.circuitCheck);toggleSet(ex,Number(btn.dataset.circuitRound),isoDate());rerenderActivePreserveScroll(btn);
    });
-   panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();const ex=getExercise(btn.dataset.simpleCheck);toggleSet(ex,0,isoDate());renderActive();});
+   panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();const ex=getExercise(btn.dataset.simpleCheck);toggleSet(ex,0,isoDate());rerenderActivePreserveScroll(btn);});
    bindSetTrackers();bindPerformanceInputs();bindExerciseImages();
    panel.scrollIntoView({behavior:"smooth",block:"start"});
  }

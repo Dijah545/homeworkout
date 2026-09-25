@@ -713,3 +713,15 @@ Warm-Up and Cool-Down are listed open during active workouts with checkboxes. Se
 - Carry Forward option for yesterday's missed scheduled workout.
 - History Recent Workouts defaults to 5 with Show More / Show Less.
 - Main Workout reorder fixed by removing the duplicate function that was overriding it; controls are visible in Sequential and Circuit modes.
+
+## v86.4 – Keep Position During Active Workout
+Checking a set or exercise now preserves the current active-workout position instead of jumping back to the top. This applies to Sequential, Circuit, Warm-Up and Cool-Down completion controls.
+
+## v86.5 – Main Workout Swap
+A visible Swap button is available beside each pre-start Main Workout exercise, using the existing date-specific swap engine. Reordering remains available.
+
+## v86.6 – Working Main Workout Swap
+- Fixed the Main Workout Swap button: it was passing an exercise object to a swap function that requires an exercise ID.
+- Swap now opens the existing replacement picker correctly.
+- Selecting a replacement saves it for the current workout date, updates workout order, closes the picker, and refreshes Today immediately.
+- The replacement can be swapped again.

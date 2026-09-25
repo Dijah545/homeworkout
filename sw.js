@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v86-3-body-carry-history-order";
+const CACHE="home-workout-v86-6-working-swap";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=86.3",
-  "./app.js?v=86.3",
+  "./styles.css?v=86.6",
+  "./app.js?v=86.6",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
