@@ -725,3 +725,7 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 - Swap now opens the existing replacement picker correctly.
 - Selecting a replacement saves it for the current workout date, updates workout order, closes the picker, and refreshes Today immediately.
 - The replacement can be swapped again.
+
+## v86.7 – Active Check-Off Fixes
+- Checking an exercise or set preserves the exact current scroll position.
+- Warm-Up and Cool-Down completion are tracked independently, even when the same exercise appears in both.

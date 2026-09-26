@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v86-6-working-swap";
+const CACHE="home-workout-v86-7-scroll-phase";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=86.6",
-  "./app.js?v=86.6",
+  "./styles.css?v=86.7",
+  "./app.js?v=86.7",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

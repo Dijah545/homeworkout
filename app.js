@@ -2879,25 +2879,13 @@ function startWorkout(plan,resumeState=null){
      </div>`:""}
    </article>`;
  }
- function activeSimpleRow(ex){
- const done=setDone(ex,0,isoDate());
- const treadmill=/treadmill/i.test(String(ex.name||"")+" "+String(ex.equipment||""));
- return `<div class="active-simple-row ${treadmill?"treadmill-finisher-row":""}"><span class="active-simple-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="active-simple-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small><b class="rep-count">${parseSetPlan(ex).label||ex.sets||""}</b></small></button><button type="button" class="active-simple-check ${done?"done":""}" data-simple-check="${ex.id}">${done?"✓":""}</button>${treadmill?treadmillFinisherInstructions(ex):""}</div>`;
+ function activeSimpleRow(ex,phase="simple"){
+   const progressEx={...ex,id:`${ex.id}__${phase}`};
+   const done=setDone(progressEx,0,isoDate());
+   return `<div class="active-simple-row"><span class="active-simple-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="active-simple-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small><b class="rep-count">${parseSetPlan(ex).label||ex.sets||""}</b></small></button><button type="button" class="active-simple-check ${done?"done":""}" data-simple-check="${ex.id}" data-simple-phase="${phase}">${done?"✓":""}</button></div>`;
  }
- function activeSimpleList(items){return `<div class="active-simple-list">${items.map(activeSimpleRow).join("")}</div>`;}
- function activeCircuitRow(ex,round){
-   const done=setDone(ex,round,isoDate()), range=repRangeFor(ex), perf=performanceFor(ex), profile=profileFor(ex);
-   const load=perf.load??profile.load??"", unit=perf.unit||profile.unit||defaultLoadUnit(ex), reps=(perf.reps&&perf.reps[round])??(range?range.max:"");
-   return `<div class="active-circuit-row">
-     <span class="active-circuit-thumb">${exerciseImageMarkup(ex)}</span>
-     <button type="button" class="active-circuit-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${isStrengthExercise(ex)&&load?`${load}${unit==="level"?"":` lb`} · `:""}${range?`<b class="rep-count">${reps||range.max} reps</b>`:`<b class="rep-count">${parseSetPlan(ex).label}</b>`}</small></button>
-     <button type="button" class="active-circuit-check ${done?"done":""}" data-circuit-check="${ex.id}" data-circuit-round="${round}" aria-label="Complete ${ex.name}">${done?"✓":""}</button>
-   </div>`;
- }
- function activeCircuitGroup(g){
-   const rounds=Math.max(...g.items.map(ex=>parseSetPlan(ex).count));
-   return `<div class="active-circuit-rounds">${Array.from({length:rounds},(_,r)=>{const items=g.items.filter(ex=>parseSetPlan(ex).count>r);return `<section class="active-circuit-round"><div class="active-circuit-round-head"><strong>Round ${r+1} of ${rounds}</strong><small>${items.filter(ex=>setDone(ex,r,isoDate())).length}/${items.length} complete</small></div>${items.map(ex=>activeCircuitRow(ex,r)).join("")}</section>`}).join("")}</div>`;
- }
+ function activeSimpleList(items,phase="simple"){return `<div class="active-simple-list">${items.map(ex=>activeSimpleRow(ex,phase)).join("")}</div>`;}
+
  function treadmillFinisherInstructions(ex){
  const total=Math.max(5,Number((String(ex.sets||"").match(/\d+/)||[10])[0]));
  const focus=String(workoutTypeForDate(isoDate(),new Date().getDay())||"Full Body");
@@ -2960,14 +2948,10 @@ function startWorkout(plan,resumeState=null){
  }
  function rerenderActivePreserveScroll(anchorEl=null){
    const y=window.scrollY;
-   const key=anchorEl?.closest?.(".active-circuit-row,.active-simple-row,.active-exercise-card")?.querySelector?.("[data-active-instructions]")?.dataset?.activeInstructions||null;
    renderActive();
-   requestAnimationFrame(()=>{
-     const target=key?panel.querySelector(`[data-active-instructions="${key}"]`):null;
-     if(target){target.scrollIntoView({block:"center"});return;}
-     window.scrollTo(0,y);
-   });
+   requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo(0,y)));
  }
+
  function renderActive(){
    const fullSessionTiming=true; // includes Warm-Up in workout elapsed time
    syncBackground();
@@ -2988,7 +2972,7 @@ function startWorkout(plan,resumeState=null){
      <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
    </div>
    <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
-   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):(g.kind==="sequential"?g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join(""):activeSimpleList(g.items))}</section>`).join("")}`;
+   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):(g.kind==="sequential"?g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join(""):activeSimpleList(g.items,g.kind))}</section>`).join("")}`;
 
    panel.querySelector("#activePause").onclick=togglePause;
    panel.querySelector("#activeReset").onclick=()=>{if(confirm("Reset this workout? This will clear all in-progress sets, reps and the workout timer, then return to the pre-start screen.")){cleanup();resetWorkoutToPreStart(plan)}};
@@ -3009,7 +2993,7 @@ function startWorkout(plan,resumeState=null){
      e.preventDefault();e.stopPropagation();
      const ex=getExercise(btn.dataset.circuitCheck);toggleSet(ex,Number(btn.dataset.circuitRound),isoDate());rerenderActivePreserveScroll(btn);
    });
-   panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();const ex=getExercise(btn.dataset.simpleCheck);toggleSet(ex,0,isoDate());rerenderActivePreserveScroll(btn);});
+   panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();const ex=getExercise(btn.dataset.simpleCheck);const progressEx={...ex,id:`${ex.id}__${btn.dataset.simplePhase||"simple"}`};toggleSet(progressEx,0,isoDate());rerenderActivePreserveScroll(btn);});
    bindSetTrackers();bindPerformanceInputs();bindExerciseImages();
    panel.scrollIntoView({behavior:"smooth",block:"start"});
  }
