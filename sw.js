@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v86-7-scroll-phase";
+const CACHE="home-workout-v86-8-active-view-icons";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=86.7",
-  "./app.js?v=86.7",
+  "./styles.css?v=86.8",
+  "./app.js?v=86.8",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

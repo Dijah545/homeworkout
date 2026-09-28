@@ -2956,6 +2956,7 @@ function startWorkout(plan,resumeState=null){
    const fullSessionTiming=true; // includes Warm-Up in workout elapsed time
    syncBackground();
    let panel=document.getElementById("activeWorkoutPanel");
+   const creatingPanel=!panel;
    if(!panel){
      const card=document.querySelector(".today-main-card, .today-workout-card");
      if(!card)return;
@@ -2995,7 +2996,7 @@ function startWorkout(plan,resumeState=null){
    });
    panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();const ex=getExercise(btn.dataset.simpleCheck);const progressEx={...ex,id:`${ex.id}__${btn.dataset.simplePhase||"simple"}`};toggleSet(progressEx,0,isoDate());rerenderActivePreserveScroll(btn);});
    bindSetTrackers();bindPerformanceInputs();bindExerciseImages();
-   panel.scrollIntoView({behavior:"smooth",block:"start"});
+   if(creatingPanel)requestAnimationFrame(()=>panel.scrollIntoView({behavior:"auto",block:"start"}));
  }
  saveSnapshot();
  renderActive();

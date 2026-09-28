@@ -729,3 +729,10 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 ## v86.7 – Active Check-Off Fixes
 - Checking an exercise or set preserves the exact current scroll position.
 - Warm-Up and Cool-Down completion are tracked independently, even when the same exercise appears in both.
+
+## v86.8 – Active Workout View + Tab Icons
+- Replaced emoji-style bottom-tab icons with clean monochrome SVG line icons.
+- Fixed Start Workout so the pre-start Main Workout card is fully hidden while the active workout panel is displayed.
+- Pause, Reset, Finish and Rest controls remain visible in the active workout header.
+- Removed repeated active-panel auto-scrolling during check-offs; the panel only positions itself when the workout first starts.
+- Existing independent Warm-Up/Cool-Down checks, swap, reorder, circuits and timers are retained.
