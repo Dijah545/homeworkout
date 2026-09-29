@@ -742,3 +742,10 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 - Start Workout now shows the running timer, Pause/Reset/Finish/Rest controls, and all checkable workout sections.
 - The pre-start content is hidden without hiding the active workout host.
 - Active session snapshots retain the real running state.
+
+## v87.0 – Active Workout Repair
+- Restored the active Circuit row/group rendering functions that were accidentally removed during the earlier scroll-position change.
+- Start Workout again renders the timer, controls, Warm-Up, Main Workout/Circuits, Finisher and Cool-Down check-offs.
+- Checking Warm-Up, Cool-Down and Circuit items now updates the clicked checkbox directly instead of re-rendering the entire active workout, eliminating the scroll-to-top problem at its source.
+- Warm-Up and Cool-Down remain independently tracked when the same exercise appears in both.
+- Existing Swap, reorder, SVG tab icons and treadmill guidance are retained.

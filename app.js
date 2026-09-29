@@ -2886,6 +2886,19 @@ function startWorkout(plan,resumeState=null){
  }
  function activeSimpleList(items,phase="simple"){return `<div class="active-simple-list">${items.map(ex=>activeSimpleRow(ex,phase)).join("")}</div>`;}
 
+ function activeCircuitRow(ex,round){
+   const done=setDone(ex,round,isoDate()), range=repRangeFor(ex), perf=performanceFor(ex), profile=profileFor(ex);
+   const load=perf.load??profile.load??"", unit=perf.unit||profile.unit||defaultLoadUnit(ex), reps=(perf.reps&&perf.reps[round])??(range?range.max:"");
+   return `<div class="active-circuit-row">
+     <span class="active-circuit-thumb">${exerciseImageMarkup(ex)}</span>
+     <button type="button" class="active-circuit-name" data-active-instructions="${ex.id}"><strong>${ex.name}</strong><small>${isStrengthExercise(ex)&&load?`${load}${unit==="level"?"":` lb`} · `:""}${range?`<b class="rep-count">${reps||range.max} reps</b>`:`<b class="rep-count">${parseSetPlan(ex).label}</b>`}</small></button>
+     <button type="button" class="active-circuit-check ${done?"done":""}" data-circuit-check="${ex.id}" data-circuit-round="${round}" aria-label="Complete ${ex.name}">${done?"✓":""}</button>
+   </div>`;
+ }
+ function activeCircuitGroup(g){
+   const rounds=Math.max(...g.items.map(ex=>parseSetPlan(ex).count));
+   return `<div class="active-circuit-rounds">${Array.from({length:rounds},(_,r)=>{const items=g.items.filter(ex=>parseSetPlan(ex).count>r);return `<section class="active-circuit-round"><div class="active-circuit-round-head"><strong>Round ${r+1} of ${rounds}</strong><small>${items.filter(ex=>setDone(ex,r,isoDate())).length}/${items.length} complete</small></div>${items.map(ex=>activeCircuitRow(ex,r)).join("")}</section>`}).join("")}</div>`;
+ }
  function treadmillFinisherInstructions(ex){
  const total=Math.max(5,Number((String(ex.sets||"").match(/\d+/)||[10])[0]));
  const focus=String(workoutTypeForDate(isoDate(),new Date().getDay())||"Full Body");
@@ -2946,11 +2959,7 @@ function startWorkout(plan,resumeState=null){
    const rest=panel.querySelector("[data-rest-total]");
    if(rest)rest.textContent=formatShort(effectiveTotalRest());
  }
- function rerenderActivePreserveScroll(anchorEl=null){
-   const y=window.scrollY;
-   renderActive();
-   requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo(0,y)));
- }
+
 
  function renderActive(){
    const fullSessionTiming=true; // includes Warm-Up in workout elapsed time
@@ -2992,9 +3001,19 @@ function startWorkout(plan,resumeState=null){
    });
    panel.querySelectorAll("[data-circuit-check]").forEach(btn=>btn.onclick=(e)=>{
      e.preventDefault();e.stopPropagation();
-     const ex=getExercise(btn.dataset.circuitCheck);toggleSet(ex,Number(btn.dataset.circuitRound),isoDate());rerenderActivePreserveScroll(btn);
+     const ex=getExercise(btn.dataset.circuitCheck);
+     toggleSet(ex,Number(btn.dataset.circuitRound),isoDate());
+     const done=setDone(ex,Number(btn.dataset.circuitRound),isoDate());
+     btn.classList.toggle("done",done);btn.textContent=done?"✓":"";
    });
-   panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();const ex=getExercise(btn.dataset.simpleCheck);const progressEx={...ex,id:`${ex.id}__${btn.dataset.simplePhase||"simple"}`};toggleSet(progressEx,0,isoDate());rerenderActivePreserveScroll(btn);});
+   panel.querySelectorAll("[data-simple-check]").forEach(btn=>btn.onclick=(e)=>{
+     e.preventDefault();e.stopPropagation();
+     const ex=getExercise(btn.dataset.simpleCheck);
+     const progressEx={...ex,id:`${ex.id}__${btn.dataset.simplePhase||"simple"}`};
+     toggleSet(progressEx,0,isoDate());
+     const done=setDone(progressEx,0,isoDate());
+     btn.classList.toggle("done",done);btn.textContent=done?"✓":"";
+   });
    bindSetTrackers();bindPerformanceInputs();bindExerciseImages();
    if(creatingPanel)requestAnimationFrame(()=>panel.scrollIntoView({behavior:"auto",block:"start"}));
  }

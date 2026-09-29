@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v86-9-start-workout-fix";
+const CACHE="home-workout-v87-0-active-workout-repair";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=86.9",
-  "./app.js?v=86.9",
+  "./styles.css?v=87.0",
+  "./app.js?v=87.0",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

@@ -1028,9 +1028,6 @@ body:has(.today-fixed-actions) main{
 .nav-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .nav-item.active .nav-icon svg{stroke:var(--accent)}
 /* The active panel is a separate element, so hide the complete pre-start Main Workout card. */
-.today-main-card.active-session-host,.today-workout-card.active-session-host{display:block!important;padding:0!important;border:0!important;background:transparent!important}
-.today-main-card.active-session-host>.today-section-head,.today-main-card.active-session-host>.today-circuit-list,.today-main-card.active-session-host>.today-lite-list,.today-main-card.active-session-host>.today-action-row,.today-main-card.active-session-host>.workout-complete-banner,.today-main-card.active-session-host>.main-order-panel,
-.today-workout-card.active-session-host>.today-section-head,.today-workout-card.active-session-host>.today-circuit-list,.today-workout-card.active-session-host>.today-lite-list,.today-workout-card.active-session-host>.today-action-row,.today-workout-card.active-session-host>.workout-complete-banner,.today-workout-card.active-session-host>.main-order-panel{display:none!important}
 #activeWorkoutPanel{display:grid!important;visibility:visible!important}
 #activeWorkoutPanel .active-workout-sticky{display:block!important}
 
