@@ -2587,7 +2587,7 @@ function saveActiveWorkoutSession(session){
    elapsed:session.elapsed,
    phase:session.phase,
    restRemaining:session.restRemaining,
-   running:false,
+   running:session.running!==false,
    totalRest:session.totalRest,
    restSessions:session.restSessions,
    workStartedAt:session.workStartedAt??null,

@@ -736,3 +736,9 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 - Pause, Reset, Finish and Rest controls remain visible in the active workout header.
 - Removed repeated active-panel auto-scrolling during check-offs; the panel only positions itself when the workout first starts.
 - Existing independent Warm-Up/Cool-Down checks, swap, reorder, circuits and timers are retained.
+
+## v86.9 – Start Workout Fix
+- Fixed the v86.8 active-session visibility regression.
+- Start Workout now shows the running timer, Pause/Reset/Finish/Rest controls, and all checkable workout sections.
+- The pre-start content is hidden without hiding the active workout host.
+- Active session snapshots retain the real running state.
