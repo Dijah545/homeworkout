@@ -1074,7 +1074,7 @@ themeApply();
 
 function route(name){
  document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.route===name));
- ({today:renderToday,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings}[name]||renderToday)();
+ ({today:renderToday,runwalk:renderRunWalk,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings}[name]||renderToday)();
 }
 document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>{
  if(b.dataset.route==="week") state.selectedDay=new Date().getDay();
@@ -1675,6 +1675,7 @@ function renderToday(){
  const done=completedSetsForPlan(plan),total=plannedSetsForPlan(plan);
 
  view.innerHTML=`
+ <section class="card rw-launch"><button type="button" class="primary" id="openRunWalk">🏃 Run / Walk · GPS, Timer & Import</button></section>
  <section class="today-clean-head"><div><span>${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</span><h1>${focus}</h1></div></section>${carry?`<section class="card carry-forward-card active"><div><span>CARRIED FORWARD</span><strong>${carry.focus}</strong><small>Missed ${new Date(carry.fromDate+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="secondary compact" id="clearCarryForward">Use Today's Plan</button></section>`:(missed?`<section class="card carry-forward-card"><div><span>MISSED WORKOUT</span><strong>${missed.focus}</strong><small>${new Date(missed.date+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="primary compact" id="carryForwardWorkout">Carry Forward</button></section>`:"")}
  ${resting?"":`<section class="card today-heat-card"><div class="today-section-head heat-head"><div><span>MUSCLE FOCUS</span><h2>Today's Heat Map</h2></div></div>${femaleHeatmap(plan)}</section>
  `} 
@@ -1708,6 +1709,8 @@ function renderToday(){
   if(restart)restart.onclick=()=>{if(confirm("Reset this workout? This will clear the current in-progress workout and return it to the beginning."))resetWorkoutToPreStart(sessionPlan)};
   if(complete)complete.onclick=()=>saveCompletedWorkout(sessionPlan);
  }
+ document.getElementById("openRunWalk")?.addEventListener("click",()=>route("runwalk"));
+
 }
 
 
@@ -3051,3 +3054,109 @@ document.addEventListener("click",(e)=>{
 });
 loadRepdbIndex();
 route("today");
+
+
+/* Run / Walk — phone GPS + timer + watch file import. Kept separate from strength-session state. */
+const RW_KEY="homeWorkoutRunWalkV1";
+let rwSession=null,rwWatch=null,rwTick=null;
+function rwRead(){try{return JSON.parse(localStorage.getItem(RW_KEY)||"[]")}catch{return []}}
+function rwSave(items){localStorage.setItem(RW_KEY,JSON.stringify(items))}
+function rwTime(sec){sec=Math.max(0,Math.floor(sec));return `${String(Math.floor(sec/3600)).padStart(2,"0")}:${String(Math.floor(sec%3600/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`}
+function rwDistance(a,b){const r=Math.PI/180,dl=(b.lat-a.lat)*r,dy=(b.lon-a.lon)*r,x=Math.sin(dl/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dy/2)**2;return 6371*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}
+function rwPace(km,sec){if(!km||km<0.01)return "—";const p=Math.round(sec/km);return `${Math.floor(p/60)}:${String(p%60).padStart(2,"0")} /km`}
+function rwElapsed(){if(!rwSession)return 0;return rwSession.elapsed+(rwSession.running?(Date.now()-rwSession.started)/1000:0)}
+function rwStopGPS(){if(rwWatch!==null){navigator.geolocation?.clearWatch(rwWatch);rwWatch=null}}
+function rwStartGPS(){
+ if(!navigator.geolocation){rwStatus("GPS unavailable in this browser");return}
+ rwStopGPS();
+ rwWatch=navigator.geolocation.watchPosition(pos=>{
+   if(!rwSession||!rwSession.running)return;
+   const q={lat:pos.coords.latitude,lon:pos.coords.longitude,t:Date.now(),acc:pos.coords.accuracy};
+   if(q.acc>60)return;
+   const prev=rwSession.points.at(-1);
+   if(prev){const d=rwDistance(prev,q);if(d>0.003&&d<0.2&&q.t-prev.t>=1000){rwSession.distance+=d;rwSession.points.push(q)}}
+   else rwSession.points.push(q);
+   rwUpdate();
+ },err=>rwStatus("GPS: "+err.message),{enableHighAccuracy:true,maximumAge:0,timeout:20000});
+}
+function rwStatus(msg){const e=document.getElementById("rwStatus");if(e)e.textContent=msg}
+function rwUpdate(){
+ const t=document.getElementById("rwClock");if(t)t.textContent=rwTime(rwElapsed());
+ const d=document.getElementById("rwKm");if(d)d.textContent=(rwSession?.distance||0).toFixed(2)+" km";
+ const p=document.getElementById("rwPace");if(p)p.textContent=rwPace(rwSession?.distance||0,rwElapsed());
+ const b=document.getElementById("rwStart");if(b)b.textContent=rwSession?.running?"Pause":rwSession?"Resume":"Start";
+ const f=document.getElementById("rwFinish");if(f)f.disabled=!rwSession;
+}
+function rwPersistActivity(item){
+ const rows=rwRead();if(rows.some(x=>x.id===item.id)){rwStatus("This activity was already imported");return false}
+ rows.unshift(item);rwSave(rows);return true;
+}
+function rwRenderRecent(){
+ const el=document.getElementById("rwRecent");if(!el)return;
+ el.innerHTML=rwRead().slice(0,8).map(x=>`<article class="rw-entry"><strong>${x.type} · ${x.location}</strong><small>${x.date} · ${Number(x.distance||0).toFixed(2)} km · ${rwTime(x.seconds||0)} · ${rwPace(x.distance,x.seconds)}</small><button type="button" class="secondary compact" data-rw-delete="${x.id}">Delete</button></article>`).join("")||"<p>No Run / Walk activities recorded yet.</p>";
+ el.querySelectorAll("[data-rw-delete]").forEach(b=>b.onclick=()=>{if(!confirm("Delete this activity?"))return;rwSave(rwRead().filter(x=>x.id!==b.dataset.rwDelete));rwRenderRecent()});
+}
+function renderRunWalk(){
+ view.classList.remove("active-workout-view");
+ view.innerHTML=`<section class="card rw-card"><div class="today-section-head"><div><span>ACTIVITY</span><h2>Run / Walk</h2></div><button type="button" class="secondary compact" id="rwBack">← Today</button></div>
+ <label>Location <select id="rwLocation"><option value="Outdoor">Outdoor · Phone GPS</option><option value="Treadmill">Treadmill · Manual distance</option></select></label>
+ <label>Activity <select id="rwType"><option>Run / Walk</option><option>Running</option><option>Walking</option></select></label>
+ <div class="rw-clock" id="rwClock">00:00:00</div><div class="rw-metrics"><div><small>Distance</small><strong id="rwKm">0.00 km</strong></div><div><small>Average pace</small><strong id="rwPace">—</strong></div></div>
+ <div class="rw-actions"><button type="button" class="primary" id="rwStart">Start</button><button type="button" class="secondary" id="rwFinish" disabled>Finish & Save</button></div><p id="rwStatus" class="muted">Outdoor GPS requires location permission. Keep this app visible and your phone unlocked for best results.</p>
+ <details><summary>Import watch workout (GPX / TCX)</summary><p>Export a GPX or TCX activity file from a supported app, then choose it below. FIT files are not supported in this version.</p><input type="file" id="rwFile" accept=".gpx,.tcx,application/gpx+xml,application/xml,text/xml"></details>
+ <h3>Recent Run / Walk Activities</h3><div id="rwRecent"></div></section>`;
+ document.getElementById("rwBack").onclick=()=>route("today");
+ document.getElementById("rwStart").onclick=()=>{
+   if(rwSession?.running){rwSession.elapsed=rwElapsed();rwSession.running=false;rwStopGPS();rwStatus("Paused")}
+   else{
+     if(!rwSession)rwSession={elapsed:0,distance:0,points:[],type:document.getElementById("rwType").value,location:document.getElementById("rwLocation").value,date:new Date().toISOString(),running:false};
+     rwSession.running=true;rwSession.started=Date.now();
+     if(rwSession.location==="Outdoor")rwStartGPS();
+     rwStatus("Recording — keep this page open");
+   }rwUpdate()
+ };
+ document.getElementById("rwFinish").onclick=()=>{
+   if(!rwSession)return;
+   const seconds=Math.round(rwElapsed());rwStopGPS();
+   if(rwSession.location==="Treadmill"){
+     const v=prompt("Treadmill distance (km)",rwSession.distance||"");
+     if(v===null)return;
+     const km=Number(v);if(!Number.isFinite(km)||km<0){rwStatus("Enter a valid distance");return}
+     rwSession.distance=km;
+   }
+   rwPersistActivity({id:"manual-"+Date.now(),date:rwSession.date.slice(0,10),type:rwSession.type,location:rwSession.location,seconds,distance:rwSession.distance,points:rwSession.points});
+   rwSession=null;rwStatus("Activity saved");rwRenderRecent();rwUpdate();
+ };
+ document.getElementById("rwFile").onchange=async e=>{
+   const file=e.target.files[0];if(!file)return;
+   try{
+     if(!/\.(gpx|tcx)$/i.test(file.name))throw Error("Only GPX or TCX files are supported");
+     const xml=new DOMParser().parseFromString(await file.text(),"application/xml");
+     if(xml.querySelector("parsererror"))throw Error("Invalid XML activity file");
+     const nodes=[...xml.getElementsByTagName("*")];
+     const tag=(el)=>el.localName;
+     const pts=[];
+     for(const n of nodes){
+       if(tag(n)==="trkpt"){const lat=Number(n.getAttribute("lat")),lon=Number(n.getAttribute("lon"));if(Number.isFinite(lat)&&Number.isFinite(lon))pts.push({lat,lon,t:Date.parse([...n.children].find(x=>tag(x)==="time")?.textContent||"")})}
+       if(tag(n)==="Trackpoint"){
+         const lat=Number(nodes.find(x=>x.parentElement===n&&tag(x)==="Position")?.children[0]?.textContent);
+         const lon=Number(nodes.find(x=>x.parentElement===n&&tag(x)==="Position")?.children[1]?.textContent);
+         if(Number.isFinite(lat)&&Number.isFinite(lon)&&lat!==0)pts.push({lat,lon,t:Date.parse([...n.children].find(x=>tag(x)==="Time")?.textContent||"")});
+       }
+     }
+     let km=0;for(let i=1;i<pts.length;i++){const d=rwDistance(pts[i-1],pts[i]);if(d<0.2)km+=d}
+     const times=pts.map(p=>p.t).filter(Number.isFinite);
+     let sec=times.length>1?Math.round((Math.max(...times)-Math.min(...times))/1000):0;
+     const tcxDist=nodes.filter(n=>tag(n)==="DistanceMeters").map(n=>Number(n.textContent)).filter(Number.isFinite);
+     if(tcxDist.length)km=Math.max(km,Math.max(...tcxDist)/1000);
+     const tcxTime=nodes.find(n=>tag(n)==="TotalTimeSeconds");if(tcxTime)sec=Math.round(Number(tcxTime.textContent))||sec;
+     if(!km&&!sec)throw Error("No usable activity measurements found");
+     const id="file-"+file.name+"-"+file.size+"-"+file.lastModified;
+     const ok=rwPersistActivity({id,date:times.length?new Date(Math.min(...times)).toISOString().slice(0,10):new Date().toISOString().slice(0,10),type:"Run / Walk",location:pts.length?"Outdoor":"Imported",seconds:sec,distance:km,points:pts});
+     rwStatus(ok?"Imported successfully":"Already imported");rwRenderRecent();
+   }catch(err){rwStatus("Import failed: "+err.message)}
+   e.target.value="";
+ };
+ rwRenderRecent();rwUpdate();
+ if(rwTick)clearInterval(rwTick);rwTick=setInterval(()=>{if(document.getElementById("rwClock"))rwUpdate();else{clearInterval(rwTick);rwTick=null}},1000);
+}

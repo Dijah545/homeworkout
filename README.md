@@ -749,3 +749,12 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 - Checking Warm-Up, Cool-Down and Circuit items now updates the clicked checkbox directly instead of re-rendering the entire active workout, eliminating the scroll-to-top problem at its source.
 - Warm-Up and Cool-Down remain independently tracked when the same exercise appears in both.
 - Existing Swap, reorder, SVG tab icons and treadmill guidance are retained.
+
+## v87.1 — Run / Walk
+- Today includes a Run / Walk option with Start/Pause/Resume/Finish timer.
+- Outdoor phone GPS distance and pace (foreground-only; browser background GPS not reliable).
+- Treadmill elapsed timer and distance entry on finish.
+- GPX/TCX import for watch-recorded workouts; FIT not supported.
+- Recent activity history stored locally with duplicate-file prevention and delete.
+- Existing strength workout interface and images unchanged.
+- Run/Walk entries are separate from the legacy workout completion streak until integrated in a subsequent update.

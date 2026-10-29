@@ -1034,3 +1034,11 @@ body:has(.today-fixed-actions) main{
 /* v86.9 active workout visibility */
 #activeWorkoutPanel{display:block!important;width:100%!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:20!important}
 #activeWorkoutPanel .active-workout-sticky,#activeWorkoutPanel .active-group,#activeWorkoutPanel .active-workout-intro{visibility:visible!important;opacity:1!important}
+
+/* Run / Walk */
+.rw-launch{margin-bottom:12px}.rw-launch button{width:100%}
+.rw-card{display:grid;gap:14px}.rw-card label{display:grid;gap:6px}
+.rw-card select,.rw-card input[type=file]{width:100%;max-width:100%;padding:10px;border-radius:10px}
+.rw-clock{text-align:center;font-size:clamp(34px,10vw,58px);font-weight:800;font-variant-numeric:tabular-nums;padding:14px 0}
+.rw-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rw-metrics>div{display:grid;gap:5px;padding:14px;background:var(--surface-2,rgba(127,127,127,.1));border-radius:12px}.rw-metrics small{opacity:.75}.rw-metrics strong{font-size:19px}
+.rw-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rw-actions button{min-height:46px}.rw-entry{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid rgba(128,128,128,.2)}.rw-entry small{opacity:.75}.rw-entry button{justify-self:start}
