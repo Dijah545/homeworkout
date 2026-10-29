@@ -1675,7 +1675,7 @@ function renderToday(){
  const done=completedSetsForPlan(plan),total=plannedSetsForPlan(plan);
 
  view.innerHTML=`
- <section class="card rw-launch"><button type="button" class="primary" id="openRunWalk">🏃 Run / Walk · GPS, Timer & Import</button></section>
+ <section class="card rw-launch"><button type="button" class="primary" id="openRunWalk">Run/Walk</button></section>
  <section class="today-clean-head"><div><span>${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</span><h1>${focus}</h1></div></section>${carry?`<section class="card carry-forward-card active"><div><span>CARRIED FORWARD</span><strong>${carry.focus}</strong><small>Missed ${new Date(carry.fromDate+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="secondary compact" id="clearCarryForward">Use Today's Plan</button></section>`:(missed?`<section class="card carry-forward-card"><div><span>MISSED WORKOUT</span><strong>${missed.focus}</strong><small>${new Date(missed.date+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="primary compact" id="carryForwardWorkout">Carry Forward</button></section>`:"")}
  ${resting?"":`<section class="card today-heat-card"><div class="today-section-head heat-head"><div><span>MUSCLE FOCUS</span><h2>Today's Heat Map</h2></div></div>${femaleHeatmap(plan)}</section>
  `} 
@@ -3056,6 +3056,80 @@ loadRepdbIndex();
 route("today");
 
 
+
+/* FIT decoding: native, offline, no remote libraries or paid accounts. */
+function rwParseFIT(buffer){
+ const v=new DataView(buffer),bytes=new Uint8Array(buffer);
+ if(bytes.length<14)throw Error("FIT file is too small");
+ const header=bytes[0],end=v.getUint32(4,true)+header;
+ if(header<12||end>bytes.length||String.fromCharCode(...bytes.slice(8,12))!==".FIT")throw Error("Not a valid FIT activity file");
+ const defs=new Map(),pts=[];let session=null,firstTime=Infinity,lastTime=-Infinity,firstDistance=null,lastDistance=null,lastTimestamp=null;
+ const epoch=631065600000,semi=180/2147483648;
+ const read=(at,size,type,little)=>{
+   const t=type&31;
+   if(at+size>bytes.length)return null;
+   if(t===7)return new TextDecoder().decode(bytes.slice(at,at+size)).replace(/\0.*$/,"");
+   const unit=(t===4||t===3||t===11)?2:(t===5||t===6||t===8||t===12)?4:(t===9||t===14||t===15||t===16)?8:1;
+   if(size!==unit)return null;
+   let x;
+   try{
+    if(t===0||t===2||t===10||t===13)x=v.getUint8(at);
+    else if(t===1)x=v.getInt8(at);
+    else if(t===3)x=v.getInt16(at,little);
+    else if(t===4||t===11)x=v.getUint16(at,little);
+    else if(t===5)x=v.getInt32(at,little);
+    else if(t===6||t===12)x=v.getUint32(at,little);
+    else if(t===8)x=v.getFloat32(at,little);
+    else if(t===9)x=v.getFloat64(at,little);
+    else return null;
+   }catch{return null}
+   if(!Number.isFinite(x))return null;
+   const invalid={0:255,1:127,2:255,3:32767,4:65535,5:2147483647,6:4294967295,10:0,11:0,12:0};
+   return invalid[t]===x?null:x;
+ };
+ let i=header;
+ while(i<end){
+  const h=bytes[i++],compressed=!!(h&128),local=compressed?(h>>5)&3:h&15;
+  if(!compressed&&(h&64)){
+   if(i+5>end)throw Error("Truncated FIT definition");
+   i++;const little=bytes[i++]===0,global=v.getUint16(i,little);i+=2;
+   const count=bytes[i++],fields=[];
+   for(let j=0;j<count;j++){if(i+3>end)throw Error("Truncated FIT field");fields.push([bytes[i],bytes[i+1],bytes[i+2]]);i+=3}
+   let devSize=0;
+   if(h&32){const n=bytes[i++];devSize=n*3;if(i+devSize>end)throw Error("Truncated FIT developer fields");i+=devSize}
+   defs.set(local,{little,global,fields,devSize});continue;
+  }
+  const def=defs.get(local);if(!def)throw Error("Missing FIT message definition");
+  const fields={};
+  for(const [id,size,type] of def.fields){fields[id]=read(i,size,type,def.little);i+=size}
+  i+=def.devSize;if(i>end)throw Error("Truncated FIT record");
+  let stamp=fields[253];
+  if(compressed&&lastTimestamp!==null){
+   stamp=(lastTimestamp&~31)|(h&31);if(stamp<lastTimestamp)stamp+=32;
+  }
+  if(stamp!=null){lastTimestamp=stamp;const ms=epoch+stamp*1000;firstTime=Math.min(firstTime,ms);lastTime=Math.max(lastTime,ms)}
+  if(def.global===20){
+   const lat=fields[0],lon=fields[1],dist=fields[5];
+   if(dist!=null){if(firstDistance===null)firstDistance=dist;lastDistance=dist}
+   if(lat!=null&&lon!=null&&Math.abs(lat)<=2147483648&&Math.abs(lon)<=2147483648)
+    pts.push({lat:lat*semi,lon:lon*semi,t:stamp==null?null:epoch+stamp*1000});
+  }
+  if(def.global===18){
+   session={date:fields[2]!=null?epoch+fields[2]*1000:null,
+    seconds:fields[8]!=null?fields[8]/1000:null,
+    distance:fields[9]!=null?fields[9]/100000:null,
+    sport:fields[5],subSport:fields[6]};
+  }
+ }
+ let km=session?.distance??(lastDistance!=null?lastDistance/100000:0);
+ if(!km&&pts.length>1){for(let j=1;j<pts.length;j++){const d=rwDistance(pts[j-1],pts[j]);if(d<0.2)km+=d}}
+ const seconds=session?.seconds??(Number.isFinite(firstTime)&&lastTime>firstTime?(lastTime-firstTime)/1000:0);
+ if(!km&&!seconds)throw Error("No distance or duration in FIT activity");
+ const dateMs=session?.date??(Number.isFinite(firstTime)?firstTime:Date.now());
+ const treadmill=pts.length===0||session?.subSport===1;
+ return {date:new Date(dateMs).toISOString().slice(0,10),type:session?.sport===1?"Running":session?.sport===11?"Walking":"Run / Walk",location:treadmill?"Treadmill":"Outdoor",seconds:Math.round(seconds),distance:km,points:pts};
+}
+
 /* Run / Walk — phone GPS + timer + watch file import. Kept separate from strength-session state. */
 const RW_KEY="homeWorkoutRunWalkV1";
 let rwSession=null,rwWatch=null,rwTick=null;
@@ -3089,21 +3163,33 @@ function rwUpdate(){
 }
 function rwPersistActivity(item){
  const rows=rwRead();if(rows.some(x=>x.id===item.id)){rwStatus("This activity was already imported");return false}
- rows.unshift(item);rwSave(rows);return true;
+ rows.unshift(item);rwSave(rows);
+ // A finished or imported activity is a completed workout day in the existing History system.
+ state.history=state.history||[];
+ if(!state.history.some(h=>h.runWalkActivityId===item.id)){
+   state.history.push({date:item.date,focus:"Run/Walk",minutes:Math.round((item.seconds||0)/60),
+     exercises:1,restSeconds:0,restSessions:0,setsCompleted:1,setsPlanned:1,
+     runWalkActivityId:item.id,runWalkType:item.type,runWalkLocation:item.location,
+     runWalkDistance:Number(item.distance||0),manuallyCompleted:true});
+   save();
+ }
+ return true;
 }
 function rwRenderRecent(){
  const el=document.getElementById("rwRecent");if(!el)return;
  el.innerHTML=rwRead().slice(0,8).map(x=>`<article class="rw-entry"><strong>${x.type} · ${x.location}</strong><small>${x.date} · ${Number(x.distance||0).toFixed(2)} km · ${rwTime(x.seconds||0)} · ${rwPace(x.distance,x.seconds)}</small><button type="button" class="secondary compact" data-rw-delete="${x.id}">Delete</button></article>`).join("")||"<p>No Run / Walk activities recorded yet.</p>";
- el.querySelectorAll("[data-rw-delete]").forEach(b=>b.onclick=()=>{if(!confirm("Delete this activity?"))return;rwSave(rwRead().filter(x=>x.id!==b.dataset.rwDelete));rwRenderRecent()});
+ el.querySelectorAll("[data-rw-delete]").forEach(b=>b.onclick=()=>{if(!confirm("Delete this activity?"))return;rwSave(rwRead().filter(x=>x.id!==b.dataset.rwDelete));
+ state.history=(state.history||[]).filter(h=>h.runWalkActivityId!==b.dataset.rwDelete);
+ save();rwRenderRecent()});
 }
 function renderRunWalk(){
  view.classList.remove("active-workout-view");
- view.innerHTML=`<section class="card rw-card"><div class="today-section-head"><div><span>ACTIVITY</span><h2>Run / Walk</h2></div><button type="button" class="secondary compact" id="rwBack">← Today</button></div>
+ view.innerHTML=`<section class="card rw-card"><div class="today-section-head"><div><span>ACTIVITY</span><h2>Run/Walk</h2></div><button type="button" class="secondary compact" id="rwBack">← Today</button></div>
  <label>Location <select id="rwLocation"><option value="Outdoor">Outdoor · Phone GPS</option><option value="Treadmill">Treadmill · Manual distance</option></select></label>
  <label>Activity <select id="rwType"><option>Run / Walk</option><option>Running</option><option>Walking</option></select></label>
  <div class="rw-clock" id="rwClock">00:00:00</div><div class="rw-metrics"><div><small>Distance</small><strong id="rwKm">0.00 km</strong></div><div><small>Average pace</small><strong id="rwPace">—</strong></div></div>
  <div class="rw-actions"><button type="button" class="primary" id="rwStart">Start</button><button type="button" class="secondary" id="rwFinish" disabled>Finish & Save</button></div><p id="rwStatus" class="muted">Outdoor GPS requires location permission. Keep this app visible and your phone unlocked for best results.</p>
- <details><summary>Import watch workout (GPX / TCX)</summary><p>Export a GPX or TCX activity file from a supported app, then choose it below. FIT files are not supported in this version.</p><input type="file" id="rwFile" accept=".gpx,.tcx,application/gpx+xml,application/xml,text/xml"></details>
+ <details><summary>Import watch workout (FIT / GPX / TCX)</summary><p>Choose a FIT, GPX or TCX activity file exported from Zepp or Strava. FIT files work for treadmill activities too.</p><input type="file" id="rwFile" accept=".fit,.gpx,.tcx,application/octet-stream,application/gpx+xml,application/xml,text/xml"></details>
  <h3>Recent Run / Walk Activities</h3><div id="rwRecent"></div></section>`;
  document.getElementById("rwBack").onclick=()=>route("today");
  document.getElementById("rwStart").onclick=()=>{
@@ -3130,7 +3216,14 @@ function renderRunWalk(){
  document.getElementById("rwFile").onchange=async e=>{
    const file=e.target.files[0];if(!file)return;
    try{
-     if(!/\.(gpx|tcx)$/i.test(file.name))throw Error("Only GPX or TCX files are supported");
+     if(!/\.(fit|gpx|tcx)$/i.test(file.name))throw Error("Choose a FIT, GPX or TCX file");
+     if(/\.fit$/i.test(file.name)){
+       const parsed=rwParseFIT(await file.arrayBuffer());
+       const id="file-"+file.name+"-"+file.size+"-"+file.lastModified;
+       const ok=rwPersistActivity({id,...parsed});
+       rwStatus(ok?"FIT workout imported successfully":"Already imported");rwRenderRecent();
+       e.target.value="";return;
+     }
      const xml=new DOMParser().parseFromString(await file.text(),"application/xml");
      if(xml.querySelector("parsererror"))throw Error("Invalid XML activity file");
      const nodes=[...xml.getElementsByTagName("*")];

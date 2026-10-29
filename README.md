@@ -758,3 +758,15 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 - Recent activity history stored locally with duplicate-file prevention and delete.
 - Existing strength workout interface and images unchanged.
 - Run/Walk entries are separate from the legacy workout completion streak until integrated in a subsequent update.
+
+## v87.2 — FIT activity imports
+- The watch activity import picker now accepts FIT, GPX and TCX files.
+- Offline FIT parser extracts session distance, moving/timer duration, timestamps, and GPS track where present.
+- Treadmill FIT activities without GPS can be imported.
+- No images or previous workout functions changed.
+
+## v87.3
+- Today Run/Walk launch and Run/Walk heading simplified.
+- Finished and imported activities now create History completion records and count toward weekly completion, streak and calendar.
+- Removing an activity also removes its corresponding History record.
+- Existing assets unchanged.
