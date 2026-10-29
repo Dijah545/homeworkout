@@ -770,3 +770,10 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 - Finished and imported activities now create History completion records and count toward weekly completion, streak and calendar.
 - Removing an activity also removes its corresponding History record.
 - Existing assets unchanged.
+
+## v87.4 — Workout results card
+- Imported or finished Run/Walk sessions display a full workout summary card.
+- Distance, duration, average pace, activity type, date, and location shown immediately.
+- Heart rate and calories appear if present in imported activity data.
+- Recent activities have a View workout action to reopen the summary.
+- All existing images and workout features retained.

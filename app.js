@@ -3175,12 +3175,39 @@ function rwPersistActivity(item){
  }
  return true;
 }
+let rwFeaturedId=null;
+function rwShowActivity(id){
+ rwFeaturedId=id;
+ const x=rwRead().find(a=>a.id===id);
+ const el=document.getElementById("rwFeatured");
+ if(!el)return;
+ if(!x){el.innerHTML="";return}
+ const km=Number(x.distance||0),seconds=Number(x.seconds||0);
+ const safe=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const date=new Date(x.date+"T12:00:00");
+ const dateLabel=Number.isNaN(date.getTime())?x.date:date.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+ const source=String(x.id||"").startsWith("file-")?"Imported workout":"Recorded workout";
+ const hr=x.avgHeartRate??x.heartRate??null;
+ const kcal=x.calories??null;
+ const extras=[hr!=null?`<div><small>Average heart rate</small><strong>${safe(hr)} bpm</strong></div>`:"",
+ kcal!=null?`<div><small>Calories</small><strong>${safe(kcal)} kcal</strong></div>`:""].join("");
+ el.innerHTML=`<article class="rw-result" aria-label="Workout details">
+ <div class="rw-result-head"><span class="rw-result-status">✓ Completed · ${source}</span><span>${safe(dateLabel)}</span></div>
+ <h3>${safe(x.type||"Run/Walk")}</h3><p class="rw-result-place">${safe(x.location||"Activity")}</p>
+ <div class="rw-result-primary"><div><small>Distance</small><strong>${km.toFixed(2)} <em>km</em></strong></div><div><small>Duration</small><strong>${rwTime(seconds)}</strong></div></div>
+ <div class="rw-result-secondary"><div><small>Average pace</small><strong>${rwPace(km,seconds)}</strong></div>${extras}</div>
+ <div class="rw-result-foot"><span>✓ Counts as a completed workout day</span></div>
+ </article>`;
+}
 function rwRenderRecent(){
  const el=document.getElementById("rwRecent");if(!el)return;
- el.innerHTML=rwRead().slice(0,8).map(x=>`<article class="rw-entry"><strong>${x.type} · ${x.location}</strong><small>${x.date} · ${Number(x.distance||0).toFixed(2)} km · ${rwTime(x.seconds||0)} · ${rwPace(x.distance,x.seconds)}</small><button type="button" class="secondary compact" data-rw-delete="${x.id}">Delete</button></article>`).join("")||"<p>No Run / Walk activities recorded yet.</p>";
+ el.innerHTML=rwRead().slice(0,8).map(x=>`<article class="rw-entry"><strong>${x.type} · ${x.location}</strong><small>${x.date} · ${Number(x.distance||0).toFixed(2)} km · ${rwTime(x.seconds||0)} · ${rwPace(x.distance,x.seconds)}</small><div class="rw-entry-actions"><button type="button" class="secondary compact" data-rw-view="${x.id}">View workout</button><button type="button" class="secondary compact" data-rw-delete="${x.id}">Delete</button></div></article>`).join("")||"<p>No Run / Walk activities recorded yet.</p>";
+ el.querySelectorAll("[data-rw-view]").forEach(b=>b.onclick=()=>{rwShowActivity(b.dataset.rwView);document.getElementById("rwFeatured")?.scrollIntoView({behavior:"smooth",block:"nearest"})});
+ if(!rwFeaturedId&&rwRead().length)rwFeaturedId=rwRead()[0].id;
+ rwShowActivity(rwFeaturedId);
  el.querySelectorAll("[data-rw-delete]").forEach(b=>b.onclick=()=>{if(!confirm("Delete this activity?"))return;rwSave(rwRead().filter(x=>x.id!==b.dataset.rwDelete));
  state.history=(state.history||[]).filter(h=>h.runWalkActivityId!==b.dataset.rwDelete);
- save();rwRenderRecent()});
+ save();if(rwFeaturedId===b.dataset.rwDelete)rwFeaturedId=rwRead()[0]?.id||null;rwRenderRecent()});
 }
 function renderRunWalk(){
  view.classList.remove("active-workout-view");
@@ -3190,7 +3217,7 @@ function renderRunWalk(){
  <div class="rw-clock" id="rwClock">00:00:00</div><div class="rw-metrics"><div><small>Distance</small><strong id="rwKm">0.00 km</strong></div><div><small>Average pace</small><strong id="rwPace">—</strong></div></div>
  <div class="rw-actions"><button type="button" class="primary" id="rwStart">Start</button><button type="button" class="secondary" id="rwFinish" disabled>Finish & Save</button></div><p id="rwStatus" class="muted">Outdoor GPS requires location permission. Keep this app visible and your phone unlocked for best results.</p>
  <details><summary>Import watch workout (FIT / GPX / TCX)</summary><p>Choose a FIT, GPX or TCX activity file exported from Zepp or Strava. FIT files work for treadmill activities too.</p><input type="file" id="rwFile" accept=".fit,.gpx,.tcx,application/octet-stream,application/gpx+xml,application/xml,text/xml"></details>
- <h3>Recent Run / Walk Activities</h3><div id="rwRecent"></div></section>`;
+ <div id="rwFeatured" aria-live="polite"></div><h3>Recent Run / Walk Activities</h3><div id="rwRecent"></div></section>`;
  document.getElementById("rwBack").onclick=()=>route("today");
  document.getElementById("rwStart").onclick=()=>{
    if(rwSession?.running){rwSession.elapsed=rwElapsed();rwSession.running=false;rwStopGPS();rwStatus("Paused")}
@@ -3211,7 +3238,7 @@ function renderRunWalk(){
      rwSession.distance=km;
    }
    rwPersistActivity({id:"manual-"+Date.now(),date:rwSession.date.slice(0,10),type:rwSession.type,location:rwSession.location,seconds,distance:rwSession.distance,points:rwSession.points});
-   rwSession=null;rwStatus("Activity saved");rwRenderRecent();rwUpdate();
+   rwSession=null;rwFeaturedId=rwRead()[0]?.id||null;rwStatus("Activity saved");rwRenderRecent();rwUpdate();
  };
  document.getElementById("rwFile").onchange=async e=>{
    const file=e.target.files[0];if(!file)return;
@@ -3221,7 +3248,7 @@ function renderRunWalk(){
        const parsed=rwParseFIT(await file.arrayBuffer());
        const id="file-"+file.name+"-"+file.size+"-"+file.lastModified;
        const ok=rwPersistActivity({id,...parsed});
-       rwStatus(ok?"FIT workout imported successfully":"Already imported");rwRenderRecent();
+       if(ok)rwFeaturedId=id;rwStatus(ok?"FIT workout imported successfully":"Already imported");rwRenderRecent();
        e.target.value="";return;
      }
      const xml=new DOMParser().parseFromString(await file.text(),"application/xml");
@@ -3246,7 +3273,7 @@ function renderRunWalk(){
      if(!km&&!sec)throw Error("No usable activity measurements found");
      const id="file-"+file.name+"-"+file.size+"-"+file.lastModified;
      const ok=rwPersistActivity({id,date:times.length?new Date(Math.min(...times)).toISOString().slice(0,10):new Date().toISOString().slice(0,10),type:"Run / Walk",location:pts.length?"Outdoor":"Imported",seconds:sec,distance:km,points:pts});
-     rwStatus(ok?"Imported successfully":"Already imported");rwRenderRecent();
+     if(ok)rwFeaturedId=id;rwStatus(ok?"Imported successfully":"Already imported");rwRenderRecent();
    }catch(err){rwStatus("Import failed: "+err.message)}
    e.target.value="";
  };
