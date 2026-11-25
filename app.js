@@ -884,37 +884,27 @@ function restDayWorkoutEnabled(date){return !!(state.restDayWorkoutOverrides&&st
 function enableRestDayWorkout(date){state.restDayWorkoutOverrides=state.restDayWorkoutOverrides||{};state.restDayWorkoutOverrides[date]=true;save();}
 function workoutPlanForRestOverride(day,focusOverride=null){return planForDay(day,focusOverride,true);}
 function workoutFocusForRestOverride(day){const original=state.restDays.slice();state.restDays=state.restDays.filter(d=>d!==day);try{return workoutType(day);}finally{state.restDays=original;}}
-const LEGACY_TYPES=["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Upper Body","Lower Body & Core"];
-const TRAINING_GROUPS=[
- ["Full Body Strength","Full Body Circuit","Full Body Conditioning","Strength & Conditioning"],
- ["Upper Body Strength","Push Day","Pull Day","Arms & Shoulders","Back & Chest","Upper Body & Core"],
- ["Lower Body Strength","Glutes & Hamstrings","Quads & Calves","Glutes & Core","Lower Body & Core"],
- ["Core Strength","Abs & Obliques","Core & Stability","Core & Cardio","Balance & Stability"],
- ["HIIT","Low-Impact Cardio","Endurance Training","Run/Walk"],
- ["Active Recovery","Mobility & Flexibility","Full Body Stretch"], ["Running Support"]];
-const WORKOUT_TYPES=[...new Set([...LEGACY_TYPES,...TRAINING_GROUPS.flat()])];
+const WORKOUT_TYPES=["Full Body","Upper Body","Lower Body","Upper Body & Core","Lower Body & Core","Core & Cardio","Run/Walk","Mobility & Recovery"];
 function weekNumber(date){const d=localDateFromISO(date);return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000+4)/7);}
 function rotatingType(date,day){
- const w=weekNumber(date), key=w, offset=Number(state.weekRotationSeeds?.[key]||0);
- const days=[0,1,2,3,4,5,6].filter(d=>!isRest(d));
- const slot=Math.max(0,days.indexOf(day));
- const patterns={Balanced:[0,3,2,1,4,6,5],Strength:[1,2,3,0,1,2,5],"Weight Loss":[0,4,1,2,4,3,5],"Running Support":[6,4,1,3,4,2,5]};
- const pattern=patterns[state.trainingFocus]||patterns.Balanced;
- const phase=((w+offset)%pattern.length+pattern.length)%pattern.length;
- let group=pattern[(slot+phase)%pattern.length];
- const prev=previousDateISO(date);
- if(group===2&&state.history?.some(h=>h.date===prev&&h.runWalkActivityId))group=3;
- let choices=TRAINING_GROUPS[group].filter(t=>t!=="Run/Walk"||state.includeRunWalk===true);
- const variety=state.workoutVariety||"Moderate";
- const index=variety==="Consistent"?0:Math.floor(w/(variety==="High"?1:2))+offset+slot;
- return choices[((index%choices.length)+choices.length)%choices.length];
+ const w=weekNumber(date), offset=Number(state.weekRotationSeeds?.[w]||0);
+ const days=[0,1,2,3,4,5,6].filter(d=>!isRest(d)||restDayWorkoutEnabled(dateForWeekday(d)));
+ const n=days.length, slot=Math.max(0,days.indexOf(day));
+ const cardio=state.includeRunWalk?"Run/Walk":"Core & Cardio";
+ const patterns={Balanced:["Full Body","Upper Body & Core","Lower Body",cardio],Strength:["Upper Body","Lower Body & Core","Upper Body & Core","Lower Body"],"Weight Loss":["Full Body","Upper Body & Core","Lower Body & Core",cardio],"Running Support":["Lower Body & Core","Upper Body","Full Body",cardio]};
+ let pattern=(patterns[state.trainingFocus]||patterns.Balanced).slice();
+ if(n<4)pattern=n===1?["Full Body"]:n===2?["Upper Body & Core","Lower Body & Core"]:["Upper Body & Core","Lower Body & Core","Full Body"];
+ if(n>4)pattern.push(state.includeRunWalk&&state.trainingFocus==="Strength"?"Run/Walk":"Mobility & Recovery");
+ if(n>5)pattern.push("Full Body");if(n>6)pattern.push("Mobility & Recovery");
+ const phase=state.scheduleMode==="Fixed"?0:((w+offset)%pattern.length+pattern.length)%pattern.length;
+ return pattern[(slot+phase)%pattern.length];
 }
 function workoutType(day){return workoutTypeForDate(dateForWeekday(day),day);}
 function workoutTypeForDate(date,day){
  const override=state.workoutTypeOverrides?.[date];
  if(override&&WORKOUT_TYPES.includes(override))return override;
  if(isRest(day)&&!restDayWorkoutEnabled(date))return "Rest / Active Recovery";
- if(state.scheduleMode==="Fixed")return ["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Full Body","Upper Body","Lower Body & Core"][day];
+
  return rotatingType(date,day);
 }
 function setWorkoutTypeForDate(date,type){
@@ -1067,7 +1057,7 @@ function finisherForDay(day=new Date().getDay(),strengthPlan=[],focusOverride=nu
 }
 function focusMatches(x,focus){
  const a=x.area.toLowerCase(), n=x.name.toLowerCase(), upper=a.includes("upper body"), lower=a.includes("lower body"), core=a.includes("core"), cardio=a.includes("cardio"), mobility=a.includes("mobility");
- const recovery=/^(Active Recovery|Mobility & Flexibility|Full Body Stretch)$/.test(focus);
+ const recovery=/^(Active Recovery|Mobility & Flexibility|Full Body Stretch|Mobility & Recovery)$/.test(focus);
  if(recovery)return mobility&&(focus!=="Full Body Stretch"||/stretch|pose/.test(n));
  if(mobility)return false;
  switch(focus){
@@ -1093,11 +1083,37 @@ function focusMatches(x,focus){
  default:return !cardio&&(upper||lower||core||a.includes("full body"));
  }
 }
+function coverageMuscles(ex){
+ const n=ex.name.toLowerCase(), a=ex.area.toLowerCase(), m=new Set();
+ if(/mobility|warm.up|cool.down/.test(a))return [];
+ if(/chest|floor press|push.up|pushup/.test(n)){m.add("chest");if(/press|push/.test(n)){m.add("triceps");m.add("shoulders")}}
+ if(/row|pulldown|pull.down|reverse fly|face pull/.test(n)){m.add("upperBack");if(/row|pull/.test(n))m.add("biceps")}
+ if(/shoulder|overhead|arnold|lateral raise|front raise/.test(n))m.add("shoulders");
+ if(/curl/.test(n)&&! /leg curl|hamstring|wrist/.test(n))m.add("biceps");if(/tricep|skull/.test(n))m.add("triceps");
+ if(/squat|lunge|step.up|wall sit/.test(n)){m.add("quads");m.add("glutes")}
+ if(/deadlift|rdl|good morning|hamstring curl|leg curl/.test(n)){m.add("hamstrings");m.add("glutes")}
+ if(/glute|hip thrust|bridge|clamshell|band lateral walk/.test(n))m.add("glutes");if(/calf/.test(n))m.add("calves");
+ if(/core/.test(a)&&/plank|crunch|dead bug|bird dog|twist|leg raise|hollow|pallof|mountain|sit.up|heel tap|flutter|scissor/.test(n))m.add("core");
+ if(/cardio/.test(a))m.add("cardio");return [...m];
+}
+function trainingPrescription(ex,focus){
+ if(!/reps|each side|each leg/i.test(ex.sets||"")||/cardio|mobility/i.test(ex.area))return ex;
+ const side=/each side|each leg/i.test(ex.sets)?" each side":" reps";
+ if(focus==="Strength"&&/dumbbell|barbell|kettlebell/i.test(ex.equipment))return {...ex,sets:"3 sets × 6–10"+side};
+ if(focus==="Weight Loss")return {...ex,sets:"3 sets × 12–15"+side};
+ if(focus==="Running Support"&&/lower body|core/i.test(ex.area))return {...ex,sets:"3 sets × 10–12"+side};return ex;
+}
+function weeklyCoverageMarkup(){
+ const labels={chest:"Chest",upperBack:"Back",shoulders:"Shoulders",biceps:"Biceps",triceps:"Triceps",glutes:"Glutes",quads:"Quads",hamstrings:"Hamstrings",calves:"Calves",core:"Core"};
+ const planned=new Set(),actual=new Set();
+ for(let d=0;d<7;d++){const date=dateForWeekday(d);if(!isRest(d)||restDayWorkoutEnabled(date))planForDay(d,workoutTypeForDate(date,d),true).forEach(x=>coverageMuscles(x).forEach(m=>planned.add(m)));for(const ex of exercises){if(Object.values(state.setProgress?.[date+"::"+ex.id]||{}).some(Boolean))coverageMuscles(ex).forEach(m=>actual.add(m));}}
+ return `<section class="card"><h2>Weekly muscle coverage</h2><small>${state.trainingFocus||"Balanced"} · Planned ${Object.keys(labels).filter(m=>planned.has(m)).length}/10 · Checked ${Object.keys(labels).filter(m=>actual.has(m)).length}/10</small><div class="coverage-grid">${Object.entries(labels).map(([m,label])=>`<div><strong>${label}</strong><small>${actual.has(m)?"✓ Checked":planned.has(m)?"Planned":"Not covered"}</small></div>`).join("")}</div><small>Coverage is estimated from exercise selection and checked sets, not measured training load.</small></section>`;
+}
 function planForDay(day,focusOverride=null,forceWorkout=false){
  if(isRest(day)&&!forceWorkout)return [];
  const focus=focusOverride||workoutType(day);
  if(focus==="Run/Walk")return [];
- const date=dateForWeekday(day), recovery=/^(Active Recovery|Mobility & Flexibility|Full Body Stretch)$/.test(focus);
+ const date=dateForWeekday(day), recovery=/^(Active Recovery|Mobility & Flexibility|Full Body Stretch|Mobility & Recovery)$/.test(focus);
  const seed=Number(state.planSeed||0)+Number(state.dayPlanSeeds?.[date]||0)+Number(state.weekRotationSeeds?.[weekNumber(date)]||0)+(state.scheduleMode==="Fixed"?0:Math.floor(weekNumber(date)/(state.workoutVariety==="Consistent"?4:state.workoutVariety==="High"?1:2)));
  const rotate=(arr,n)=>{const i=((n%arr.length)+arr.length)%arr.length;return arr.length?[...arr.slice(i),...arr.slice(0,i)]:[]};
  let pool=rotate(exercises.filter(x=>x&&allowed(x)&&focusMatches(x,focus)),day*7+seed*3);
@@ -1105,7 +1121,11 @@ function planForDay(day,focusOverride=null,forceWorkout=false){
  pool=[];while([...buckets.values()].some(b=>b.length)){for(const b of buckets.values())if(b.length)pool.push(b.shift())}
  const selectedBase=(state.finisherMode==="cardio"||state.finisherMode==="core")?selectedFinisherBase():null;
  if(selectedBase&&!recovery)pool=pool.filter(x=>x.id!==selectedBase.id);
- const main=pool.slice(0,strengthExerciseCount());
+ const main=[], covered=new Set();
+ const targets=focus==="Full Body"?["chest","upperBack","shoulders","biceps","triceps","glutes","quads","hamstrings","calves","core"]:focus.startsWith("Upper")?["chest","upperBack","shoulders","biceps","triceps",...(focus.includes("Core")?["core"]:[])]:focus.startsWith("Lower")?["glutes","quads","hamstrings","calves",...(focus.includes("Core")?["core"]:[])]:focus==="Core & Cardio"?["core","cardio"]:[];
+ const limit=strengthExerciseCount(), training=state.trainingFocus||"Balanced";
+ const score=x=>coverageMuscles(x).filter(m=>targets.includes(m)&&!covered.has(m)).length*10+(training==="Running Support"&&/single.leg|calf|lunge|step.up|dead bug|bird dog/.test(x.name.toLowerCase())?2:0)+(training==="Strength"&&/dumbbell|barbell/.test(x.equipment.toLowerCase())?1:0);
+ while(pool.length&&main.length<limit){let best=0;for(let i=1;i<pool.length;i++)if(score(pool[i])>score(pool[best]))best=i;const x=pool.splice(best,1)[0];coverageMuscles(x).forEach(m=>covered.add(m));main.push(trainingPrescription(x,training));}
  const finisher=recovery||/HIIT|Cardio|Endurance/.test(focus)?null:finisherForDay(day,main,focus);
  return finisher?[...main,finisher]:main;
 }
@@ -1700,7 +1720,7 @@ function circuitPreview(plan){
 }
 function bindTodayCircuitConfig(){
  const setCfg=(id,patch)=>{state.circuitConfig=state.circuitConfig||{};state.circuitConfig[id]={...(state.circuitConfig[id]||{}),...patch};save();};
- document.querySelectorAll("[data-cfg-sets]").forEach(x=>x.onchange=()=>setCfg(x.dataset.cfgSets,{sets:Math.max(1,Math.min(8,Number(x.value)||1))}));
+ document.querySelectorAll("[data-cfg-sets]").forEach(x=>x.onchange=()=>{const n=Math.max(1,Math.min(8,Math.trunc(Number(x.value)||1)));x.value=n;setCfg(x.dataset.cfgSets,{sets:n});const item=x.closest(".circuit-plan-item");const label=item?.querySelector(".circuit-plan-copy small");if(label)label.textContent=label.textContent.replace(/^\d+ sets?/,`${n} sets`);const block=x.closest(".today-circuit-block");const rounds=block?.querySelector(".today-circuit-head>span");if(rounds)rounds.textContent=`${Math.max(...Array.from(block.querySelectorAll("[data-cfg-sets]"),el=>Number(el.value)||1))} rounds`;});
  document.querySelectorAll("[data-cfg-reps]").forEach(x=>x.onchange=()=>setCfg(x.dataset.cfgReps,{reps:Math.max(1,Math.min(100,Number(x.value)||1))}));
  document.querySelectorAll("[data-cfg-load]").forEach(x=>x.onchange=()=>setCfg(x.dataset.cfgLoad,{load:x.dataset.cfgUnit==="lb"?(x.value===""?"":Number(x.value)):x.value,unit:x.dataset.cfgUnit}));
 }
@@ -1747,10 +1767,15 @@ function renderToday(){
  if(!resting)renderRestTracker();
  if(!resting&&!workoutCompletedOn()){
   const start=document.getElementById("startWorkout"),resume=document.getElementById("resumeWorkout"),restart=document.getElementById("restartWorkout"),complete=document.getElementById("markWorkoutComplete");
-  if(start)start.onclick=()=>{if(!plan.length){showToast("No matching exercises for your equipment");return}const prepared=sessionPlan.map(ex=>{const c=(state.circuitConfig||{})[String(ex.id)];if(state.workoutStyle!=="circuit"||!c||!safeCircuitEligible(ex))return {...ex};const original=String(ex.sets||"");const suffix=original.replace(/^\s*\d+\s*(?:sets?|x)?\s*/i,"").trim();return {...ex,sets:`${c.sets} sets${suffix?` · ${suffix}`:""}`};});startWorkout(prepared)};
-  if(resume)resume.onclick=()=>resumeActiveWorkout(sessionPlan);
+  const prepare=()=>sessionPlan.map(ex=>{
+    const c=(state.circuitConfig||{})[String(ex.id)];
+    if(!c||!plan.includes(ex)||ex.isFinisher||!safeCircuitEligible(ex))return {...ex};
+    return {...ex,sets:`${Math.max(1,Math.min(8,Math.trunc(Number(c.sets)||parseSetPlan(ex).count)))} sets × ${parseSetPlan(ex).label}`};
+  });
+  if(start)start.onclick=()=>{if(!plan.length){showToast("No matching exercises for your equipment");return}startWorkout(prepare())};
+  if(resume)resume.onclick=()=>resumeActiveWorkout(prepare());
   if(restart)restart.onclick=()=>{if(confirm("Reset this workout? This will clear the current in-progress workout and return it to the beginning."))resetWorkoutToPreStart(sessionPlan)};
-  if(complete)complete.onclick=()=>{if(plan.length)saveCompletedWorkout(sessionPlan);else showToast("No matching exercises for your equipment")};
+  if(complete)complete.onclick=()=>{if(plan.length)saveCompletedWorkout(prepare());else showToast("No matching exercises for your equipment")};
  }
  document.getElementById("openRunWalk")?.addEventListener("click",()=>route("runwalk"));
 
@@ -1759,7 +1784,7 @@ function renderToday(){
 
 function parseSetPlan(ex){
  const text=ex.sets||"";
- let m=text.match(/(\d+)\s*sets?\s*[×x]\s*(.+)/i);
+ let m=text.match(/(\d+)\s*sets?\s*[×x·]\s*(.+)/i);
  if(m) return {count:Number(m[1]),label:m[2].trim()};
  m=text.match(/^(\d+)\s*[×x]\s*(.+)/i);
  if(m) return {count:Number(m[1]),label:m[2].trim()};
@@ -1806,7 +1831,7 @@ function bindSetTrackers(){
      const trackingDate=btn.dataset.setDate||isoDate();
      toggleSet(ex,Number(btn.dataset.setIndex),trackingDate);
      const parent=btn.closest(".set-tracker");
-     if(parent) parent.outerHTML=setTracker(ex,trackingDate);
+     if(parent){const done=setDone(ex,Number(btn.dataset.setIndex),trackingDate);btn.classList.toggle("done",done);btn.querySelector(".set-box").textContent=done?"✓":"";const card=parent.closest(".active-exercise-card");if(card){const checks=parent.querySelectorAll("[data-set-ex]");card.querySelector(".active-exercise-progress").textContent=`${parent.querySelectorAll(".set-check.done").length}/${checks.length}`;}}
      bindSetTrackers();
      if(trackingDate===isoDate()) updateTodaySetProgress();
    };
@@ -2123,6 +2148,7 @@ function renderWeek(){
      </button>`).join("")}
  </div>
 
+ ${weeklyCoverageMarkup()}
  ${weekBanner(selected,plan,workoutOverride,selectedFocus)}
 
  <section class="card week-plan-card">
@@ -3031,7 +3057,7 @@ function startWorkout(plan,resumeState=null){
      <div class="active-rest-line"><span>Recorded rest: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></span><button type="button" class="secondary compact" id="activeRest">${phase==="rest"?"End Rest":`Rest ${state.restSeconds}s`}</button>${phase==="rest"?`<button type="button" class="secondary compact" id="activeAddRest">+30s</button>`:""}</div>
    </div>
    <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
-   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):(g.kind==="sequential"?g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join(""):activeSimpleList(g.items,g.kind))}</section>`).join("")}`;
+   ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):((g.kind==="sequential"||g.kind==="standalone")?g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join(""):activeSimpleList(g.items,g.kind))}</section>`).join("")}`;
 
    panel.querySelector("#activePause").onclick=togglePause;
    panel.querySelector("#activeReset").onclick=()=>{if(confirm("Reset this workout? This will clear all in-progress sets, reps and the workout timer, then return to the pre-start screen.")){cleanup();resetWorkoutToPreStart(plan)}};

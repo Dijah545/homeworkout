@@ -1055,3 +1055,4 @@ body:has(.today-fixed-actions) main{
 .rw-result-secondary strong{font-size:18px;font-variant-numeric:tabular-nums}
 .rw-result-foot{margin-top:14px;color:var(--accent);font-size:12px;font-weight:800}
 .rw-entry-actions{display:flex;gap:8px;flex-wrap:wrap}
+.coverage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.coverage-grid>div{display:flex;flex-direction:column;gap:4px;padding:9px;border:1px solid var(--surface3);border-radius:8px}.coverage-grid small{color:var(--muted)}

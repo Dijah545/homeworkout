@@ -780,3 +780,9 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 
 ## v87.5 — Rotating training
 Expanded workout types with targeted exercise matching, rotating weekly categories, fixed mode, focus and variety settings, optional scheduled Run/Walk, and day/week regeneration. Existing rest days and date overrides remain. Recovery sessions omit finishers. Existing assets unchanged.
+
+## v87.6 — Set count fix
+Configured sets use the same format as the set parser. Circuit summaries update immediately, and sequential check-offs preserve the prepared set count. Standalone main exercises support multiple sets.
+
+## v87.7
+Eight workout types, focus-specific rep prescriptions, rotating balanced templates and estimated weekly muscle coverage. Existing rest and finisher settings retained.

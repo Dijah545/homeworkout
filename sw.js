@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v87-5-rotating-training";
+const CACHE="home-workout-v87-7-balanced-training";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=87.5",
-  "./app.js?v=87.5",
+  "./styles.css?v=87.7",
+  "./app.js?v=87.7",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
