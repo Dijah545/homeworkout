@@ -777,3 +777,6 @@ A visible Swap button is available beside each pre-start Main Workout exercise, 
 - Heart rate and calories appear if present in imported activity data.
 - Recent activities have a View workout action to reopen the summary.
 - All existing images and workout features retained.
+
+## v87.5 — Rotating training
+Expanded workout types with targeted exercise matching, rotating weekly categories, fixed mode, focus and variety settings, optional scheduled Run/Walk, and day/week regeneration. Existing rest days and date overrides remain. Recovery sessions omit finishers. Existing assets unchanged.

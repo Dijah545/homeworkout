@@ -884,16 +884,38 @@ function restDayWorkoutEnabled(date){return !!(state.restDayWorkoutOverrides&&st
 function enableRestDayWorkout(date){state.restDayWorkoutOverrides=state.restDayWorkoutOverrides||{};state.restDayWorkoutOverrides[date]=true;save();}
 function workoutPlanForRestOverride(day,focusOverride=null){return planForDay(day,focusOverride,true);}
 function workoutFocusForRestOverride(day){const original=state.restDays.slice();state.restDays=state.restDays.filter(d=>d!==day);try{return workoutType(day);}finally{state.restDays=original;}}
-const WORKOUT_TYPES=["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Upper Body","Lower Body & Core"];
-function workoutType(day){
- const types=["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Full Body","Upper Body","Lower Body & Core"];
- return isRest(day)?"Rest / Active Recovery":types[day];
+const LEGACY_TYPES=["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Upper Body","Lower Body & Core"];
+const TRAINING_GROUPS=[
+ ["Full Body Strength","Full Body Circuit","Full Body Conditioning","Strength & Conditioning"],
+ ["Upper Body Strength","Push Day","Pull Day","Arms & Shoulders","Back & Chest","Upper Body & Core"],
+ ["Lower Body Strength","Glutes & Hamstrings","Quads & Calves","Glutes & Core","Lower Body & Core"],
+ ["Core Strength","Abs & Obliques","Core & Stability","Core & Cardio","Balance & Stability"],
+ ["HIIT","Low-Impact Cardio","Endurance Training","Run/Walk"],
+ ["Active Recovery","Mobility & Flexibility","Full Body Stretch"], ["Running Support"]];
+const WORKOUT_TYPES=[...new Set([...LEGACY_TYPES,...TRAINING_GROUPS.flat()])];
+function weekNumber(date){const d=localDateFromISO(date);return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000+4)/7);}
+function rotatingType(date,day){
+ const w=weekNumber(date), key=w, offset=Number(state.weekRotationSeeds?.[key]||0);
+ const days=[0,1,2,3,4,5,6].filter(d=>!isRest(d));
+ const slot=Math.max(0,days.indexOf(day));
+ const patterns={Balanced:[0,3,2,1,4,6,5],Strength:[1,2,3,0,1,2,5],"Weight Loss":[0,4,1,2,4,3,5],"Running Support":[6,4,1,3,4,2,5]};
+ const pattern=patterns[state.trainingFocus]||patterns.Balanced;
+ const phase=((w+offset)%pattern.length+pattern.length)%pattern.length;
+ let group=pattern[(slot+phase)%pattern.length];
+ const prev=previousDateISO(date);
+ if(group===2&&state.history?.some(h=>h.date===prev&&h.runWalkActivityId))group=3;
+ let choices=TRAINING_GROUPS[group].filter(t=>t!=="Run/Walk"||state.includeRunWalk===true);
+ const variety=state.workoutVariety||"Moderate";
+ const index=variety==="Consistent"?0:Math.floor(w/(variety==="High"?1:2))+offset+slot;
+ return choices[((index%choices.length)+choices.length)%choices.length];
 }
+function workoutType(day){return workoutTypeForDate(dateForWeekday(day),day);}
 function workoutTypeForDate(date,day){
  const override=state.workoutTypeOverrides?.[date];
- if(override&&WORKOUT_TYPES.includes(override)) return override;
- if(isRest(day)&&restDayWorkoutEnabled(date)) return workoutFocusForRestOverride(day);
- return workoutType(day);
+ if(override&&WORKOUT_TYPES.includes(override))return override;
+ if(isRest(day)&&!restDayWorkoutEnabled(date))return "Rest / Active Recovery";
+ if(state.scheduleMode==="Fixed")return ["Full Body","Upper Body & Core","Lower Body","Core & Cardio","Full Body","Upper Body","Lower Body & Core"][day];
+ return rotatingType(date,day);
 }
 function setWorkoutTypeForDate(date,type){
  state.workoutTypeOverrides=state.workoutTypeOverrides||{};
@@ -1043,29 +1065,49 @@ function finisherForDay(day=new Date().getDay(),strengthPlan=[],focusOverride=nu
  }
  return customFinisherExercise();
 }
-function planForDay(day,focusOverride=null,forceWorkout=false){
- if(isRest(day)&&!forceWorkout) return [];
- const focus=focusOverride||workoutType(day);
- const filtered=exercises.filter(x=>x && allowed(x) && x.id!=="bike" && !x.area.includes("Mobility"));
- const matches=x=>focus.includes(x.area.split(" & ")[0])||x.area.includes(focus.split(" & ")[0])||(focus.includes("Full Body")&&x.area.includes("Full Body"));
- const rotate=(arr,n)=>arr.length?[...arr.slice(n%arr.length),...arr.slice(0,n%arr.length)]:arr;
- const seed=Number(state.planSeed||0);
- let ranked=rotate(filtered.filter(matches),day*7+seed*3);
- const families=["Adjustable Dumbbells","Barbell","Kettlebell","Resistance Loop Bands","Resistance/Toning Tubes","Disc Sliders","Skipping Rope","Mini Stepper","Stationary Bike"];
- let buckets=families.map((e,i)=>rotate(ranked.filter(x=>x.equipment===e),day*(i+2)+seed*(i+1)));
- let other=rotate(ranked.filter(x=>!families.includes(x.equipment)),day+seed*2);
- let pool=[],more=true;
- while(more){
-   more=false;
-   for(const b of buckets){if(b.length){pool.push(b.shift());more=true}}
-   if(other.length){pool.push(other.shift());more=true}
+function focusMatches(x,focus){
+ const a=x.area.toLowerCase(), n=x.name.toLowerCase(), upper=a.includes("upper body"), lower=a.includes("lower body"), core=a.includes("core"), cardio=a.includes("cardio"), mobility=a.includes("mobility");
+ const recovery=/^(Active Recovery|Mobility & Flexibility|Full Body Stretch)$/.test(focus);
+ if(recovery)return mobility&&(focus!=="Full Body Stretch"||/stretch|pose/.test(n));
+ if(mobility)return false;
+ switch(focus){
+ case "Push Day":return upper&&/press|push.up|fly|tricep|raise/.test(n)&&! /row|curl/.test(n);
+ case "Pull Day":return upper&&/row|pull|curl|reverse fly|face pull/.test(n);
+ case "Arms & Shoulders":return upper&&/curl|tricep|shoulder|raise|overhead/.test(n);
+ case "Back & Chest":return upper&&/row|chest|push.up|pull|fly|floor press/.test(n);
+ case "Glutes & Hamstrings":return lower&&!cardio&&/deadlift|rdl|bridge|thrust|hamstring|kickback|good morning/.test(n);
+ case "Quads & Calves":return lower&&!cardio&&/squat|lunge|calf|step.up|wall sit/.test(n);
+ case "Glutes & Core":return core&&!cardio||lower&&!cardio&&/glute|bridge|thrust|kickback|band walk/.test(n);
+ case "Running Support":return lower&&!cardio&&/single.leg|calf|lunge|step.up|bridge/.test(n)||core&&!cardio;
+ case "Abs & Obliques":return core&&!cardio&&/crunch|twist|side plank|heel tap|leg raise|bicycle/.test(n);
+ case "Core & Stability":case "Balance & Stability":return core&&!cardio&&/plank|dead bug|bird dog|balance|hold|pallof/.test(n)||lower&&!cardio&&/single.leg|balance/.test(n);
+ case "Core Strength":return core&&!cardio;
+ case "HIIT":return cardio&&/interval|jump|burpee|climber|high knee|sprint/.test(n);
+ case "Low-Impact Cardio":case "Endurance Training":return cardio&&/bike|stepper|walk|march|low.impact|cycling/.test(n)&&!/jump|sprint/.test(n);
+ case "Core & Cardio":return core||cardio;
+ case "Upper Body & Core":return upper||core&&!cardio;
+ case "Lower Body & Core":return lower&&!cardio||core&&!cardio;
+ case "Upper Body":case "Upper Body Strength":return upper&&!cardio;
+ case "Lower Body":case "Lower Body Strength":return lower&&!cardio;
+ case "Full Body Conditioning":case "Strength & Conditioning":return upper||lower||core||cardio||a.includes("full body");
+ default:return !cardio&&(upper||lower||core||a.includes("full body"));
  }
- pool=[...pool,...rotate(filtered.filter(x=>!ranked.includes(x)),day*3+seed*5)];
+}
+function planForDay(day,focusOverride=null,forceWorkout=false){
+ if(isRest(day)&&!forceWorkout)return [];
+ const focus=focusOverride||workoutType(day);
+ if(focus==="Run/Walk")return [];
+ const date=dateForWeekday(day), recovery=/^(Active Recovery|Mobility & Flexibility|Full Body Stretch)$/.test(focus);
+ const seed=Number(state.planSeed||0)+Number(state.dayPlanSeeds?.[date]||0)+Number(state.weekRotationSeeds?.[weekNumber(date)]||0)+(state.scheduleMode==="Fixed"?0:Math.floor(weekNumber(date)/(state.workoutVariety==="Consistent"?4:state.workoutVariety==="High"?1:2)));
+ const rotate=(arr,n)=>{const i=((n%arr.length)+arr.length)%arr.length;return arr.length?[...arr.slice(i),...arr.slice(0,i)]:[]};
+ let pool=rotate(exercises.filter(x=>x&&allowed(x)&&focusMatches(x,focus)),day*7+seed*3);
+ const buckets=new Map();for(const x of pool){const key=/^Full Body/.test(focus)?x.area.split(" & ")[0]:x.equipment;if(!buckets.has(key))buckets.set(key,[]);buckets.get(key).push(x)}
+ pool=[];while([...buckets.values()].some(b=>b.length)){for(const b of buckets.values())if(b.length)pool.push(b.shift())}
  const selectedBase=(state.finisherMode==="cardio"||state.finisherMode==="core")?selectedFinisherBase():null;
- if(selectedBase) pool=pool.filter(x=>String(x.id)!==String(selectedBase.id));
- const strength=pool.slice(0,strengthExerciseCount());
- const finisher=finisherForDay(day,strength,focus);
- return finisher?[...strength,finisher]:strength;
+ if(selectedBase&&!recovery)pool=pool.filter(x=>x.id!==selectedBase.id);
+ const main=pool.slice(0,strengthExerciseCount());
+ const finisher=recovery||/HIIT|Cardio|Endurance/.test(focus)?null:finisherForDay(day,main,focus);
+ return finisher?[...main,finisher]:main;
 }
 function themeApply(){
  document.documentElement.dataset.theme=state.theme==="system"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):state.theme;
@@ -1359,8 +1401,8 @@ function bindTodayReordering(plan){
 function findExerciseByName(name){
  return exercises.find(ex=>ex && ex.name===name)||null;
 }
-function preWorkoutWarmup(day){
- const focus=workoutType(day).toLowerCase();
+function preWorkoutWarmup(day,focusOverride=null){
+ const focus=(focusOverride||workoutType(day)).toLowerCase();
  let names=["Arm Circles","Standing Hip Circles"];
 
  if(focus.includes("lower")){
@@ -1573,8 +1615,8 @@ function openPastCompletionPicker(){
 }
 
 
-function postWorkoutCooldown(day){
- const focus=workoutType(day);
+function postWorkoutCooldown(day,focusOverride=null){
+ const focus=focusOverride||workoutType(day);
  const names=focus.includes("Lower")?[
    "Hip Flexor Stretch","Hamstring Stretch","Quad Stretch","Figure-Four Glute Stretch","Calf Stretch"
  ]:focus.includes("Upper")?[
@@ -1670,8 +1712,9 @@ function renderToday(){
  view.classList.remove("active-workout-view");
  const day=new Date().getDay(),date=isoDate(),scheduledRest=isRest(day),carry=carryForwardInfo(date),missed=missedPreviousWorkout(date),override=(scheduledRest&&restDayWorkoutEnabled(date))||!!carry,resting=scheduledRest&&!override;
  const focus=carry?.focus||workoutTypeForDate(date,day),sourceDay=carry?.day??day;
+ if(focus==="Run/Walk"&&!resting&&!hasActiveWorkoutToday()){view.innerHTML=`<section class="card"><h1>Run/Walk</h1><select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option ${t===focus?"selected":""}>${t}</option>`).join("")}</select><p>${workoutCompletedOn()?"Workout completed today":"Record or import your activity to complete today's workout."}</p><button class="primary" id="openRunWalk">Open Run/Walk</button></section>`;document.getElementById("todayWorkoutType").onchange=e=>{setWorkoutTypeForDate(date,e.target.value);renderToday()};document.getElementById("openRunWalk").onclick=()=>route("runwalk");return;}
  const base=carry?planForDay(sourceDay,focus,true):(override?workoutPlanForRestOverride(day,focus):planForDay(day,focus)),plan=orderedTodayPlan(base,date);
- const warmup=preWorkoutWarmup(sourceDay),cooldown=postWorkoutCooldown(sourceDay),sessionPlan=[...warmup,...plan,...cooldown.items.map(ex=>({...ex,isCooldown:true}))];
+ const warmup=preWorkoutWarmup(sourceDay,focus),cooldown=postWorkoutCooldown(sourceDay,focus),sessionPlan=[...warmup,...plan,...cooldown.items.map(ex=>({...ex,isCooldown:true}))];
  const done=completedSetsForPlan(plan),total=plannedSetsForPlan(plan);
 
  view.innerHTML=`
@@ -1704,10 +1747,10 @@ function renderToday(){
  if(!resting)renderRestTracker();
  if(!resting&&!workoutCompletedOn()){
   const start=document.getElementById("startWorkout"),resume=document.getElementById("resumeWorkout"),restart=document.getElementById("restartWorkout"),complete=document.getElementById("markWorkoutComplete");
-  if(start)start.onclick=()=>{const prepared=sessionPlan.map(ex=>{const c=(state.circuitConfig||{})[String(ex.id)];if(state.workoutStyle!=="circuit"||!c||!safeCircuitEligible(ex))return {...ex};const original=String(ex.sets||"");const suffix=original.replace(/^\s*\d+\s*(?:sets?|x)?\s*/i,"").trim();return {...ex,sets:`${c.sets} sets${suffix?` · ${suffix}`:""}`};});startWorkout(prepared)};
+  if(start)start.onclick=()=>{if(!plan.length){showToast("No matching exercises for your equipment");return}const prepared=sessionPlan.map(ex=>{const c=(state.circuitConfig||{})[String(ex.id)];if(state.workoutStyle!=="circuit"||!c||!safeCircuitEligible(ex))return {...ex};const original=String(ex.sets||"");const suffix=original.replace(/^\s*\d+\s*(?:sets?|x)?\s*/i,"").trim();return {...ex,sets:`${c.sets} sets${suffix?` · ${suffix}`:""}`};});startWorkout(prepared)};
   if(resume)resume.onclick=()=>resumeActiveWorkout(sessionPlan);
   if(restart)restart.onclick=()=>{if(confirm("Reset this workout? This will clear the current in-progress workout and return it to the beginning."))resetWorkoutToPreStart(sessionPlan)};
-  if(complete)complete.onclick=()=>saveCompletedWorkout(sessionPlan);
+  if(complete)complete.onclick=()=>{if(plan.length)saveCompletedWorkout(sessionPlan);else showToast("No matching exercises for your equipment")};
  }
  document.getElementById("openRunWalk")?.addEventListener("click",()=>route("runwalk"));
 
@@ -2068,7 +2111,7 @@ function renderWeek(){
  view.innerHTML=`
  <div class="section-title">
    <div><div class="eyebrow">Weekly Schedule</div><h1 style="margin-bottom:3px">Week</h1></div>
-   <button class="secondary" id="regen">Regenerate</button>
+   <button class="secondary" id="regen">Regenerate week</button>
  </div>
  <p class="week-subtext">Select a day to preview what is planned. The current day opens automatically when you enter Week.</p>
 
@@ -2093,7 +2136,7 @@ function renderWeek(){
         <p>Stretch the areas that feel tight, do 5–10 minutes of gentle mobility, take an easy walk, foam roll if you have one, and prioritize hydration and sleep.</p>
         <button type="button" class="primary" id="weekWorkoutOnRestDay">Workout This Day</button>
       </div>`:
-     `<div class="week-type-control"><label>Workout type</label><select id="weekWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===selectedFocus?"selected":""}>${t}</option>`).join("")}</select></div><div class="week-compact-list">${plan.map((ex,i)=>weekExerciseRow(ex,i)).join("")}</div>`
+     `<div class="week-type-control"><label>Workout type</label><select id="weekWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===selectedFocus?"selected":""}>${t}</option>`).join("")}</select></div><button class="secondary compact" id="regenDay">Regenerate this day</button><div class="week-compact-list">${selectedFocus==="Run/Walk"?"Record or import a Run/Walk activity on this day.":plan.length?plan.map((ex,i)=>weekExerciseRow(ex,i)).join(""):"No matching exercises for your selected equipment."}</div>`
    }
  </section>`;
 
@@ -2107,11 +2150,12 @@ function renderWeek(){
    renderWeek();
  });
  document.getElementById("regen").onclick=()=>{
-   state.planSeed=(Number(state.planSeed||0)+1)%1000;
+   state.weekRotationSeeds=state.weekRotationSeeds||{};const k=weekNumber(selectedDate);state.weekRotationSeeds[k]=(state.weekRotationSeeds[k]||0)+1;
    save();
    showToast("Weekly plan regenerated");
    renderWeek();
  };
+ document.getElementById("regenDay")?.addEventListener("click",()=>{state.dayPlanSeeds=state.dayPlanSeeds||{};state.dayPlanSeeds[selectedDate]=(state.dayPlanSeeds[selectedDate]||0)+1;save();renderWeek()});
  document.querySelectorAll(".week-exercise-row[data-ex]").forEach(row=>{
    row.onclick=(e)=>{
      e.preventDefault();
@@ -2489,6 +2533,7 @@ function renderSettings(){
  <div class="setting-row"><div><label>Workout Style</label><small>${state.workoutStyle==="circuit"?"Circuit: compatible strength/core exercises are grouped into rounds. Timed cardio stays separate.":"Sequential: finish all sets of one exercise before moving to the next."}</small></div><select id="workoutStyleSetting"><option value="sequential" ${state.workoutStyle==="sequential"?"selected":""}>Sequential</option><option value="circuit" ${state.workoutStyle==="circuit"?"selected":""}>Circuit</option></select></div>
  <div class="setting-row"><div><label>Difficulty</label><small>Controls pacing guidance</small></div><select id="difficulty">${["Beginner","Moderate","Advanced"].map(x=>`<option ${x===state.difficulty?"selected":""}>${x}</option>`).join("")}</select></div>
  <div class="setting-row"><div><label>Default rest between sets</label><small>Actual rest time is recorded during workouts</small></div><select id="restSec">${[30,45,60,90].map(n=>`<option value="${n}" ${n===state.restSeconds?"selected":""}>${n} sec</option>`).join("")}</select></div></section>
+ <section class="card"><div class="section-title"><h2>Training Schedule</h2></div>${[["scheduleMode","Schedule mode",["Rotating","Fixed"],"Rotating"],["trainingFocus","Training focus",["Balanced","Strength","Weight Loss","Running Support"],"Balanced"],["workoutVariety","Workout variety",["Consistent","Moderate","High"],"Moderate"]].map(([key,label,opts,def])=>`<div class="setting-row"><label>${label}</label><select data-training="${key}">${opts.map(o=>`<option ${o===(state[key]||def)?"selected":""}>${o}</option>`).join("")}</select></div>`).join("")}<div class="setting-row"><label>Schedule Run/Walk days</label><input type="checkbox" id="includeRunWalk" ${state.includeRunWalk?"checked":""}></div></section>
  <section class="card"><div class="section-title"><h2>Finisher</h2><small>Choose what ends each workout</small></div>
  <div class="setting-row"><div><label>Finisher type</label><small>Choose one yourself or select Cardio/Core and let the app choose the exercise</small></div><select id="finisherMode"><option value="auto" ${state.finisherMode==="auto"?"selected":""}>Automatic / Surprise Me</option><option value="treadmill" ${state.finisherMode==="treadmill"?"selected":""}>Treadmill</option><option value="cardio" ${state.finisherMode==="cardio"?"selected":""}>Cardio</option><option value="core" ${state.finisherMode==="core"?"selected":""}>Core</option><option value="none" ${state.finisherMode==="none"?"selected":""}>No finisher</option></select></div>
  ${state.finisherMode==="auto"?(()=>{const pick=generatedFinisherSelection(state.selectedDay??new Date().getDay());return `<div class="setting-row"><div><label>Generate from</label><small>Choose the finisher category</small></div><select id="autoFinisherCategory"><option value="cardio" ${state.autoFinisherCategory==="cardio"?"selected":""}>Cardio</option><option value="core" ${state.autoFinisherCategory==="core"?"selected":""}>Core</option></select></div><div class="setting-row"><div><label>Generated finisher</label><small>${pick?`${pick.exercise.name} · ${pick.mode==="core"?"Core":"Cardio"} · ${pick.minutes} min`:"No compatible cardio/core exercises available"}</small></div><button type="button" class="secondary" id="regenerateFinisher">Generate another</button></div><p class="finisher-auto-note">The app keeps this generated choice for the day so it does not change every time you open the workout.</p>`})():""}
@@ -2511,6 +2556,7 @@ function renderSettings(){
  <button class="secondary" id="export" style="width:100%">Export History JSON</button><div style="height:8px"></div>
  <button class="secondary" id="reset" style="width:100%;color:var(--danger)">Reset App Data</button>
  </section>`;
+ document.querySelectorAll("[data-training]").forEach(el=>el.onchange=()=>{state[el.dataset.training]=el.value;save()});document.getElementById("includeRunWalk").onchange=e=>{state.includeRunWalk=e.target.checked;save()};
  const themeSel=document.getElementById("themeSel");themeSel.value=state.theme;themeSel.onchange=e=>{state.theme=e.target.value;save();themeApply()};
  document.getElementById("days").onchange=e=>{state.workoutDays=Math.max(4,Math.min(7,Number(e.target.value)||4)); if(7-state.restDays.length<state.workoutDays) state.restDays=state.restDays.slice(0,7-state.workoutDays); save();renderSettings()};
  document.getElementById("durationSetting").onchange=e=>{state.duration=Math.max(20,Math.min(90,Math.round((Number(e.target.value)||45)/5)*5));save();showToast(`Workout duration: ${state.duration} min`);renderSettings()};
