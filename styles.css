@@ -1080,3 +1080,20 @@ body,.app-shell{background:var(--bg)!important}.topbar,.bottom-nav{background:va
 .athletic-map .muscle-focus-list div{display:grid;grid-template-columns:minmax(0,1fr) max-content;min-width:0;gap:4px;padding:5px 6px;line-height:1.3}
 .athletic-map .muscle-focus-list span{min-width:0;overflow-wrap:anywhere}
 .athletic-map .muscle-focus-list b{white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* v88.2: compact heat map, expandable full-width intensity breakdown */
+.athletic-today .athletic-hero-grid{grid-template-columns:minmax(0,1fr);gap:6px}
+.athletic-map .female-muscle-map{width:100%;height:150px;max-width:100%}
+.athletic-map .dynamic-heat-legend{gap:4px 8px}
+.muscle-breakdown{margin-top:8px;background:var(--surface);border-radius:10px;padding:8px 10px;min-width:0}
+.muscle-breakdown summary{cursor:pointer;list-style:none;font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;min-height:30px}
+.muscle-breakdown summary::-webkit-details-marker{display:none}.muscle-breakdown summary:after{content:'⌄';color:var(--accent)}.muscle-breakdown[open] summary:after{content:'⌃'}
+.muscle-bars{display:grid;gap:7px;padding:8px 0 2px;border-top:1px solid var(--border)}
+.muscle-bar-row{display:grid;grid-template-columns:minmax(72px,1fr) minmax(30px,1.5fr) 36px;gap:7px;align-items:center;font-size:11px;text-transform:capitalize}.muscle-bar-row b{text-align:right;font-variant-numeric:tabular-nums;color:var(--accent)}.muscle-bar-row>span:first-child{overflow-wrap:anywhere}.muscle-bar-track{height:5px;background:var(--surface3);border-radius:8px;overflow:hidden}.muscle-bar-track i{display:block;height:100%;background:var(--accent);border-radius:8px}.muscle-bar-track .heat-light{background:#405879}.muscle-bar-track .heat-moderate{background:#638ac0}.muscle-bar-track .heat-primary{background:#b6d4ff}
+/* Keep the entire timer card above the scrolling exercise list. */
+.app-shell:has(.active-workout-view){overflow:visible!important}.app-shell:has(.active-workout-view) .topbar{position:relative!important;z-index:20!important}
+#view.active-workout-view,#activeWorkoutPanel{overflow:visible!important}
+#activeWorkoutPanel .active-workout-sticky{position:sticky!important;top:env(safe-area-inset-top,0px)!important;z-index:110!important;isolation:isolate;background:var(--surface)!important;display:block!important}
+#activeWorkoutPanel #activeRest{min-width:0!important;padding:8px 4px!important}
+#activeAddRest[hidden]{display:none!important}
+#modal.exercise-guide-active{z-index:300!important}

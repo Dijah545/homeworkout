@@ -502,13 +502,9 @@ function femaleHeatmap(plan){
      <span><i class="heat-primary"></i>Primary</span>
    </div>
 
-   <div class="muscle-focus-list">
-     ${muscleGroups
-       .filter(m=>(h[m]||0)>0)
-       .sort((a,b)=>h[b]-h[a])
-       .map(m=>`<div><span>${m.replace(/([A-Z])/g," $1")}</span><b>${Math.round(h[m]*100)}%</b></div>`)
-       .join("")}
-   </div>
+   <details class="muscle-breakdown"><summary>Muscle breakdown</summary>
+     <div class="muscle-bars">${muscleGroups.slice().sort((a,b)=>h[b]-h[a]).map(m=>{const pct=Math.round((h[m]||0)*100);return `<div class="muscle-bar-row"><span>${m.replace(/([A-Z])/g," $1")}</span><span class="muscle-bar-track"><i class="heat-${level(h[m]||0)}" style="width:${pct}%"></i></span><b>${pct}%</b></div>`}).join("")}</div>
+   </details>
  </div>`;
 }
 
@@ -2029,8 +2025,7 @@ function preview(id){
  modal.innerHTML=`<div class="modal-card exercise-detail">
    <div class="modal-head">
      <div><div class="eyebrow">Exercise Instructions</div><h2>${ex.name}</h2></div>
-     <button class="close" type="button">×</button>
-   </div>
+     </div>
    ${imageHtml}
    <div class="tags" style="margin:12px 0">
      <span class="tag">${ex.area}</span>
@@ -2049,7 +2044,6 @@ function preview(id){
  </div>`;
  modal.classList.remove("hidden");
  try{bindExerciseImages();}catch(err){}
- modal.querySelector(".close").onclick=closeModal;
  modal.querySelector(".close2").onclick=closeModal;
 
  const guideModal=document.querySelector(".modal.show, .modal.open, .modal:not(.hidden)");
@@ -2915,7 +2909,8 @@ function startWorkout(plan,resumeState=null){
  }
  function addRest(seconds){
    if(phase!=="rest"){toggleRest();return;}
-   restRemaining=effectiveRestRemaining()+seconds;
+   commitRest();
+   restRemaining+=seconds;
    restStart=running?Date.now():null;
    saveSnapshot();renderActive();
  }
@@ -3026,8 +3021,12 @@ function startWorkout(plan,resumeState=null){
    syncBackground();
    const panel=document.getElementById("activeWorkoutPanel");if(!panel)return;
    const time=panel.querySelector("[data-active-time]");
-   if(time)time.textContent=format(effectiveElapsed());
+   if(time)time.textContent=format(effectiveElapsed()+effectiveTotalRest());
    const countdown=panel.querySelector("[data-rest-countdown]");if(countdown)countdown.textContent=format(phase==="rest"?effectiveRestRemaining():state.restSeconds);
+   const restButton=panel.querySelector("#activeRest");
+   if(restButton)restButton.textContent=phase==="rest"?"End Rest":"Rest";
+   const addButton=panel.querySelector("#activeAddRest");
+   if(addButton)addButton.hidden=phase!=="rest";
    const label=panel.querySelector("[data-active-phase]");
    if(label)label.textContent="WORKOUT TIME";
    const rest=panel.querySelector("[data-rest-total]");
@@ -3050,8 +3049,8 @@ function startWorkout(plan,resumeState=null){
    }
    const groups=workoutGroups();
    panel.innerHTML=`<header class="athletic-session-head"><span class="athletic-kicker">${running?"WORKOUT IN PROGRESS":"SESSION PAUSED"}</span><h2>${workoutTypeForDate(isoDate(),new Date().getDay())}</h2><small>${state.trainingFocus||"Balanced"} · ${state.workoutStyle==="circuit"?"Circuit":"Sequential"}</small></header><div class="active-workout-sticky">
-     <div class="athletic-clocks"><div><span>WORKOUT TIME</span><strong data-active-time>${format(effectiveElapsed())}</strong><small>Includes warm-up</small></div><div><span>REST TIMER</span><strong data-rest-countdown>${format(phase==="rest"?effectiveRestRemaining():state.restSeconds)}</strong><small>Recorded: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></small></div></div>
-     <div class="athletic-session-actions"><button class="secondary" id="activePause">${running?"Pause":"Resume"}</button><button class="secondary" id="activeRest">${phase==="rest"?"End Rest":"Rest"}</button><button class="primary" id="activeFinish">Finish</button></div>${phase==="rest"?`<button class="secondary compact" id="activeAddRest">+30s</button>`:""}<div class="athletic-progress"><span>Session progress</span><b data-session-count></b><progress data-session-progress max="1" value="0"></progress></div>
+     <div class="athletic-clocks"><div><span>WORKOUT TIME</span><strong data-active-time>${format(effectiveElapsed()+effectiveTotalRest())}</strong><small>Includes warm-up</small></div><div><span>REST TIMER</span><strong data-rest-countdown>${format(phase==="rest"?effectiveRestRemaining():state.restSeconds)}</strong><small>Recorded: <b data-rest-total>${formatShort(effectiveTotalRest())}</b></small></div></div>
+     <div class="athletic-session-actions"><button class="secondary" id="activePause">${running?"Pause":"Resume"}</button><button class="secondary" id="activeRest">${phase==="rest"?"End Rest":"Rest"}</button><button class="primary" id="activeFinish">Finish</button></div><button class="secondary compact" id="activeAddRest" ${phase==="rest"?"":"hidden"}>+30s</button><div class="athletic-progress"><span>Session progress</span><b data-session-count></b><progress data-session-progress max="1" value="0"></progress></div>
    </div>
    <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
    ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):((g.kind==="sequential"||g.kind==="standalone")?g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join(""):activeSimpleList(g.items,g.kind))}</section>`).join("")}`;
@@ -3068,7 +3067,7 @@ function startWorkout(plan,resumeState=null){
    panel.querySelector("#activeFinish").onclick=()=>{
      if(!confirm("Finish this workout and save it to History?"))return;
      syncBackground();phase==="work"?commitWork():commitRest();
-     cleanup();clearActiveWorkout();completeWorkout(plan,totalRest+totalLoggedRest(),restSessions);
+     cleanup();clearActiveWorkout();completeWorkout(plan,totalRest,restSessions);
    };
    panel.querySelectorAll("[data-expand-active]").forEach(btn=>btn.onclick=()=>{
      const id=String(btn.dataset.expandActive);expanded.has(id)?expanded.delete(id):expanded.add(id);renderActive();

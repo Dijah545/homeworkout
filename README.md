@@ -798,3 +798,7 @@ Hybrid Athletic palette, compact Today hero, integrated exercise ordering and co
 
 ### v88.1
 Fixed muscle focus percentage overflow in the Today hero using a single-column metric list and wrapping labels. No workout logic or assets changed.
+
+## v88.2
+- Collapsible muscle intensity bars and compact heat map.
+- Sticky full timer panel, automatic rest button reset, single guide close icon.
