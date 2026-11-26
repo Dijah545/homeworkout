@@ -795,3 +795,6 @@ Removed standalone pre-workout Rest Tracker (active rest timer and history retai
 
 ## v88.0
 Hybrid Athletic palette, compact Today hero, integrated exercise ordering and configuration, unified Workout Plan and separate Run/Walk record/import controls. Circuit grouping follows manual exercise order.
+
+### v88.1
+Fixed muscle focus percentage overflow in the Today hero using a single-column metric list and wrapping labels. No workout logic or assets changed.

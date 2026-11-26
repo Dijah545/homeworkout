@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v88-0-hybrid-athletic";
+const CACHE="home-workout-v88-1-heatmap-fit";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=88.0",
-  "./app.js?v=88.0",
+  "./styles.css?v=88.1",
+  "./app.js?v=88.1",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",
