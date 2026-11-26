@@ -792,3 +792,6 @@ Athletic Today hero, weekly progress, compact active timers, circuit round matri
 
 ### v87.9
 Removed standalone pre-workout Rest Tracker (active rest timer and history retained). Removed pre-start exercise thumbnails while preserving exercise guide links and circuit configuration expansion. Active cool-down opens by default in both workout styles. Existing image assets unchanged.
+
+## v88.0
+Hybrid Athletic palette, compact Today hero, integrated exercise ordering and configuration, unified Workout Plan and separate Run/Walk record/import controls. Circuit grouping follows manual exercise order.

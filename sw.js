@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v87-9-compact-today";
+const CACHE="home-workout-v88-0-hybrid-athletic";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=87.9",
-  "./app.js?v=87.9",
+  "./styles.css?v=88.0",
+  "./app.js?v=88.0",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

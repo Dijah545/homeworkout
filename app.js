@@ -371,7 +371,7 @@ function femaleHeatmap(plan){
  return `<div class="dynamic-heatmap-wrap">
    <div class="heatmap-title">
      <strong>Today's Muscle Heat Map</strong>
-     <small>Calculated from the exercises scheduled for today.</small>
+     
    </div>
 
    <svg class="female-muscle-map" viewBox="0 0 620 610" role="img" aria-label="Dynamic front and back female body muscle heat map">
@@ -1148,7 +1148,7 @@ document.getElementById("themeQuick").onclick=()=>{state.theme=(document.documen
 function todayLabel(day){return DAY_NAMES[day]}
 function durationControl(){
  return `<div class="duration-control">
-   <div><strong>Workout Duration</strong><small>Total time includes your selected finisher</small></div>
+   <div><strong>Workout Duration</strong></div>
    <div class="duration-input-wrap">
      <button class="duration-step" data-delta="-5">−</button>
      <input id="todayDuration" type="number" min="20" max="90" step="5" value="${state.duration}">
@@ -1695,16 +1695,15 @@ function safeCircuitGroups(plan){
  const type=ex=>{const a=String(ex.area||"");return a.includes("Lower Body")?"lower":a.includes("Upper Body")?"upper":a.includes("Core")?"core":"other"};
  while(circuit.length){
   const group=[];
-  ["lower","upper","core"].forEach(t=>{if(group.length>=3)return;const i=circuit.findIndex(ex=>type(ex)===t);if(i>=0)group.push(circuit.splice(i,1)[0])});
   while(group.length<3&&circuit.length)group.push(circuit.shift());
   if(group.length>=2)groups.push(group.slice(0,3));else if(group.length===1)standalone.push(group[0]);
  }
  return {groups,standalone};
 }
-function circuitPlanCard(ex){
+function circuitPlanCard(ex,index=-1,total=0){
  const c=circuitConfigFor(ex), range=repRangeFor(ex);
  return `<details class="circuit-plan-item">
-  <summary><span class="circuit-plan-copy"><button type="button" class="today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong></button><small>${c.sets} sets${range?` · ${c.reps} reps`:""}</small></span><span class="chev" aria-label="Expand set settings">⌄</span></summary>
+  <summary><span class="circuit-plan-copy"><button type="button" class="today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong></button><small>${c.sets} sets${range?` · ${c.reps} reps`:""}</small></span><span class="plan-tools">${ex.isFinisher?"":`<button type="button" class="plan-icon" data-swap-main="${ex.id}" aria-label="Swap exercise">⇄</button><button type="button" class="plan-icon" data-main-index="${index}" data-move-dir="-1" aria-label="Move up" ${index<=0?"disabled":""}>↑</button><button type="button" class="plan-icon" data-main-index="${index}" data-move-dir="1" aria-label="Move down" ${index>=total-1?"disabled":""}>↓</button>`}<span class="chev" aria-label="Expand set settings">⌄</span></span></summary>
   <div class="circuit-plan-fields">
    <label>Sets<input type="number" min="1" max="8" value="${c.sets}" data-cfg-sets="${ex.id}"></label>
    ${isStrengthExercise(ex)?(c.unit==="level"?`<label>Resistance<select data-cfg-load="${ex.id}" data-cfg-unit="level">${["","Light","Medium","Heavy","Extra Heavy"].map(v=>`<option value="${v}" ${String(c.load)===v?"selected":""}>${v||"—"}</option>`).join("")}</select></label>`:`<label>Weight<input type="number" min="0" step="0.5" value="${c.load}" data-cfg-load="${ex.id}" data-cfg-unit="lb"></label>`):""}
@@ -1715,8 +1714,8 @@ function circuitPlanCard(ex){
 }
 function circuitPreview(plan){
  const o=safeCircuitGroups([...plan]), blocks=[];
- o.groups.forEach((items,i)=>blocks.push(`<section class="today-circuit-block"><div class="today-circuit-head"><div><b>Circuit ${i+1}</b><small>${items.length} exercises</small></div><span>${Math.max(...items.map(x=>circuitConfigFor(x).sets))} rounds</span></div>${items.map(circuitPlanCard).join("")}</section>`));
- if(o.standalone.length)blocks.push(`<section class="today-circuit-block"><div class="today-circuit-head"><div><b>Standalone</b><small>Completed separately</small></div></div>${o.standalone.map(circuitPlanCard).join("")}</section>`);
+ o.groups.forEach((items,i)=>blocks.push(`<section class="today-circuit-block"><div class="today-circuit-head"><div><b>Circuit ${i+1}</b><small>${items.length} exercises</small></div><span>${Math.max(...items.map(x=>circuitConfigFor(x).sets))} rounds</span></div>${items.map(ex=>circuitPlanCard(ex,plan.filter(x=>!x.isFinisher).indexOf(ex),plan.filter(x=>!x.isFinisher).length)).join("")}</section>`));
+ if(o.standalone.length)blocks.push(`<section class="today-circuit-block"><div class="today-circuit-head"><div><b>Standalone</b><small>Completed separately</small></div></div>${o.standalone.map(ex=>circuitPlanCard(ex,plan.filter(x=>!x.isFinisher).indexOf(ex),plan.filter(x=>!x.isFinisher).length)).join("")}</section>`);
  return blocks.join("");
 }
 function bindTodayCircuitConfig(){
@@ -1741,16 +1740,16 @@ function renderToday(){
 
  view.innerHTML=`
  <section class="today-clean-head"><div><span>${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</span><h1>Today</h1></div></section>${carry?`<section class="card carry-forward-card active"><div><span>CARRIED FORWARD</span><strong>${carry.focus}</strong><small>Missed ${new Date(carry.fromDate+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="secondary compact" id="clearCarryForward">Use Today's Plan</button></section>`:(missed?`<section class="card carry-forward-card"><div><span>MISSED WORKOUT</span><strong>${missed.focus}</strong><small>${new Date(missed.date+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="primary compact" id="carryForwardWorkout">Carry Forward</button></section>`:"")}
- ${resting?"":`<section class="card athletic-hero"><div class="athletic-hero-grid"><div><span class="athletic-kicker">TODAY'S TRAINING</span><h2>${focus}</h2><p>Training focus · ${state.trainingFocus||"Balanced"}</p><p>${state.duration} min · ${plan.length} exercises</p><label class="athletic-kicker" for="todayWorkoutType">Change workout</label><select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select></div><div class="athletic-map">${femaleHeatmap(plan)}</div></div><div class="athletic-week"><span>Weekly goal</span><b>${uniqueWorkoutDays(historyForWeek(startOfCalendarWeek()))} / ${7-state.restDays.length} workouts</b><progress max="${Math.max(1,7-state.restDays.length)}" value="${uniqueWorkoutDays(historyForWeek(startOfCalendarWeek()))}"></progress></div><div class="athletic-start"></div></section>
+ ${resting?"":`<section class="card athletic-hero"><div class="athletic-hero-grid"><div><span class="athletic-kicker">TODAY'S TRAINING</span><h2>${focus}</h2><p>Training focus · ${state.trainingFocus||"Balanced"}</p><details class="change-workout"><summary>⟳ Change workout</summary><select id="todayWorkoutType" aria-label="Workout type">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select></details></div><div class="athletic-map">${femaleHeatmap(plan)}</div></div><div class="athletic-week"><span>Weekly goal</span><b>${uniqueWorkoutDays(historyForWeek(startOfCalendarWeek()))} / ${7-state.restDays.length} workouts</b><progress max="${Math.max(1,7-state.restDays.length)}" value="${uniqueWorkoutDays(historyForWeek(startOfCalendarWeek()))}"></progress></div><div class="athletic-start"></div></section>
   <section class="card today-duration-card">${durationControl()}</section>
- <details class="card today-phase-card"><summary><strong>Warm-Up & Mobility</strong> · ${warmup.length} moves</summary><div class="today-lite-list">${warmup.map((ex,i)=>todayGuideCard(ex,i,warmup.length)).join("")}</div></details>`}
- <section class="card today-main-card"><div class="today-section-head"><div><span>TODAY'S WORKOUT</span><h2>${resting?"Active Recovery":focus}</h2></div>${resting?"":`<b>${done}/${total} sets</b>`}</div>
+ <section class="workout-plan-shell"><h2 class="plan-heading">Workout Plan</h2><details class="card today-phase-card"><summary><strong>Warm-Up & Mobility</strong> · ${warmup.length} moves</summary><div class="today-lite-list">${warmup.map((ex,i)=>todayGuideCard(ex,i,warmup.length)).join("")}</div></details>`}
+ <section class="card today-main-card"><div class="today-section-head"><div><h2>${resting?"Active Recovery":"Main Workout"}</h2></div>${resting?"":`<b>${done}/${total} sets</b>`}</div>
  ${resting?`<button type="button" class="primary" id="workoutOnRestDay">Workout Today</button>`:
-   `${state.workoutStyle==="circuit"?`<details class="main-order-panel" open><summary><strong>Arrange Main Workout</strong><small>Move exercises before starting</small></summary><div class="today-lite-list">${plan.map((ex,i)=>todayMainOrderCard(ex,i,plan.length)).join("")}</div></details><div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map((ex,i)=>todayMainOrderCard(ex,i,plan.length)).join("")}</div>`}
+   `${state.workoutStyle==="circuit"?`<div class="today-circuit-list">${circuitPreview(plan)}</div>`:`<div class="today-lite-list">${plan.map((ex,i)=>circuitPlanCard(ex,i,plan.filter(x=>!x.isFinisher).length)).join("")}</div>`}
     ${workoutCompletedOn()?`<div class="workout-complete-banner"><span>✓</span><strong>Workout Completed</strong></div>`:
       `<div class="today-action-row">${hasActiveWorkoutToday()?`<button class="primary" id="resumeWorkout">Resume Workout</button><button class="secondary reset-workout-btn" id="restartWorkout">Reset Workout</button>`:`<button class="primary" id="startWorkout">Start Workout</button>`}<button class="complete-workout-btn" id="markWorkoutComplete">Mark Complete</button></div>`}`}
  </section>
- ${resting?"":todayCooldownExpanded(cooldown)}<section class="card rw-launch"><div class="today-section-head"><div><span>ALTERNATIVE ACTIVITY</span><h2>Run/Walk</h2></div></div><button type="button" class="secondary" id="openRunWalk">Record or import activity</button></section>`;
+ ${resting?"":todayCooldownExpanded(cooldown)+"</section>"}<section class="card rw-launch"><div class="today-section-head"><div><span>ALTERNATIVE ACTIVITY</span><h2>Run/Walk</h2></div></div><div class="rw-actions"><button type="button" class="secondary" id="openRunWalk">Record Activity</button><button type="button" class="secondary" id="openRunImport">Import Activity</button></div></section>`;
  const actionRow=view.querySelector(".today-action-row");if(actionRow&&view.querySelector(".athletic-start"))view.querySelector(".athletic-start").append(actionRow);
 
  const carryBtn=document.getElementById("carryForwardWorkout");if(carryBtn)carryBtn.onclick=()=>carryForwardMissedWorkout(missed,date);
@@ -1775,6 +1774,7 @@ function renderToday(){
   if(complete)complete.onclick=()=>{if(plan.length)saveCompletedWorkout(prepare());else showToast("No matching exercises for your equipment")};
  }
  document.getElementById("openRunWalk")?.addEventListener("click",()=>route("runwalk"));
+ document.getElementById("openRunImport")?.addEventListener("click",()=>{route("runwalk");document.getElementById("rwImportSection")?.scrollIntoView({block:"start"});});
 
 }
 
@@ -3046,7 +3046,7 @@ function startWorkout(plan,resumeState=null){
      card.classList.add("active-session-host");
      view.classList.add("active-workout-view");
      panel=document.createElement("section");panel.id="activeWorkoutPanel";panel.className="active-workout-panel";
-     card.parentNode.insertBefore(panel,card);
+     view.insertBefore(panel,view.firstChild);
    }
    const groups=workoutGroups();
    panel.innerHTML=`<header class="athletic-session-head"><span class="athletic-kicker">${running?"WORKOUT IN PROGRESS":"SESSION PAUSED"}</span><h2>${workoutTypeForDate(isoDate(),new Date().getDay())}</h2><small>${state.trainingFocus||"Balanced"} · ${state.workoutStyle==="circuit"?"Circuit":"Sequential"}</small></header><div class="active-workout-sticky">
@@ -3286,11 +3286,11 @@ function rwRenderRecent(){
 function renderRunWalk(){
  view.classList.remove("active-workout-view","athletic-today");
  view.innerHTML=`<section class="card rw-card"><div class="today-section-head"><div><span>ACTIVITY</span><h2>Run/Walk</h2></div><button type="button" class="secondary compact" id="rwBack">← Today</button></div>
- <label>Location <select id="rwLocation"><option value="Outdoor">Outdoor · Phone GPS</option><option value="Treadmill">Treadmill · Manual distance</option></select></label>
+ <section class="rw-record-section"><h3>Record Activity</h3><label>Location <select id="rwLocation"><option value="Outdoor">Outdoor · Phone GPS</option><option value="Treadmill">Treadmill · Manual distance</option></select></label>
  <label>Activity <select id="rwType"><option>Run / Walk</option><option>Running</option><option>Walking</option></select></label>
  <div class="rw-clock" id="rwClock">00:00:00</div><div class="rw-metrics"><div><small>Distance</small><strong id="rwKm">0.00 km</strong></div><div><small>Average pace</small><strong id="rwPace">—</strong></div></div>
  <div class="rw-actions"><button type="button" class="primary" id="rwStart">Start</button><button type="button" class="secondary" id="rwFinish" disabled>Finish & Save</button></div><p id="rwStatus" class="muted">Outdoor GPS requires location permission. Keep this app visible and your phone unlocked for best results.</p>
- <details><summary>Import watch workout (FIT / GPX / TCX)</summary><p>Choose a FIT, GPX or TCX activity file exported from Zepp or Strava. FIT files work for treadmill activities too.</p><input type="file" id="rwFile" accept=".fit,.gpx,.tcx,application/octet-stream,application/gpx+xml,application/xml,text/xml"></details>
+ </section><section class="rw-import-section" id="rwImportSection"><h3>Import Activity</h3><p>Choose a FIT, GPX or TCX activity file exported from Zepp or Strava. FIT files work for treadmill activities too.</p><input type="file" id="rwFile" accept=".fit,.gpx,.tcx,application/octet-stream,application/gpx+xml,application/xml,text/xml"></section>
  <div id="rwFeatured" aria-live="polite"></div><h3>Recent Run / Walk Activities</h3><div id="rwRecent"></div></section>`;
  document.getElementById("rwBack").onclick=()=>route("today");
  document.getElementById("rwStart").onclick=()=>{
