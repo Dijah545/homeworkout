@@ -786,3 +786,6 @@ Configured sets use the same format as the set parser. Circuit summaries update 
 
 ## v87.7
 Eight workout types, focus-specific rep prescriptions, rotating balanced templates and estimated weekly muscle coverage. Existing rest and finisher settings retained.
+
+## v87.8
+Athletic Today hero, weekly progress, compact active timers, circuit round matrix and sequential thumbnails. Existing assets and storage retained.
