@@ -789,3 +789,6 @@ Eight workout types, focus-specific rep prescriptions, rotating balanced templat
 
 ## v87.8
 Athletic Today hero, weekly progress, compact active timers, circuit round matrix and sequential thumbnails. Existing assets and storage retained.
+
+### v87.9
+Removed standalone pre-workout Rest Tracker (active rest timer and history retained). Removed pre-start exercise thumbnails while preserving exercise guide links and circuit configuration expansion. Active cool-down opens by default in both workout styles. Existing image assets unchanged.

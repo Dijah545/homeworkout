@@ -1332,7 +1332,7 @@ function saveTodayOrder(plan,date=isoDate()){
  save();
 } 
 function todayMainOrderCard(ex,index,total){
- return `<article class="today-lite-ex main-order-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="swap-main-btn" data-swap-main="${ex.id}">Swap</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
+ return `<article class="today-lite-ex main-order-ex"><div class="today-lite-row"><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button><div class="today-row-actions"><button type="button" class="swap-main-btn" data-swap-main="${ex.id}">Swap</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="-1" ${index===0?"disabled":""}>↑</button><button type="button" class="order-btn" data-main-index="${index}" data-move-dir="1" ${index===total-1?"disabled":""}>↓</button></div></div></article>`;
 }
 
 function moveTodayExercise(plan,index,direction,date=isoDate()){
@@ -1670,7 +1670,7 @@ function bindRecoveryInstructions(){
 
 
 function todayGuideCard(ex){
- return `<article class="today-lite-ex"><div class="today-lite-row"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button></div></article>`;
+ return `<article class="today-lite-ex"><div class="today-lite-row"><button type="button" class="today-lite-copy today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong><small>${ex.equipment||""}</small></button></div></article>`;
 }
 function circuitConfigFor(ex){
  state.circuitConfig=state.circuitConfig||{};
@@ -1704,7 +1704,7 @@ function safeCircuitGroups(plan){
 function circuitPlanCard(ex){
  const c=circuitConfigFor(ex), range=repRangeFor(ex);
  return `<details class="circuit-plan-item">
-  <summary><span class="circuit-plan-thumb">${exerciseImageMarkup(ex)}</span><span class="circuit-plan-copy"><strong>${ex.name}</strong><small>${c.sets} sets${range?` · ${c.reps} reps`:""}</small></span><span class="chev">⌄</span></summary>
+  <summary><span class="circuit-plan-copy"><button type="button" class="today-name-button" data-today-guide="${ex.id}"><strong>${ex.name}</strong></button><small>${c.sets} sets${range?` · ${c.reps} reps`:""}</small></span><span class="chev" aria-label="Expand set settings">⌄</span></summary>
   <div class="circuit-plan-fields">
    <label>Sets<input type="number" min="1" max="8" value="${c.sets}" data-cfg-sets="${ex.id}"></label>
    ${isStrengthExercise(ex)?(c.unit==="level"?`<label>Resistance<select data-cfg-load="${ex.id}" data-cfg-unit="level">${["","Light","Medium","Heavy","Extra Heavy"].map(v=>`<option value="${v}" ${String(c.load)===v?"selected":""}>${v||"—"}</option>`).join("")}</select></label>`:`<label>Weight<input type="number" min="0" step="0.5" value="${c.load}" data-cfg-load="${ex.id}" data-cfg-unit="lb"></label>`):""}
@@ -1726,7 +1726,7 @@ function bindTodayCircuitConfig(){
  document.querySelectorAll("[data-cfg-load]").forEach(x=>x.onchange=()=>setCfg(x.dataset.cfgLoad,{load:x.dataset.cfgUnit==="lb"?(x.value===""?"":Number(x.value)):x.value,unit:x.dataset.cfgUnit}));
 }
 function todayCooldownExpanded(cooldown){
- return `<details class="recovery-section today-cooldown" open><summary><div><strong>Cool-Down</strong><small>${cooldown.items.length} exercises · ${cooldown.minutes} min</small></div><span>⌄</span></summary><div class="recovery-body">${cooldown.items.map(ex=>`<button type="button" class="recovery-row" data-recovery-ex="${ex.id}"><span class="today-lite-thumb">${exerciseImageMarkup(ex)}</span><div><b>${ex.name}</b><small>${ex.sets||"30–45 sec"}</small></div><span>Instructions ›</span></button>`).join("")}</div></details>`;
+ return `<details class="recovery-section today-cooldown" open><summary><div><strong>Cool-Down</strong><small>${cooldown.items.length} exercises · ${cooldown.minutes} min</small></div><span>⌄</span></summary><div class="recovery-body">${cooldown.items.map(ex=>`<button type="button" class="recovery-row" data-recovery-ex="${ex.id}"><div><b>${ex.name}</b><small>${ex.sets||"30–45 sec"}</small></div><span>Instructions ›</span></button>`).join("")}</div></details>`;
 }
 
 function renderToday(){
@@ -1743,7 +1743,6 @@ function renderToday(){
  <section class="today-clean-head"><div><span>${todayLabel(day)} · ${new Date().toLocaleDateString(undefined,{month:"long",day:"numeric"})}</span><h1>Today</h1></div></section>${carry?`<section class="card carry-forward-card active"><div><span>CARRIED FORWARD</span><strong>${carry.focus}</strong><small>Missed ${new Date(carry.fromDate+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="secondary compact" id="clearCarryForward">Use Today's Plan</button></section>`:(missed?`<section class="card carry-forward-card"><div><span>MISSED WORKOUT</span><strong>${missed.focus}</strong><small>${new Date(missed.date+"T12:00").toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})}</small></div><button type="button" class="primary compact" id="carryForwardWorkout">Carry Forward</button></section>`:"")}
  ${resting?"":`<section class="card athletic-hero"><div class="athletic-hero-grid"><div><span class="athletic-kicker">TODAY'S TRAINING</span><h2>${focus}</h2><p>Training focus · ${state.trainingFocus||"Balanced"}</p><p>${state.duration} min · ${plan.length} exercises</p><label class="athletic-kicker" for="todayWorkoutType">Change workout</label><select id="todayWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===focus?"selected":""}>${t}</option>`).join("")}</select></div><div class="athletic-map">${femaleHeatmap(plan)}</div></div><div class="athletic-week"><span>Weekly goal</span><b>${uniqueWorkoutDays(historyForWeek(startOfCalendarWeek()))} / ${7-state.restDays.length} workouts</b><progress max="${Math.max(1,7-state.restDays.length)}" value="${uniqueWorkoutDays(historyForWeek(startOfCalendarWeek()))}"></progress></div><div class="athletic-start"></div></section>
   <section class="card today-duration-card">${durationControl()}</section>
- <section class="card today-rest-card"><div id="todayRestTracker"></div></section>
  <details class="card today-phase-card"><summary><strong>Warm-Up & Mobility</strong> · ${warmup.length} moves</summary><div class="today-lite-list">${warmup.map((ex,i)=>todayGuideCard(ex,i,warmup.length)).join("")}</div></details>`}
  <section class="card today-main-card"><div class="today-section-head"><div><span>TODAY'S WORKOUT</span><h2>${resting?"Active Recovery":focus}</h2></div>${resting?"":`<b>${done}/${total} sets</b>`}</div>
  ${resting?`<button type="button" class="primary" id="workoutOnRestDay">Workout Today</button>`:
@@ -1763,7 +1762,6 @@ function renderToday(){
  document.querySelectorAll("[data-swap-main]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();openSwapModal(btn.dataset.swapMain,date);});
  document.querySelectorAll("[data-main-index]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();moveTodayExercise(plan,Number(btn.dataset.mainIndex),Number(btn.dataset.moveDir),date)});
  bindTodayCircuitConfig(); bindExerciseImages(); bindRecoveryInstructions();
- if(!resting)renderRestTracker();
  if(!resting&&!workoutCompletedOn()){
   const start=document.getElementById("startWorkout"),resume=document.getElementById("resumeWorkout"),restart=document.getElementById("restartWorkout"),complete=document.getElementById("markWorkoutComplete");
   const prepare=()=>sessionPlan.map(ex=>{
@@ -3058,7 +3056,7 @@ function startWorkout(plan,resumeState=null){
    <div class="active-workout-intro"><strong>${state.workoutStyle==="circuit"?"Circuit workout":"Sequential workout"}</strong><small>${state.workoutStyle==="circuit"?"Work through one set of each exercise in the circuit, then return to the first exercise for the next round.":"Finish all planned sets for an exercise before moving to the next."} Tap an exercise to record reps, weight/resistance and completed sets.</small></div>
    ${groups.map((g,gi)=>`<section class="active-group ${g.kind}"><div class="active-group-title"><div><strong>${g.title}</strong>${g.subtitle?`<small>${g.subtitle}</small>`:""}</div></div>${g.kind==="circuit"?activeCircuitGroup(g):((g.kind==="sequential"||g.kind==="standalone")?g.items.map((ex,i)=>activeExerciseCard(ex,i+1)).join(""):activeSimpleList(g.items,g.kind))}</section>`).join("")}`;
 
-   panel.querySelectorAll(".active-group.warmup,.active-group.cooldown,.active-group.finisher").forEach(group=>{const details=document.createElement("details");details.open=group.classList.contains("warmup");const title=group.querySelector(".active-group-title");const summary=document.createElement("summary");summary.append(title);details.append(summary);while(group.firstChild)details.append(group.firstChild);group.append(details);});
+   panel.querySelectorAll(".active-group.warmup,.active-group.cooldown,.active-group.finisher").forEach(group=>{const details=document.createElement("details");details.open=group.classList.contains("warmup")||group.classList.contains("cooldown");const title=group.querySelector(".active-group-title");const summary=document.createElement("summary");summary.append(title);details.append(summary);while(group.firstChild)details.append(group.firstChild);group.append(details);});
    panel.insertAdjacentHTML("beforeend",`<button class="primary athletic-complete" id="activeCompleteBottom">Complete Workout</button><button class="secondary athletic-reset" id="activeReset">Reset Workout</button>`);
    const refreshProgress=()=>{const checks=panel.querySelectorAll("[data-circuit-check],[data-simple-check],[data-set-ex]");let total=0,done=0;groups.forEach(g=>g.items.forEach(ex=>{const simple=["warmup","cooldown","finisher"].includes(g.kind),n=simple?1:parseSetPlan(ex).count;total+=n;for(let i=0;i<n;i++)if(setDone(simple?{...ex,id:`${ex.id}__${g.kind}`} :ex,i))done++;}));panel.querySelector("[data-session-count]").textContent=`${done}/${total}`;const bar=panel.querySelector("[data-session-progress]");bar.max=Math.max(1,total);bar.value=done;};
    panel.onclick=()=>queueMicrotask(refreshProgress);panel.refreshProgress=refreshProgress;refreshProgress();
