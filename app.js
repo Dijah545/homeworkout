@@ -817,11 +817,12 @@ function isoDate(d=new Date()){
  return `${y}-${m}-${day}`;
 }
 
+let weekPreviewOffset=0;
 function dateForWeekday(day){
  const now=new Date();
  const sunday=new Date(now.getFullYear(),now.getMonth(),now.getDate()-now.getDay(),12,0,0,0);
  const target=new Date(sunday);
- target.setDate(sunday.getDate()+day);
+ target.setDate(sunday.getDate()+day+weekPreviewOffset*7);
  return isoDate(target);
 }
 
@@ -1103,7 +1104,7 @@ function weeklyCoverageMarkup(){
  const labels={chest:"Chest",upperBack:"Back",shoulders:"Shoulders",biceps:"Biceps",triceps:"Triceps",glutes:"Glutes",quads:"Quads",hamstrings:"Hamstrings",calves:"Calves",core:"Core"};
  const planned=new Set(),actual=new Set();
  for(let d=0;d<7;d++){const date=dateForWeekday(d);if(!isRest(d)||restDayWorkoutEnabled(date))planForDay(d,workoutTypeForDate(date,d),true).forEach(x=>coverageMuscles(x).forEach(m=>planned.add(m)));for(const ex of exercises){if(Object.values(state.setProgress?.[date+"::"+ex.id]||{}).some(Boolean))coverageMuscles(ex).forEach(m=>actual.add(m));}}
- return `<section class="card"><h2>Weekly muscle coverage</h2><small>${state.trainingFocus||"Balanced"} · Planned ${Object.keys(labels).filter(m=>planned.has(m)).length}/10 · Checked ${Object.keys(labels).filter(m=>actual.has(m)).length}/10</small><div class="coverage-grid">${Object.entries(labels).map(([m,label])=>`<div><strong>${label}</strong><small>${actual.has(m)?"✓ Checked":planned.has(m)?"Planned":"Not covered"}</small></div>`).join("")}</div><small>Coverage is estimated from exercise selection and checked sets, not measured training load.</small></section>`;
+ return `<details class="card sleek-detail"><summary>Muscle group breakdown</summary><small>${state.trainingFocus||"Balanced"} · Planned ${Object.keys(labels).filter(m=>planned.has(m)).length}/10 · Checked ${Object.keys(labels).filter(m=>actual.has(m)).length}/10</small><div class="coverage-grid">${Object.entries(labels).map(([m,label])=>`<div><strong>${label}</strong><small>${actual.has(m)?"✓ Checked":planned.has(m)?"Planned":"Not covered"}</small></div>`).join("")}</div><small>Coverage is estimated from exercise selection and checked sets, not measured training load.</small></details>`;
 }
 function planForDay(day,focusOverride=null,forceWorkout=false){
  if(isRest(day)&&!forceWorkout)return [];
@@ -1131,12 +1132,13 @@ function themeApply(){
 themeApply();
 
 function route(name){
+ if(name!=="week")weekPreviewOffset=0;
  view.classList.remove("athletic-today","active-workout-view");
  document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.route===name));
  ({today:renderToday,runwalk:renderRunWalk,week:renderWeek,library:renderLibrary,history:renderHistory,body:renderBodyTracker,settings:renderSettings}[name]||renderToday)();
 }
 document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>{
- if(b.dataset.route==="week") state.selectedDay=new Date().getDay();
+ if(b.dataset.route==="week"){weekPreviewOffset=0;state.selectedDay=new Date().getDay();}
  route(b.dataset.route);
 }));
 document.getElementById("themeQuick").onclick=()=>{state.theme=(document.documentElement.dataset.theme==="dark"?"light":"dark");save();themeApply();route(document.querySelector(".nav-item.active").dataset.route)};
@@ -1770,7 +1772,7 @@ function renderToday(){
   if(complete)complete.onclick=()=>{if(plan.length)saveCompletedWorkout(prepare());else showToast("No matching exercises for your equipment")};
  }
  document.getElementById("openRunWalk")?.addEventListener("click",()=>route("runwalk"));
- document.getElementById("openRunImport")?.addEventListener("click",()=>{route("runwalk");document.getElementById("rwImportSection")?.scrollIntoView({block:"start"});});
+ document.getElementById("openRunImport")?.addEventListener("click",()=>{route("runwalk");document.getElementById("rwImportTab")?.click();});
 
 }
 
@@ -2125,38 +2127,17 @@ function renderWeek(){
  const plan=workoutOverride?workoutPlanForRestOverride(selected,selectedFocus):planForDay(selected,selectedFocus);
  const dayLetters=["S","M","T","W","T","F","S"];
 
- view.innerHTML=`
- <div class="section-title">
-   <div><div class="eyebrow">Weekly Schedule</div><h1 style="margin-bottom:3px">Week</h1></div>
-   <button class="secondary" id="regen">Regenerate week</button>
- </div>
- <p class="week-subtext">Select a day to preview what is planned. The current day opens automatically when you enter Week.</p>
-
- <div class="week-grid week-grid-letters">
-   ${dayLetters.map((letter,i)=>`
-     <button class="day-chip letter-chip ${i===selected?"active":""} ${isRest(i)?"rest":""}" data-day="${i}" aria-label="${DAY_NAMES[i]}">
-       <strong>${letter}</strong>
-       <span>${dateForWeekday(i).slice(-2)}</span>
-     </button>`).join("")}
- </div>
-
- ${weeklyCoverageMarkup()}
- ${weekBanner(selected,plan,workoutOverride,selectedFocus)}
-
- <section class="card week-plan-card">
-   <div class="section-title">
-     <h2>${DAY_NAMES[selected]}</h2>
-     <small>${resting?"Recovery":new Date(selectedDate+"T12:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small>
-   </div>
-   ${resting?
-     `<div class="rest-day-detail">
-        <strong>Recovery focus</strong>
-        <p>Stretch the areas that feel tight, do 5–10 minutes of gentle mobility, take an easy walk, foam roll if you have one, and prioritize hydration and sleep.</p>
-        <button type="button" class="primary" id="weekWorkoutOnRestDay">Workout This Day</button>
-      </div>`:
-     `<div class="week-type-control"><label>Workout type</label><select id="weekWorkoutType">${WORKOUT_TYPES.map(t=>`<option value="${t}" ${t===selectedFocus?"selected":""}>${t}</option>`).join("")}</select></div><button class="secondary compact" id="regenDay">Regenerate this day</button><div class="week-compact-list">${selectedFocus==="Run/Walk"?"Record or import a Run/Walk activity on this day.":plan.length?plan.map((ex,i)=>weekExerciseRow(ex,i)).join(""):"No matching exercises for your selected equipment."}</div>`
-   }
- </section>`;
+ const start=localDateFromISO(dateForWeekday(0));start.setHours(0,0,0,0);
+ const done=uniqueWorkoutDays(historyForWeek(start)),goal=Math.max(1,7-state.restDays.length);
+ const coverage=weeklyCoverageMarkup();const planned=Number(coverage.match(/Planned (\d+)\/10/)?.[1]||0);
+ const range=[0,6].map(d=>localDateFromISO(dateForWeekday(d)).toLocaleDateString(undefined,{month:"short",day:"numeric"})).join(" – ");
+ const phase=(name,items)=>items.length?`<details class="sleek-phase"><summary>${name}<small>${items.length} exercises</small></summary>${items.map(weekExerciseRow).join("")}</details>`:"";
+ view.innerHTML=`<h1>Week</h1><div class="sleek-nav"><button class="secondary compact" id="weekPrev">‹</button><strong>${range}</strong><button class="secondary compact" id="weekNext">›</button></div>
+ <div class="sleek-grid">${sleekMetric("Weekly goal",`${done} / ${goal}`,"Workout days",done/goal)}${sleekMetric("Muscle coverage",`${planned} / 10`,"Groups planned",planned/10)}</div>
+ <div class="week-grid week-grid-letters sleek-calendar">${dayLetters.map((letter,i)=>{const date=dateForWeekday(i),finished=state.history.some(h=>h.date===date),rest=isRest(i)&&!restDayWorkoutEnabled(date);return `<button class="day-chip letter-chip ${i===selected?"active":""}" data-day="${i}" aria-label="${DAY_NAMES[i]}"><small>${DAY_NAMES[i].slice(0,3)}</small><strong>${date.slice(-2)}</strong><span>${finished?"✓":rest?"☾":date<isoDate()?"!":"○"}</span></button>`}).join("")}</div>
+ <section class="card sleek-selected"><small class="athletic-kicker">${DAY_NAMES[selected].toUpperCase()} · ${selectedDate}</small><h2>${resting?"Rest Day":selectedFocus}</h2>${resting?`<p>Rest and recovery</p><button class="primary" id="weekWorkoutOnRestDay">Workout This Day</button>`:`<small>${state.duration} min planned · ${state.trainingFocus||"Balanced"}</small>${selectedFocus==="Run/Walk"?"<p>Record or import a Run/Walk activity.</p>":phase("Warm-up",preWorkoutWarmup(selected,selectedFocus))+phase("Main workout",plan.filter(x=>!x.isFinisher))+phase("Finisher",plan.filter(x=>x.isFinisher))+phase("Cool-down",postWorkoutCooldown(selected,selectedFocus).items)}<details class="sleek-phase"><summary>Change workout</summary><select id="weekWorkoutType">${WORKOUT_TYPES.map(t=>`<option ${t===selectedFocus?"selected":""}>${t}</option>`).join("")}</select><button class="secondary compact" id="regenDay">Regenerate day</button></details>`}</section>
+ ${coverage}<details class="card sleek-detail"><summary>Manage weekly schedule</summary><button class="secondary" id="regen">Regenerate week</button><button class="secondary" id="weekSettings">Rest days & preferences</button></details>`;
+ document.getElementById("weekPrev").onclick=()=>{weekPreviewOffset--;renderWeek()};document.getElementById("weekNext").onclick=()=>{weekPreviewOffset++;renderWeek()};document.getElementById("weekSettings").onclick=()=>route("settings");
 
  const weekWorkoutOnRestDay=document.getElementById("weekWorkoutOnRestDay");
  if(weekWorkoutOnRestDay) weekWorkoutOnRestDay.onclick=()=>{enableRestDayWorkout(selectedDate);showToast("Workout enabled for this rest day");renderWeek();};
@@ -2434,6 +2415,10 @@ function renderBodyTracker(){
 let historyMonthOffset=0;
 let historyShowAll=false;
 
+let historyPeriod="Month",historyFilter="All";
+function historySeconds(h){return Number(h.actualSeconds??(Number(h.minutes||0)*60))||0;}
+function historyDuration(h){return h.actualSeconds==null?`${h.minutes||0} min`:rwTime(historySeconds(h));}
+function sleekMetric(label,value,sub,ratio){return `<div class="sleek-metric"><small>${label}</small><strong>${value}</strong>${ratio!=null?`<progress max="1" value="${Math.min(1,ratio)}"></progress>`:""}<small>${sub}</small></div>`;}
 function renderHistory(){
  const weekStart=startOfCalendarWeek(new Date());
  const thisWeek=historyForWeek(weekStart);
@@ -2443,84 +2428,19 @@ function renderHistory(){
  const totalMin=thisWeek.reduce((s,h)=>s+(h.minutes||0),0);
  const totalRest=thisWeek.reduce((s,h)=>s+(h.restSeconds||0),0);
 
- view.innerHTML=`
- <div class="eyebrow">Progress</div>
- <div class="history-title-row"><h1>History</h1><button class="secondary compact" id="markPastWorkout">+ Past Workout</button></div>
-
- <section class="card history-summary-card">
-   <div class="history-summary-grid">
-     <div class="history-summary-stat">
-       <span class="summary-icon">🔥</span>
-       <div><b>${streak}</b><small>Week Streak</small></div>
-     </div>
-     <div class="history-summary-stat">
-       <span class="summary-icon">✓</span>
-       <div><b>${completedDays}/${requiredDays}</b><small>Workout Days</small></div>
-     </div>
-   </div>
-   <p class="streak-note">${streak===0?"Complete at least one workout this week to start your streak.":`You have completed at least one workout for ${streak} consecutive week${streak===1?"":"s"}.`}</p>
- </section>
-
- <section class="card">
-   <div class="section-title">
-     <h2>This Week</h2>
-     <small>${completedDays}/${requiredDays} workout days</small>
-   </div>
-   <div class="progress-row">
-     ${DAYS.map((d,i)=>{
-       const date=dateForWeekday(i);
-       const done=thisWeek.some(h=>h.date===date);
-       const rest=isRest(i);
-       return `<div class="history-day">
-         <div class="dot ${done?"done":rest?"rest":""}">${done?"✓":rest?"☾":d[0]}</div>
-         <small>${d}</small>
-       </div>`;
-     }).join("")}
-   </div>
- </section>
-
- <section class="card">
-   <div class="metrics">
-     <div class="metric"><b>${completedDays}</b><span>Workout Days</span></div>
-     <div class="metric"><b>${totalMin}</b><span>Workout Min</span></div>
-     <div class="metric"><b>${formatShort(totalRest)}</b><span>Rest Time</span></div>
-   </div>
- </section>
- <section class="card">
-   <div class="section-title"><h2>Training Records</h2><small>Current tracked loads</small></div>
-   ${bestLoads().length?`<div class="record-list">${bestLoads().map(r=>`<div><span>${r.name}</span><b>${r.load} ${r.unit}</b></div>`).join("")}</div>`:`<div class="empty">Enter weights during workouts to start building your training records.</div>`}
- </section>
-
-
- <section class="card">
-   ${(()=>{
-     const now=new Date();
-     const viewed=new Date(now.getFullYear(),now.getMonth()+historyMonthOffset,1,12);
-     return `<div class="history-month-nav">
-       <button type="button" class="history-month-btn" id="historyPrevMonth" aria-label="Previous month">‹</button>
-       <button type="button" class="history-month-title" id="historyCurrentMonth" title="Return to current month">${viewed.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</button>
-       <button type="button" class="history-month-btn" id="historyNextMonth" aria-label="Next month">›</button>
-     </div>
-     <small class="history-month-caption">Monthly activity</small>
-     ${calendarMonthMarkup(viewed.getFullYear(),viewed.getMonth())}`;
-   })()}
- </section>
-
- <section class="card">
-   <div class="section-title"><h2>Recent Workouts</h2><small>${state.history.length} saved</small></div>
-   ${state.history.length?
-     state.history.slice().reverse().slice(0,historyShowAll?state.history.length:5).map(h=>`
-       <div class="history-row">
-         <div class="history-check">✓</div>
-         <div>
-           <h3>${h.focus}</h3>
-           <p>${new Date(h.date+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})} · ${h.minutes} min · ${h.exercises} exercises</p>
-           <p>Sets: ${h.setsCompleted??0}/${h.setsPlanned??0} completed · Rest: ${formatShort(h.restSeconds||0)} across ${h.restSessions||0} rest periods · Finisher: ${h.finisherSnapshot?.minutes??h.finisherMinutes??h.treadmillMinutes??0} min${(h.finisherSnapshot?.name||h.finisherName)?` (${h.finisherSnapshot?.name||h.finisherName}${(h.finisherSnapshot?.type||h.finisherType)?` · ${h.finisherSnapshot?.type||h.finisherType}`:""})`:""}</p>
-         </div>
-       </div>`).join(""):
-     `<div class="empty">Complete a workout and it will appear here.</div>`}
-   ${state.history.length>5?`<button type="button" class="secondary history-toggle" id="historyToggle">${historyShowAll?"Show Less":"Show More"}</button>`:""}
- </section>`;
+ const now=new Date(),viewed=new Date(now.getFullYear(),now.getMonth()+historyMonthOffset,1,12);
+ const monthKey=isoDate(viewed).slice(0,7),entries=state.history.filter(h=>historyPeriod==="All time"|| (historyPeriod==="Week"?thisWeek.includes(h):h.date.startsWith(monthKey)));
+ const rows=entries.filter(h=>historyFilter==="All"||(historyFilter==="Run/Walk"?h.focus==="Run/Walk":h.focus!=="Run/Walk")).slice().sort((a,b)=>b.date.localeCompare(a.date));
+ const seconds=entries.reduce((n,h)=>n+historySeconds(h),0),weeks=Array.from({length:4},(_,i)=>{const d=new Date(weekStart);d.setDate(d.getDate()-7*(3-i));return historyForWeek(d).reduce((n,h)=>n+historySeconds(h),0)/60});
+ view.innerHTML=`<div class="section-title"><h1>History</h1><details class="sleek-menu"><summary>•••</summary><button id="markPastWorkout" class="secondary compact">+ Past workout</button><button id="historyExport" class="secondary compact">Export CSV</button><button id="historyBackup" class="secondary compact">Backup data</button><button id="historySettings" class="secondary compact">Restore / settings</button></details></div>
+ <div class="sleek-tabs">${["Week","Month","All time"].map(x=>`<button class="secondary ${historyPeriod===x?"selected":""}" data-hperiod="${x}">${x}</button>`).join("")}</div>
+ <div class="sleek-nav"><button class="secondary compact" id="historyPrevMonth">‹</button><button class="secondary compact" id="historyCurrentMonth">${viewed.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</button><button class="secondary compact" id="historyNextMonth">›</button></div>
+ <div class="sleek-grid">${sleekMetric("Workouts",entries.length,"Sessions")}${sleekMetric("Training time",formatShort(Math.round(seconds)),"Recorded duration")}${sleekMetric("Weekly goal",`${completedDays} / ${requiredDays}`,"This week",completedDays/requiredDays)}${sleekMetric("Weekly streak",`${streak} weeks`,"At least one workout")}</div>
+ <details class="card sleek-detail"><summary>Activity calendar</summary>${calendarMonthMarkup(viewed.getFullYear(),viewed.getMonth())}</details>
+ <details class="card sleek-detail"><summary>Training analytics</summary><small>Last four weeks · training minutes</small>${weeks.map((v,i)=>`<div class="sleek-bar"><span>${i===3?"This week":`${3-i} weeks ago`}</span><progress max="${Math.max(1,...weeks)}" value="${v}"></progress><b>${Math.round(v)}</b></div>`).join("")}<h3>Training records</h3>${bestLoads().length?`<div class="record-list">${bestLoads().map(r=>`<div><span>${r.name}</span><b>${r.load} ${r.unit}</b></div>`).join("")}</div>`:"<small>No tracked loads yet.</small>"}</details>
+ <h2>Workout records</h2><div class="sleek-tabs">${["All","Strength","Run/Walk"].map(x=>`<button class="secondary ${historyFilter===x?"selected":""}" data-hfilter="${x}">${x}</button>`).join("")}</div><section class="card sleek-records">${rows.slice(0,historyShowAll?rows.length:5).map(h=>`<details class="sleek-record"><summary><span><small>${localDateFromISO(h.date).toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><strong>${h.focus}</strong></span><b>${historyDuration(h)}</b></summary><div class="sleek-record-detail"><p>${h.actualSeconds==null?"Legacy / estimated duration":"Actual duration"}: ${historyDuration(h)}</p>${h.plannedMinutes!=null?`<p>Planned: ${h.plannedMinutes} min · Active: ${formatShort(h.activeSeconds||0)}</p>`:""}${h.focus==="Run/Walk"?`<p>${h.runWalkType||"Activity"} · ${h.runWalkLocation||""} · ${Number(h.runWalkDistance||0).toFixed(2)} km · ${rwPace(h.runWalkDistance,historySeconds(h))}</p>`:`<p>Sets: ${h.setsCompleted??0}/${h.setsPlanned??0} · Rest: ${formatShort(h.restSeconds||0)}</p><p>Finisher: ${h.finisherSnapshot?.name||h.finisherName||"—"} · ${h.finisherSnapshot?.minutes??h.finisherMinutes??0} min</p>`}<p>Rating: ${h.rating||"Not rated"}</p></div></details>`).join("")||"<small>No matching workouts.</small>"}${rows.length>5?`<button class="secondary" id="historyToggle">${historyShowAll?"Show less":"Show more"}</button>`:""}</section>`;
+ document.querySelectorAll("[data-hperiod]").forEach(b=>b.onclick=()=>{historyPeriod=b.dataset.hperiod;renderHistory()});document.querySelectorAll("[data-hfilter]").forEach(b=>b.onclick=()=>{historyFilter=b.dataset.hfilter;renderHistory()});
+ document.getElementById("historyExport").onclick=exportHistoryCSV;document.getElementById("historyBackup").onclick=exportFullBackup;document.getElementById("historySettings").onclick=()=>route("settings");
  const historyToggle=document.getElementById("historyToggle");if(historyToggle)historyToggle.onclick=()=>{historyShowAll=!historyShowAll;renderHistory();};
  const pastBtn=document.getElementById("markPastWorkout");
  if(pastBtn) pastBtn.onclick=openPastCompletionPicker;
@@ -2534,7 +2454,7 @@ function renderHistory(){
    const date=btn.dataset.historyDate;
    const d=localDateFromISO(date);
    if(d>new Date()) return;
-   if((state.history||[]).some(h=>h.date===date)){showToast("Workout already completed");return;}
+   if((state.history||[]).some(h=>h.date===date)){historyPeriod="Month";historyFilter="All";historyShowAll=true;renderHistory();document.querySelector(".sleek-records")?.scrollIntoView({block:"start"});return;}
    if(isRest(d.getDay())){showToast("Rest day");return;}
    if(confirm(`Mark ${d.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"})} as completed?`)) markPastWorkoutCompleted(date);
  });
@@ -2615,7 +2535,7 @@ function renderSettings(){
        const incoming=parsed.state||parsed;
        if(!incoming || typeof incoming!=="object") throw new Error("Invalid backup");
        if(confirm("Import this backup and replace current app data?")){
-         state=Object.assign({},defaults,incoming);save();location.reload();
+         state=Object.assign({},defaults,incoming);if(Array.isArray(parsed.runWalk))rwSave(parsed.runWalk);save();location.reload();
        }
      }catch(err){showToast("Backup file could not be imported");}
    };
@@ -2650,6 +2570,7 @@ function saveActiveWorkoutSession(session){
  state.activeWorkout={
    date:isoDate(),
    plan:session.plan,
+   plannedMinutes:session.plannedMinutes,
    idx:session.idx,
    elapsed:session.elapsed,
    phase:session.phase,
@@ -2819,7 +2740,7 @@ function showWorkoutSummary(record,suggestions=[]){
  modal.innerHTML=`<div class="modal-card workout-summary-modal">
    <div class="modal-head"><div><div class="eyebrow">Workout Complete</div><h2>${record.focus}</h2></div><button class="close">×</button></div>
    <div class="summary-grid">
-     <div><b>${record.minutes}</b><span>Minutes</span></div>
+     <div><b>${historyDuration(record)}</b><span>Actual time</span></div>${record.plannedMinutes!=null?`<div><b>${record.plannedMinutes} min</b><span>Planned</span></div><div><b>${formatShort(record.activeSeconds)}</b><span>Active training</span></div>`:""}
      <div><b>${record.exercises}</b><span>Exercises</span></div>
      <div><b>${record.setsCompleted}/${record.setsPlanned}</b><span>Sets</span></div>
      <div><b>${record.finisherSnapshot?.minutes??record.finisherMinutes??record.treadmillMinutes??0}</b><span>Finisher</span></div>
@@ -2843,17 +2764,18 @@ function showWorkoutSummary(record,suggestions=[]){
  modal.querySelector("#summaryDone").onclick=finish;
 }
 function exportFullBackup(){
- const blob=new Blob([JSON.stringify({version:"v50",exportedAt:new Date().toISOString(),state},null,2)],{type:"application/json"});
+ const blob=new Blob([JSON.stringify({version:"v88.3",exportedAt:new Date().toISOString(),state,runWalk:rwRead()},null,2)],{type:"application/json"});
  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`home-workout-backup-${isoDate()}.json`;a.click();URL.revokeObjectURL(a.href);
 }
 function exportHistoryCSV(){
- const rows=[["Date","Focus","Minutes","Exercises","Sets Completed","Sets Planned","Rest Seconds","Finisher Minutes","Finisher Name","Finisher Type","Rating"]];
- state.history.forEach(h=>rows.push([h.date,h.focus,h.minutes,h.exercises,h.setsCompleted??"",h.setsPlanned??"",h.restSeconds??0,h.finisherSnapshot?.minutes??h.finisherMinutes??h.treadmillMinutes??0,h.finisherSnapshot?.name??h.finisherName??"",h.finisherSnapshot?.type??h.finisherType??"",h.rating??""]));
+ const rows=[["Date","Focus","Minutes","Exercises","Sets Completed","Sets Planned","Rest Seconds","Finisher Minutes","Finisher Name","Finisher Type","Rating","Actual Seconds","Planned Minutes","Active Seconds"]];
+ state.history.forEach(h=>rows.push([h.date,h.focus,h.minutes,h.exercises,h.setsCompleted??"",h.setsPlanned??"",h.restSeconds??0,h.finisherSnapshot?.minutes??h.finisherMinutes??h.treadmillMinutes??0,h.finisherSnapshot?.name??h.finisherName??"",h.finisherSnapshot?.type??h.finisherType??"",h.rating??"",h.actualSeconds??"",h.plannedMinutes??"",h.activeSeconds??""]));
  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
  const blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`home-workout-history-${isoDate()}.csv`;a.click();URL.revokeObjectURL(a.href);
 }
 
 function startWorkout(plan,resumeState=null){
+ const plannedMinutes=resumeState?.plannedMinutes??state.duration;
  let elapsed=resumeState?.elapsed??0;
  let phase=resumeState?.phase??"work";
  let restRemaining=resumeState?.restRemaining??state.restSeconds;
@@ -2873,7 +2795,7 @@ function startWorkout(plan,resumeState=null){
  const effectiveTotalRest=()=>running&&phase==="rest"&&restStart!==null
    ?totalRest+Math.min(restRemaining,Math.max(0,Math.floor((Date.now()-restStart)/1000))):totalRest;
 
- const session=()=>({plan,idx:0,elapsed,phase,restRemaining,totalRest,restSessions,running,workStartedAt,restStart,savedAt:Date.now()});
+ const session=()=>({plan,plannedMinutes,idx:0,elapsed,phase,restRemaining,totalRest,restSessions,running,workStartedAt,restStart,savedAt:Date.now()});
  const saveSnapshot=()=>saveActiveWorkoutSession(session());
 
  function commitWork(){if(workStartedAt!==null){elapsed=effectiveElapsed();workStartedAt=null;}}
@@ -3067,7 +2989,7 @@ function startWorkout(plan,resumeState=null){
    panel.querySelector("#activeFinish").onclick=()=>{
      if(!confirm("Finish this workout and save it to History?"))return;
      syncBackground();phase==="work"?commitWork():commitRest();
-     cleanup();clearActiveWorkout();completeWorkout(plan,totalRest,restSessions);
+     cleanup();clearActiveWorkout();completeWorkout(plan,totalRest,restSessions,elapsed,plannedMinutes);
    };
    panel.querySelectorAll("[data-expand-active]").forEach(btn=>btn.onclick=()=>{
      const id=String(btn.dataset.expandActive);expanded.has(id)?expanded.delete(id):expanded.add(id);renderActive();
@@ -3100,13 +3022,13 @@ function startWorkout(plan,resumeState=null){
 }
 function format(sec){const m=Math.floor(sec/60),s=sec%60;return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`}
 function formatShort(sec){const m=Math.floor(sec/60),s=sec%60;return m?`${m}m ${s}s`:`${s}s`}
-function completeWorkout(plan,totalRest,restSessions){
+function completeWorkout(plan,totalRest,restSessions,elapsed,plannedMinutes){
  clearActiveWorkout();
  if(workoutCompletedOn()){closeModal();showToast("Today's workout is already marked complete");route("history");return;}
  const day=new Date().getDay(), finisher=plan.find(x=>x.isFinisher);
  const record={
-   date:isoDate(),focus:workoutTypeForDate(isoDate(),day),minutes:state.duration,exercises:plan.length,
-   restSeconds:totalRest+totalLoggedRest(),restSessions:restSessions+restEntries().length,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",finisherSnapshot:finisher?{id:String(finisher.id||""),sourceExerciseId:String(finisher.sourceExerciseId||finisher.id||""),name:finisher.name||"",type:finisher.finisherType||"",minutes:Number(finisher.minutes||0),sets:finisher.sets||"",equipment:finisher.equipment||"",area:finisher.area||""}:null,
+   date:isoDate(),focus:workoutTypeForDate(isoDate(),day),minutes:(elapsed+totalRest)/60,actualSeconds:elapsed+totalRest,activeSeconds:elapsed,plannedMinutes,exercises:plan.length,
+   restSeconds:totalRest,restSessions:restSessions,treadmillMinutes:finisher?.id==="treadmill-finisher"?(finisher.minutes||0):0,finisherMinutes:finisher?.minutes||0,finisherName:finisher?.name||"",finisherType:finisher?.finisherType||"",finisherSnapshot:finisher?{id:String(finisher.id||""),sourceExerciseId:String(finisher.sourceExerciseId||finisher.id||""),name:finisher.name||"",type:finisher.finisherType||"",minutes:Number(finisher.minutes||0),sets:finisher.sets||"",equipment:finisher.equipment||"",area:finisher.area||""}:null,
    setsCompleted:plan.reduce((sum,ex)=>sum+Object.values((state.setProgress||{})[progressKey(ex,isoDate())]||{}).filter(Boolean).length,0),
    setsPlanned:plan.reduce((sum,ex)=>sum+parseSetPlan(ex).count,0)
  };
@@ -3228,10 +3150,12 @@ function rwStartGPS(){
 }
 function rwStatus(msg){const e=document.getElementById("rwStatus");if(e)e.textContent=msg}
 function rwUpdate(){
+ const loc=rwSession?.location||document.getElementById("rwLocation")?.value||"Outdoor";const place=document.getElementById("rwPlace");if(place)place.textContent=loc;const hint=document.getElementById("rwPlaceHint");if(hint)hint.textContent=loc==="Outdoor"?"Phone GPS":"Manual distance";const cfg=document.getElementById("rwConfig");if(cfg)cfg.hidden=!!rwSession;
+
  const t=document.getElementById("rwClock");if(t)t.textContent=rwTime(rwElapsed());
  const d=document.getElementById("rwKm");if(d)d.textContent=(rwSession?.distance||0).toFixed(2)+" km";
  const p=document.getElementById("rwPace");if(p)p.textContent=rwPace(rwSession?.distance||0,rwElapsed());
- const b=document.getElementById("rwStart");if(b)b.textContent=rwSession?.running?"Pause":rwSession?"Resume":"Start";
+ const b=document.getElementById("rwStart");if(b)b.textContent=rwSession?.running?"Pause":rwSession?"Resume":"Start Activity";
  const f=document.getElementById("rwFinish");if(f)f.disabled=!rwSession;
 }
 function rwPersistActivity(item){
@@ -3240,7 +3164,7 @@ function rwPersistActivity(item){
  // A finished or imported activity is a completed workout day in the existing History system.
  state.history=state.history||[];
  if(!state.history.some(h=>h.runWalkActivityId===item.id)){
-   state.history.push({date:item.date,focus:"Run/Walk",minutes:Math.round((item.seconds||0)/60),
+   state.history.push({date:item.date,focus:"Run/Walk",minutes:(item.seconds||0)/60,actualSeconds:item.seconds||0,
      exercises:1,restSeconds:0,restSessions:0,setsCompleted:1,setsPlanned:1,
      runWalkActivityId:item.id,runWalkType:item.type,runWalkLocation:item.location,
      runWalkDistance:Number(item.distance||0),manuallyCompleted:true});
@@ -3273,6 +3197,8 @@ function rwShowActivity(id){
  </article>`;
 }
 function rwRenderRecent(){
+ const summary=document.getElementById("rwWeekSummary");if(summary){const start=isoDate(startOfCalendarWeek()),end=isoDate(endOfCalendarWeek());const rows=rwRead().filter(x=>x.date>=start&&x.date<end);summary.innerHTML=`<section class="card"><h3>This week</h3><div class="sleek-grid three">${sleekMetric("Activities",rows.length,"")}${sleekMetric("Distance",rows.reduce((n,x)=>n+Number(x.distance||0),0).toFixed(2)+" km","")}${sleekMetric("Duration",rwTime(rows.reduce((n,x)=>n+Number(x.seconds||0),0)),"")}</div></section>`;}
+
  const el=document.getElementById("rwRecent");if(!el)return;
  el.innerHTML=rwRead().slice(0,8).map(x=>`<article class="rw-entry"><strong>${x.type} · ${x.location}</strong><small>${x.date} · ${Number(x.distance||0).toFixed(2)} km · ${rwTime(x.seconds||0)} · ${rwPace(x.distance,x.seconds)}</small><div class="rw-entry-actions"><button type="button" class="secondary compact" data-rw-view="${x.id}">View workout</button><button type="button" class="secondary compact" data-rw-delete="${x.id}">Delete</button></div></article>`).join("")||"<p>No Run / Walk activities recorded yet.</p>";
  el.querySelectorAll("[data-rw-view]").forEach(b=>b.onclick=()=>{rwShowActivity(b.dataset.rwView);document.getElementById("rwFeatured")?.scrollIntoView({behavior:"smooth",block:"nearest"})});
@@ -3285,12 +3211,14 @@ function rwRenderRecent(){
 function renderRunWalk(){
  view.classList.remove("active-workout-view","athletic-today");
  view.innerHTML=`<section class="card rw-card"><div class="today-section-head"><div><span>ACTIVITY</span><h2>Run/Walk</h2></div><button type="button" class="secondary compact" id="rwBack">← Today</button></div>
- <section class="rw-record-section"><h3>Record Activity</h3><label>Location <select id="rwLocation"><option value="Outdoor">Outdoor · Phone GPS</option><option value="Treadmill">Treadmill · Manual distance</option></select></label>
- <label>Activity <select id="rwType"><option>Run / Walk</option><option>Running</option><option>Walking</option></select></label>
- <div class="rw-clock" id="rwClock">00:00:00</div><div class="rw-metrics"><div><small>Distance</small><strong id="rwKm">0.00 km</strong></div><div><small>Average pace</small><strong id="rwPace">—</strong></div></div>
+ <div class="sleek-tabs"><button class="secondary selected" id="rwRecordTab">Record Activity</button><button class="secondary" id="rwImportTab">Import Activity</button></div><section class="rw-record-section" id="rwRecordSection"><div id="rwConfig"><h3>Record Activity</h3><label>Location <select id="rwLocation"><option value="Outdoor">Outdoor · Phone GPS</option><option value="Treadmill">Treadmill · Manual distance</option></select></label>
+ <label>Activity <select id="rwType"><option>Run / Walk</option><option>Running</option><option>Walking</option></select></label></div>
+ <div class="sleek-grid rw-dashboard"><div class="sleek-metric"><small>Distance</small><strong id="rwKm">0.00 km</strong></div><div class="sleek-metric"><small>Duration</small><strong id="rwClock">00:00:00</strong></div><div class="sleek-metric"><small>Average pace</small><strong id="rwPace">—</strong></div><div class="sleek-metric"><small>Location</small><strong id="rwPlace">Outdoor</strong><small id="rwPlaceHint">Phone GPS</small></div></div>
  <div class="rw-actions"><button type="button" class="primary" id="rwStart">Start</button><button type="button" class="secondary" id="rwFinish" disabled>Finish & Save</button></div><p id="rwStatus" class="muted">Outdoor GPS requires location permission. Keep this app visible and your phone unlocked for best results.</p>
- </section><section class="rw-import-section" id="rwImportSection"><h3>Import Activity</h3><p>Choose a FIT, GPX or TCX activity file exported from Zepp or Strava. FIT files work for treadmill activities too.</p><input type="file" id="rwFile" accept=".fit,.gpx,.tcx,application/octet-stream,application/gpx+xml,application/xml,text/xml"></section>
- <div id="rwFeatured" aria-live="polite"></div><h3>Recent Run / Walk Activities</h3><div id="rwRecent"></div></section>`;
+ </section><section class="rw-import-section" id="rwImportSection" hidden><h3>Import Activity</h3><p>Choose a FIT, GPX or TCX activity file exported from Zepp or Strava. FIT files work for treadmill activities too.</p><input type="file" id="rwFile" accept=".fit,.gpx,.tcx,application/octet-stream,application/gpx+xml,application/xml,text/xml"></section>
+ <div id="rwFeatured" aria-live="polite"></div><div id="rwWeekSummary"></div><h3>Recent Run / Walk Activities</h3><div id="rwRecent"></div></section>`;
+ const switchTab=importing=>{document.getElementById("rwRecordSection").hidden=importing;document.getElementById("rwImportSection").hidden=!importing;document.getElementById("rwRecordTab").classList.toggle("selected",!importing);document.getElementById("rwImportTab").classList.toggle("selected",importing)};
+ document.getElementById("rwRecordTab").onclick=()=>switchTab(false);document.getElementById("rwImportTab").onclick=()=>switchTab(true);document.getElementById("rwLocation").onchange=rwUpdate;
  document.getElementById("rwBack").onclick=()=>route("today");
  document.getElementById("rwStart").onclick=()=>{
    if(rwSession?.running){rwSession.elapsed=rwElapsed();rwSession.running=false;rwStopGPS();rwStatus("Paused")}
@@ -3303,14 +3231,14 @@ function renderRunWalk(){
  };
  document.getElementById("rwFinish").onclick=()=>{
    if(!rwSession)return;
-   const seconds=Math.round(rwElapsed());rwStopGPS();
+   const seconds=Math.round(rwElapsed());
    if(rwSession.location==="Treadmill"){
      const v=prompt("Treadmill distance (km)",rwSession.distance||"");
      if(v===null)return;
      const km=Number(v);if(!Number.isFinite(km)||km<0){rwStatus("Enter a valid distance");return}
      rwSession.distance=km;
    }
-   rwPersistActivity({id:"manual-"+Date.now(),date:rwSession.date.slice(0,10),type:rwSession.type,location:rwSession.location,seconds,distance:rwSession.distance,points:rwSession.points});
+   rwStopGPS();rwPersistActivity({id:"manual-"+Date.now(),date:isoDate(new Date(rwSession.date)),type:rwSession.type,location:rwSession.location,seconds,distance:rwSession.distance,points:rwSession.points});
    rwSession=null;rwFeaturedId=rwRead()[0]?.id||null;rwStatus("Activity saved");rwRenderRecent();rwUpdate();
  };
  document.getElementById("rwFile").onchange=async e=>{

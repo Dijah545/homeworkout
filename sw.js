@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v88-2-compact-heatmap-timers";
+const CACHE="home-workout-v88-3-dashboard-history";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=88.2",
-  "./app.js?v=88.2",
+  "./styles.css?v=88.3",
+  "./app.js?v=88.3",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

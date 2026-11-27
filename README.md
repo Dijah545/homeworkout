@@ -802,3 +802,6 @@ Fixed muscle focus percentage overflow in the Today hero using a single-column m
 ## v88.2
 - Collapsible muscle intensity bars and compact heat map.
 - Sticky full timer panel, automatic rest button reset, single guide close icon.
+
+### v88.3
+Dashboard layouts for Run/Walk, Week and History; collapsible workout phases, calendar and analytics. Actual timed sessions store exact seconds, active seconds and planned minutes; legacy and manually marked sessions retain estimated durations. CSV includes new fields. Run/Walk weekly totals and backup data included. History streak retains the existing at-least-one-workout definition.
