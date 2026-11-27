@@ -2338,6 +2338,7 @@ function deleteBodyMetricsEntry(date){
  save();
  renderBodyTracker();
 }
+let bodyShowAll=false;
 function renderBodyTracker(){
  const latest=bodyMetricLatest();
  const previous=bodyMetricPrevious();
@@ -2387,7 +2388,7 @@ function renderBodyTracker(){
  <section class="card">
    <div class="section-title"><h2>Measurement History</h2><small>${(state.bodyMetrics||[]).length} entries</small></div>
    ${(state.bodyMetrics||[]).length?`<div class="body-history-list">
-     ${bodyMetricRows().reverse().map(r=>`<div class="body-history-row">
+     ${bodyMetricRows().reverse().slice(0,bodyShowAll?undefined:5).map(r=>`<div class="body-history-row">
        <div>
          <strong>${r.date}</strong>
          <small>
@@ -2404,9 +2405,11 @@ function renderBodyTracker(){
          <button type="button" data-delete-metric="${r.date}">Delete</button>
        </div>
      </div>`).join("")}
-   </div>`:`<div class="empty">Add your first entry to start tracking trends.</div>`}
+   </div>${(state.bodyMetrics||[]).length>5?`<button type="button" id="bodyShowMore" style="width:100%;margin-top:10px">${bodyShowAll?"Show less":"Show more measurements"} · ${bodyShowAll?(state.bodyMetrics||[]).length:5} of ${(state.bodyMetrics||[]).length}</button>`:""}`:`<div class="empty">Add your first entry to start tracking trends.</div>`}
  </section>`;
 
+ const moreButton=document.getElementById("bodyShowMore");
+ if(moreButton)moreButton.onclick=()=>{bodyShowAll=!bodyShowAll;renderBodyTracker();document.getElementById("bodyShowMore")?.scrollIntoView({block:"nearest"});};
  document.getElementById("saveBodyMetric").onclick=saveBodyMetricsEntry;
  document.querySelectorAll("[data-edit-metric]").forEach(btn=>btn.onclick=()=>editBodyMetricsEntry(btn.dataset.editMetric));
  document.querySelectorAll("[data-delete-metric]").forEach(btn=>btn.onclick=()=>deleteBodyMetricsEntry(btn.dataset.deleteMetric));
@@ -2417,6 +2420,7 @@ let historyShowAll=false;
 
 let historyPeriod="Month",historyFilter="All";
 function historySeconds(h){return Number(h.actualSeconds??(Number(h.minutes||0)*60))||0;}
+function historyTotalTime(seconds){const sec=Math.max(0,Math.round(Number(seconds)||0));return `${Math.floor(sec/3600)}h ${Math.floor(sec%3600/60)}m ${sec%60}s`;}
 function historyDuration(h){return h.actualSeconds==null?`${h.minutes||0} min`:rwTime(historySeconds(h));}
 function sleekMetric(label,value,sub,ratio){return `<div class="sleek-metric"><small>${label}</small><strong>${value}</strong>${ratio!=null?`<progress max="1" value="${Math.min(1,ratio)}"></progress>`:""}<small>${sub}</small></div>`;}
 function renderHistory(){
@@ -2435,7 +2439,7 @@ function renderHistory(){
  view.innerHTML=`<div class="section-title"><h1>History</h1><details class="sleek-menu"><summary>•••</summary><button id="markPastWorkout" class="secondary compact">+ Past workout</button><button id="historyExport" class="secondary compact">Export CSV</button><button id="historyBackup" class="secondary compact">Backup data</button><button id="historySettings" class="secondary compact">Restore / settings</button></details></div>
  <div class="sleek-tabs">${["Week","Month","All time"].map(x=>`<button class="secondary ${historyPeriod===x?"selected":""}" data-hperiod="${x}">${x}</button>`).join("")}</div>
  <div class="sleek-nav"><button class="secondary compact" id="historyPrevMonth">‹</button><button class="secondary compact" id="historyCurrentMonth">${viewed.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</button><button class="secondary compact" id="historyNextMonth">›</button></div>
- <div class="sleek-grid">${sleekMetric("Workouts",entries.length,"Sessions")}${sleekMetric("Training time",formatShort(Math.round(seconds)),"Recorded duration")}${sleekMetric("Weekly goal",`${completedDays} / ${requiredDays}`,"This week",completedDays/requiredDays)}${sleekMetric("Weekly streak",`${streak} weeks`,"At least one workout")}</div>
+ <div class="sleek-grid">${sleekMetric("Workouts",entries.length,"Sessions")}${sleekMetric("Training time",historyTotalTime(seconds),"Recorded duration")}${sleekMetric("Weekly goal",`${completedDays} / ${requiredDays}`,"This week",completedDays/requiredDays)}${sleekMetric("Weekly streak",`${streak} weeks`,"At least one workout")}</div>
  <details class="card sleek-detail"><summary>Activity calendar</summary>${calendarMonthMarkup(viewed.getFullYear(),viewed.getMonth())}</details>
  <details class="card sleek-detail"><summary>Training analytics</summary><small>Last four weeks · training minutes</small>${weeks.map((v,i)=>`<div class="sleek-bar"><span>${i===3?"This week":`${3-i} weeks ago`}</span><progress max="${Math.max(1,...weeks)}" value="${v}"></progress><b>${Math.round(v)}</b></div>`).join("")}<h3>Training records</h3>${bestLoads().length?`<div class="record-list">${bestLoads().map(r=>`<div><span>${r.name}</span><b>${r.load} ${r.unit}</b></div>`).join("")}</div>`:"<small>No tracked loads yet.</small>"}</details>
  <h2>Workout records</h2><div class="sleek-tabs">${["All","Strength","Run/Walk"].map(x=>`<button class="secondary ${historyFilter===x?"selected":""}" data-hfilter="${x}">${x}</button>`).join("")}</div><section class="card sleek-records">${rows.slice(0,historyShowAll?rows.length:5).map(h=>`<details class="sleek-record"><summary><span><small>${localDateFromISO(h.date).toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><strong>${h.focus}</strong></span><b>${historyDuration(h)}</b></summary><div class="sleek-record-detail"><p>${h.actualSeconds==null?"Legacy / estimated duration":"Actual duration"}: ${historyDuration(h)}</p>${h.plannedMinutes!=null?`<p>Planned: ${h.plannedMinutes} min · Active: ${formatShort(h.activeSeconds||0)}</p>`:""}${h.focus==="Run/Walk"?`<p>${h.runWalkType||"Activity"} · ${h.runWalkLocation||""} · ${Number(h.runWalkDistance||0).toFixed(2)} km · ${rwPace(h.runWalkDistance,historySeconds(h))}</p>`:`<p>Sets: ${h.setsCompleted??0}/${h.setsPlanned??0} · Rest: ${formatShort(h.restSeconds||0)}</p><p>Finisher: ${h.finisherSnapshot?.name||h.finisherName||"—"} · ${h.finisherSnapshot?.minutes??h.finisherMinutes??0} min</p>`}<p>Rating: ${h.rating||"Not rated"}</p></div></details>`).join("")||"<small>No matching workouts.</small>"}${rows.length>5?`<button class="secondary" id="historyToggle">${historyShowAll?"Show less":"Show more"}</button>`:""}</section>`;

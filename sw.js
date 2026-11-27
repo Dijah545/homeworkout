@@ -1,10 +1,10 @@
 
-const CACHE="home-workout-v88-3-dashboard-history";
+const CACHE="home-workout-v88-5-body-history";
 const CORE=[
   "./",
   "./index.html",
-  "./styles.css?v=88.3",
-  "./app.js?v=88.3",
+  "./styles.css?v=88.5",
+  "./app.js?v=88.5",
   "./manifest.json",
   "./assets/home-workout-brand.png",
   "./assets/icon-192.png",

@@ -805,3 +805,10 @@ Fixed muscle focus percentage overflow in the Today hero using a single-column m
 
 ### v88.3
 Dashboard layouts for Run/Walk, Week and History; collapsible workout phases, calendar and analytics. Actual timed sessions store exact seconds, active seconds and planned minutes; legacy and manually marked sessions retain estimated durations. CSV includes new fields. Run/Walk weekly totals and backup data included. History streak retains the existing at-least-one-workout definition.
+
+
+### v88.4
+History Training time summary displays total hours, minutes and seconds for the selected period. Existing records and duration storage are unchanged.
+
+### v88.5
+Body measurement history shows the latest five records by default, with Show more / Show less. Existing measurement editing and deletion retained.
